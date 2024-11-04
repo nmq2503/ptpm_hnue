@@ -10,6 +10,9 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String PREFS_NAME = "app_prefs";
+    public static final String KEY_FIRST_LAUNCH = "first_launch";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
