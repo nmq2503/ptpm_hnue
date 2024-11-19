@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:cardElevation="4dp"
+        android:radius="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <!-- ImageView for the dish -->
+
+            <!-- Main title for the dish -->
+
+            <ImageView
+                android:id="@+id/dish_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/avatars"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/dish_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="82dp" />
+
+            <!-- Subtitle for the restaurant name -->
+            <TextView
+                android:id="@+id/restaurant_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Text View"
+                android:textColor="#888888"
+                android:textSize="14sp"
+                app:layout_constraintTop_toBottomOf="@id/dish_title"
+                tools:layout_editor_absoluteX="82dp" />
+
+            <!-- Price TextView -->
+            <TextView
+                android:id="@+id/dish_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Text view"
+                android:textColor="#00CC00"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/restaurant_name"
+                app:layout_constraintTop_toBottomOf="@id/restaurant_name"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <!-- Add/Remove Quantity Layout -->
+            <LinearLayout
+                android:id="@+id/quantity_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <!-- Minus button -->
+                <TextView
+                    android:id="@+id/button_minus"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:text="-"
+                    android:textAlignment="center"
+                    android:background="@drawable/ic_minus"
+                    android:textSize="25sp"
+                    android:textColor="#143E16" />
+
+                <!-- Quantity TextView -->
+                <TextView
+                    android:id="@+id/quantity_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <!-- Plus button -->
+                <TextView
+                    android:id="@+id/button_plus"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:text="+"
+                    android:textSize="25sp"
+                    android:textAlignment="center"
+                    android:textColor="#CEEFCF"
+                    android:background="@drawable/ic_plus" />
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
