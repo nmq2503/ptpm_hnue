@@ -21,6 +21,8 @@ import java.util.List;
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DESCRIPTION = "description";
         public static final String COLUMN_RATING = "rating";
+        public static final String COLUMN_OPEN_HOUR = "open_hour";
+        public static final String COLUMN_CLOSE_HOUR = "close_hour";
         public static final String TABLE_COMMENTS = "Comments";
         public static final String COLUMN_COMMENT_ID = "comment_id";
         public static final String COLUMN_RESTAURANT_ID = "restaurant_id";
@@ -32,7 +34,9 @@ import java.util.List;
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_NAME + " TEXT, " +
                         COLUMN_DESCRIPTION + " TEXT, " +
-                        COLUMN_RATING + " REAL)";
+                        COLUMN_RATING + " REAL, " +
+                        COLUMN_OPEN_HOUR + " TEXT, " +
+                        COLUMN_CLOSE_HOUR + " TEXT)";
         private static final String CREATE_TABLE_COMMENTS =
                 "CREATE TABLE " + TABLE_COMMENTS + " (" +
                         COLUMN_COMMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

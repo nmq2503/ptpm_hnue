@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2;
+package com.nmq.foodninjaver2.features;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,9 +6,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +20,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.Model.Comment;
 import com.nmq.foodninjaver2.Model.Product;
 import com.nmq.foodninjaver2.Model.Restaurant;
@@ -26,15 +30,30 @@ import com.nmq.foodninjaver2.dataBase.RestaurantDatabaseHelper;
 import java.util.List;
 
 public class RestaurantDetailActivity extends AppCompatActivity {
-    private ImageView imageRestaurant;
-    private TextView textRestaurantName, textDistance, textRating, textDescription;
-    private LinearLayout popularMenuContainer, commentsContainer;
+     ImageView imageRestaurant;
+     TextView textRestaurantName;
+     TextView textDistance;
+     TextView textRating;
+     TextView textDescription;
+     Button viewAllText;
+     ImageButton backButton;
+     LinearLayout popularMenuContainer, commentsContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_restaurant_detail);
+
+        imageRestaurant = findViewById(R.id.imageRestaurant);
+        textRestaurantName = findViewById(R.id.textRestaurantName);
+        textDistance = findViewById(R.id.textDistance);
+        textRating = findViewById(R.id.textRating);
+        textDescription = findViewById(R.id.textDescription);
+        popularMenuContainer = findViewById(R.id.popularMenuContainer);
+        commentsContainer = findViewById(R.id.commentsContainer);
+        viewAllText = findViewById(R.id.viewAllText);
+        backButton = findViewById(R.id.backButton);
         RestaurantDatabaseHelper dbHelper = new RestaurantDatabaseHelper(this);
         int restaurantId = getIntent().getIntExtra("restaurant_id", -1);
         if (restaurantId != -1) {
@@ -48,15 +67,10 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 textRating.setText(String.valueOf(restaurant.getRating()));
             }
         }
+        addEvents();
 
         // Khởi tạo các view
-        imageRestaurant = findViewById(R.id.imageRestaurant);
-        textRestaurantName = findViewById(R.id.textRestaurantName);
-        textDistance = findViewById(R.id.textDistance);
-        textRating = findViewById(R.id.textRating);
-        textDescription = findViewById(R.id.textDescription);
-        popularMenuContainer = findViewById(R.id.popularMenuContainer);
-        commentsContainer = findViewById(R.id.commentsContainer);
+
 
         // Nhận Intent và đối tượng Restaurant
         Intent intent = getIntent();
@@ -74,6 +88,20 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+    }
+    public void addEvents() {
+        // Gắn sự kiện cho nút Back
+        backButton.setOnClickListener(v -> {
+            Log.d("RestaurantDetailActivity", "Back button clicked");
+            Intent intent = new Intent(RestaurantDetailActivity.this, MainActivity.class);
+            startActivity(intent);
+        });
+
+        // Gắn sự kiện cho nút View All
+        viewAllText.setOnClickListener(v -> {
+            Intent intent = new Intent(RestaurantDetailActivity.this, PopularMenuActivity.class);
+            startActivity(intent);
         });
     }
 

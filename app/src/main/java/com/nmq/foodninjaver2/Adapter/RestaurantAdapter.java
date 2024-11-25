@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.nmq.foodninjaver2.Model.Restaurant;
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.RestaurantDetailActivity;
+import com.nmq.foodninjaver2.features.RestaurantDetailActivity;
 
 import java.util.List;
 
