@@ -36,7 +36,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
      TextView textRating;
      TextView textDescription;
      Button viewAllText;
-     ImageButton backButton;
+     ImageButton backButton, crab1, crab2, crab3, crab4;
      LinearLayout popularMenuContainer, commentsContainer;
 
     @Override
@@ -54,6 +54,10 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         commentsContainer = findViewById(R.id.commentsContainer);
         viewAllText = findViewById(R.id.viewAllText);
         backButton = findViewById(R.id.backButton);
+        crab1 = findViewById(R.id.crab1);
+        crab2 = findViewById(R.id.crab2);
+        crab3 = findViewById(R.id.crab3);
+        crab4 = findViewById(R.id.crab4);
         RestaurantDatabaseHelper dbHelper = new RestaurantDatabaseHelper(this);
         int restaurantId = getIntent().getIntExtra("restaurant_id", -1);
         if (restaurantId != -1) {
@@ -100,6 +104,22 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
         // Gắn sự kiện cho nút View All
         viewAllText.setOnClickListener(v -> {
+            Intent intent = new Intent(RestaurantDetailActivity.this, ViewAllActivity.class);
+            startActivity(intent);
+        });
+        crab1.setOnClickListener(v -> {
+            Intent intent = new Intent(RestaurantDetailActivity.this, PopularMenuActivity.class);
+            startActivity(intent);
+        });
+        crab2.setOnClickListener(v -> {
+            Intent intent = new Intent(RestaurantDetailActivity.this, PopularMenuActivity.class);
+            startActivity(intent);
+        });
+        crab3.setOnClickListener(v -> {
+            Intent intent = new Intent(RestaurantDetailActivity.this, PopularMenuActivity.class);
+            startActivity(intent);
+        });
+        crab4.setOnClickListener(v -> {
             Intent intent = new Intent(RestaurantDetailActivity.this, PopularMenuActivity.class);
             startActivity(intent);
         });

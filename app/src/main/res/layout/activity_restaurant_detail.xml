@@ -180,7 +180,8 @@
                     app:cardCornerRadius="8dp"
                     app:cardElevation="6dp">
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/crab1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -194,7 +195,8 @@
                     app:cardCornerRadius="10dp"
                     app:cardElevation="6dp">
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/crab2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -208,7 +210,8 @@
                     app:cardCornerRadius="10dp"
                     app:cardElevation="6dp">
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/crab3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -222,7 +225,8 @@
                     app:cardCornerRadius="10dp"
                     app:cardElevation="6dp">
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/crab4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
