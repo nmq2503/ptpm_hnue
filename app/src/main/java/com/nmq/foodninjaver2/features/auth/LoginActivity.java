@@ -24,6 +24,7 @@ import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 import com.nmq.foodninjaver2.features.splash.FirstSplashActivity;
 import com.nmq.foodninjaver2.features.splash.SecondSplashActivity;
+import com.ptt.Home.HomeActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -90,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 preferences.edit().putBoolean(MainActivity.KEY_FIRST_LAUNCH, false).apply();
             } else {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             }
         } else {
             Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();

@@ -1,10 +1,13 @@
 package com.ptt.Home.Domain;
 
-public class MenuDomain {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class RestaurantDomain implements Serializable {
     private String title;
     private String pic;
 
-    public MenuDomain(String title, String pic) {
+    public RestaurantDomain(String title, String pic) {
         this.title = title;
         this.pic = pic;
     }
