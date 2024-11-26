@@ -8,11 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:cardElevation="4dp"
+        android:layout_margin="10dp"
         android:radius="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -22,49 +18,50 @@
             android:layout_height="wrap_content"
             android:padding="10dp">
 
-            <!-- ImageView for the dish -->
-
-            <!-- Main title for the dish -->
-
+            <!-- Dish Image -->
             <ImageView
                 android:id="@+id/dish_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="centerCrop"
-                tools:srcCompat="@tools:sample/avatars"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
 
+            <!-- Dish Name -->
             <TextView
-                android:id="@+id/dish_title"
+                android:id="@+id/tvProductName"
+                android:layout_marginLeft="10dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:text="Dish Name"
                 android:textColor="#000000"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/dish_image"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="82dp" />
+                app:layout_constraintEnd_toStartOf="@id/quantity_layout" />
 
-            <!-- Subtitle for the restaurant name -->
+            <!-- Restaurant Name -->
             <TextView
                 android:id="@+id/restaurant_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Text View"
+                android:text="Restaurant Name"
                 android:textColor="#888888"
                 android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/dish_title"
-                tools:layout_editor_absoluteX="82dp" />
+                app:layout_constraintStart_toStartOf="@id/tvProductName"
+                app:layout_constraintTop_toBottomOf="@id/tvProductName"
+                app:layout_constraintEnd_toEndOf="@id/tvProductName" />
 
-            <!-- Price TextView -->
+            <!-- Price -->
             <TextView
-                android:id="@+id/dish_price"
+                android:id="@+id/tvProductPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Text view"
+                android:text="$10.00"
                 android:textColor="#00CC00"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -72,7 +69,7 @@
                 app:layout_constraintTop_toBottomOf="@id/restaurant_name"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-            <!-- Add/Remove Quantity Layout -->
+            <!-- Add/Remove Quantity -->
             <LinearLayout
                 android:id="@+id/quantity_layout"
                 android:layout_width="wrap_content"
@@ -82,40 +79,36 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <!-- Minus button -->
-                <TextView
-                    android:id="@+id/button_minus"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                <!-- Decrease Button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnDecrease"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:text="-"
-                    android:textAlignment="center"
+                    android:textSize="20sp"
                     android:background="@drawable/ic_minus"
-                    android:textSize="25sp"
                     android:textColor="#143E16" />
 
-                <!-- Quantity TextView -->
+                <!-- Quantity Text -->
                 <TextView
-                    android:id="@+id/quantity_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="32dp"
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:gravity="center"
                     android:paddingHorizontal="8dp"
                     android:text="0"
                     android:textColor="#000000"
                     android:textSize="16sp" />
 
-                <!-- Plus button -->
-                <TextView
-                    android:id="@+id/button_plus"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
+                <!-- Increase Button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnIncrease"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:text="+"
-                    android:textSize="25sp"
-                    android:textAlignment="center"
-                    android:textColor="#CEEFCF"
-                    android:background="@drawable/ic_plus" />
-
-
+                    android:textSize="20sp"
+                    android:background="@drawable/ic_plus"
+                    android:textColor="#143E16" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

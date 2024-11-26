@@ -10,4 +10,8 @@
 
     <color name="startColor">#53E88B</color> <!-- Màu bắt đầu của gradient -->
     <color name="endColor">#15BE77</color>   <!-- Màu kết thúc của gradient -->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
 </resources>
