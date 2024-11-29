@@ -1,4 +1,4 @@
-package com.ptt.Home.Adapter;
+package com.nmq.foodninjaver2.features.Home.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
-import com.ptt.Home.Domain.RestaurantDomain;
-import com.ptt.Home.ThucDonActivity;
+import com.nmq.foodninjaver2.features.Home.DetailRestaurant.ThucDonActivity;
+import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
 
 import java.util.ArrayList;
 

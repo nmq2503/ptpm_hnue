@@ -1,7 +1,6 @@
-package com.ptt.Home.Domain;
+package com.nmq.foodninjaver2.features.Home.Model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class RestaurantDomain implements Serializable {
     private String title;

@@ -1,4 +1,4 @@
-package com.ptt.Home;
+package com.nmq.foodninjaver2.features.Home.DetailRestaurant;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,17 +8,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
-import com.ptt.Home.Adapter.RestaurantAdapter;
-import com.ptt.Home.Domain.RestaurantDomain;
+import com.nmq.foodninjaver2.features.Home.HomeActivity;
+import com.nmq.foodninjaver2.features.Home.Adapter.RestaurantAdapter;
+import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,5 @@
-package com.ptt.Home.Adapter;
+package com.nmq.foodninjaver2.features.Home.Adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +8,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
-import com.ptt.Home.Domain.MenuDomain;
+import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
 
 import java.util.ArrayList;
 
