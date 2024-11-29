@@ -21,6 +21,21 @@
 
         </activity>
         <activity
+            android:name=".features.Home.DetailRestaurant.RestaurantListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.Home.DetailRestaurant.ThucDonActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.Home.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.Home.CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.Home.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".features.auth.RegisterActivity"
             android:exported="false" />
         <activity

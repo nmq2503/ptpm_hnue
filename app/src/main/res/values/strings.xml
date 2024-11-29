@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">FoodNinja</string>
+    <string name="action_home">Home</string>
+    <string name="action_profile">Profile</string>
+    <string name="action_cart">Cart</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
