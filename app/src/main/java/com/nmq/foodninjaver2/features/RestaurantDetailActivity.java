@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,15 +19,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.nmq.foodninjaver2.Adapter.MonAnAdapter;
 import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.Model.Comment;
+import com.nmq.foodninjaver2.Model.MonAn;
 import com.nmq.foodninjaver2.Model.Product;
 import com.nmq.foodninjaver2.Model.Restaurant;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.dataBase.RestaurantDatabaseHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestaurantDetailActivity extends AppCompatActivity {
@@ -36,8 +43,12 @@ public class RestaurantDetailActivity extends AppCompatActivity {
      TextView textRating;
      TextView textDescription;
      Button viewAllText;
-     ImageButton backButton, crab1, crab2, crab3, crab4;
+     ImageView  crab1, crab2, crab3, crab4;
+     ImageButton backButton;
      LinearLayout popularMenuContainer, commentsContainer;
+     RecyclerView lvMonAn;
+     ArrayList<MonAn> listMonAn;
+     MonAnAdapter adapterMonAn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +65,20 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         commentsContainer = findViewById(R.id.commentsContainer);
         viewAllText = findViewById(R.id.viewAllText);
         backButton = findViewById(R.id.backButton);
-        crab1 = findViewById(R.id.crab1);
-        crab2 = findViewById(R.id.crab2);
-        crab3 = findViewById(R.id.crab3);
-        crab4 = findViewById(R.id.crab4);
+        lvMonAn = findViewById(R.id.lvMonAn);
+        listMonAn = new ArrayList<>();
+        listMonAn.add(new MonAn(R.drawable.pizza));
+        listMonAn.add(new MonAn(R.drawable.img));
+        listMonAn.add(new MonAn(R.drawable.pizza));
+        listMonAn.add(new MonAn(R.drawable.img));
+
+        // Thiết lập adapter và layout
+        adapterMonAn = new MonAnAdapter(this, listMonAn);
+        lvMonAn.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        lvMonAn.setAdapter(adapterMonAn);
+        MonAnAdapter adapterMonAn = new MonAnAdapter(this, listMonAn);
+
+
         RestaurantDatabaseHelper dbHelper = new RestaurantDatabaseHelper(this);
         int restaurantId = getIntent().getIntExtra("restaurant_id", -1);
         if (restaurantId != -1) {
@@ -105,22 +126,6 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         // Gắn sự kiện cho nút View All
         viewAllText.setOnClickListener(v -> {
             Intent intent = new Intent(RestaurantDetailActivity.this, ViewAllActivity.class);
-            startActivity(intent);
-        });
-        crab1.setOnClickListener(v -> {
-            Intent intent = new Intent(RestaurantDetailActivity.this, PopularMenuActivity.class);
-            startActivity(intent);
-        });
-        crab2.setOnClickListener(v -> {
-            Intent intent = new Intent(RestaurantDetailActivity.this, PopularMenuActivity.class);
-            startActivity(intent);
-        });
-        crab3.setOnClickListener(v -> {
-            Intent intent = new Intent(RestaurantDetailActivity.this, PopularMenuActivity.class);
-            startActivity(intent);
-        });
-        crab4.setOnClickListener(v -> {
-            Intent intent = new Intent(RestaurantDetailActivity.this, PopularMenuActivity.class);
             startActivity(intent);
         });
     }
