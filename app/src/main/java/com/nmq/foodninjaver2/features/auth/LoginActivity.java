@@ -22,6 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
+import com.nmq.foodninjaver2.features.cart.FoodCartActivity;
 import com.nmq.foodninjaver2.features.splash.FirstSplashActivity;
 import com.nmq.foodninjaver2.features.splash.SecondSplashActivity;
 

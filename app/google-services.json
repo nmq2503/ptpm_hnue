@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "829948597326",
+    "project_id": "foodninjaver2",
+    "storage_bucket": "foodninjaver2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:829948597326:android:fffea3021c7d6ecd47df1f",
+        "android_client_info": {
+          "package_name": "com.nmq.foodninjaver2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx9QneDj9ABHhVhSA9gS8pa7UR7Yd2k_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
