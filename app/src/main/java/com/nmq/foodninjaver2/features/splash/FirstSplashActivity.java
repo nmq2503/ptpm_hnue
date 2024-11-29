@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.admin.views.AdminActivity;
 import com.nmq.foodninjaver2.core.SessionManager;
 
 public class FirstSplashActivity extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class FirstSplashActivity extends AppCompatActivity {
         // Kiểm tra trạng thái đăng nhập
         if (sessionManager.isLoggedIn()) {
             // Nếu đã đăng nhập, chuyển đến MainActivity và kết thúc SplashActivity
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, AdminActivity.class));
             finish(); // Kết thúc FirstSplashActivity
             return; // Ngăn chặn xử lý tiếp nội dung splash
         }
