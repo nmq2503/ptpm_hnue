@@ -3,7 +3,11 @@ package com.nmq.foodninjaver2.admin.views;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.nmq.foodninjaver2.core.modelBase.UserModel;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminRepository {
     private final DataBaseHelper dbHelper;
@@ -36,6 +40,33 @@ public class AdminRepository {
         }
         return 0;
     }
+
+    public List<UserModel> getAllUsersWithRoles() {
+        List<UserModel> userList = new ArrayList<>();
+
+        // Câu truy vấn để lấy dữ liệu
+        String query = "SELECT u.user_name, u.email, r.role_name " +
+                "FROM USER u " +
+                "JOIN ROLE r ON u.role_id = r.role_id";
+
+        // Gọi executeQuery để thực thi truy vấn
+        Cursor cursor = dbHelper.executeQuery(query, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                UserModel user = new UserModel();
+                user.setUserName(cursor.getString(0)); // user_name
+                user.setEmail(cursor.getString(1));    // email
+                user.setRole(cursor.getString(2));     // role_name
+                userList.add(user);
+            } while (cursor.moveToNext());
+
+            cursor.close(); // Đóng Cursor sau khi sử dụng
+        }
+
+        return userList;
+    }
+
 
     // Truy vấn số lượng món ăn
     public int getMenuItemCount() {

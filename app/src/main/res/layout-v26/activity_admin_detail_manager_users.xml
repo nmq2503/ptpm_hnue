@@ -48,7 +48,7 @@
             android:layout_marginTop="20dp"
             android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:background="@drawable/bg_search"
+            android:background="@drawable/img_background_search"
             android:iconTint="#DA6317"
             android:textSize="12sp"
             app:iconifiedByDefault="false"
@@ -58,6 +58,61 @@
             app:closeIcon="@drawable/ic_delete_search"
             app:searchIcon="@drawable/ic_search"
             android:layout_height="50dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAdd"
+                android:text="Thêm"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:background="@drawable/bg_add_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="85dp"
+                android:layout_height="30dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEdit"
+                android:layout_width="85dp"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_edit_btn"
+                android:text="Sửa"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+                app:layout_constraintStart_toEndOf="@id/btnAdd"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDelete"
+                android:text="Xóa"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:background="@drawable/bg_delete_btn"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="85dp"
+                android:layout_height="30dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewManagerUsers"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
