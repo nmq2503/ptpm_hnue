@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.features.Home.Model;
+package com.nmq.foodninjaver2.features.Home.Domain;
 
 public class MenuDomain {
     private String title;

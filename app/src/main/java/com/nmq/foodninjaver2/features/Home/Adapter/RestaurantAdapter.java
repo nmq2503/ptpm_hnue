@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.features.Home.DetailRestaurant.ThucDonActivity;
+import com.nmq.foodninjaver2.features.Home.DetailRestaurant.ItemRestaurantActivity;
 import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
 
 import java.util.ArrayList;
@@ -42,10 +42,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         holder.pic.setImageResource(drawableResourceId);
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(holder.itemView.getContext(), ThucDonActivity.class);
+            Intent intent = new Intent(holder.itemView.getContext(), ItemRestaurantActivity.class);
             intent.putExtra("object", restaurantDomains.get(position));
             holder.itemView.getContext().startActivity(intent);
         });
+
     }
 
 

@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ptt.Home.DetailRestaurant.ThucDonActivity">
+    tools:context=".features.Home.DetailRestaurant.ItemRestaurantActivity">
+
     <TextView
         android:id="@+id/res_name"
         android:layout_width="wrap_content"
