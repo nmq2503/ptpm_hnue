@@ -27,6 +27,19 @@ public class PopularMenuAdapter extends RecyclerView.Adapter<PopularMenuAdapter.
         notifyDataSetChanged();
     }
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView menuName, fee;
+        ImageView menuPic;
+        ConstraintLayout mainLayout;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            menuName = itemView.findViewById(R.id.tvMenuName);
+            menuPic = itemView.findViewById(R.id.tvPic);
+            fee = itemView.findViewById(R.id.fee);
+            mainLayout = itemView.findViewById(R.id.mainLayout);
+        }
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,6 +51,7 @@ public class PopularMenuAdapter extends RecyclerView.Adapter<PopularMenuAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         MenuDomain currentItem = menuDomain.get(position);
         holder.menuName.setText(currentItem.getTitle());
+        holder.fee.setText(String.valueOf(currentItem.getFee()));
 
         int drawableResourceId = holder.itemView.getResources().getIdentifier(
                 currentItem.getPic(), "drawable", holder.itemView.getContext().getPackageName()
@@ -51,15 +65,4 @@ public class PopularMenuAdapter extends RecyclerView.Adapter<PopularMenuAdapter.
         return menuDomain.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView menuName;
-        ImageView menuPic;
-        ConstraintLayout mainLayout;
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            menuName = itemView.findViewById(R.id.menuName);
-            menuPic = itemView.findViewById(R.id.menuPic);
-            mainLayout = itemView.findViewById(R.id.mainLayout);
-        }
-    }
 }

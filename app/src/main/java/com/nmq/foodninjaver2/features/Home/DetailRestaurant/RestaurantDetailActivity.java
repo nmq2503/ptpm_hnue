@@ -19,7 +19,7 @@ import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
 
 import java.util.ArrayList;
 
-public class RestaurantListActivity extends AppCompatActivity {
+public class RestaurantDetailActivity extends AppCompatActivity {
     private RecyclerView rvRestaurantList;
     private RestaurantAdapter adapterRes;
     private ArrayList<RestaurantDomain> restaurantList, originalRestaurantList;
@@ -50,9 +50,9 @@ public class RestaurantListActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RestaurantListActivity.this, HomeActivity.class);
+                Intent intent = new Intent(RestaurantDetailActivity.this, HomeActivity.class);
                 startActivity(intent);
-//                finish();
+//              finish();
             }
         });
 
