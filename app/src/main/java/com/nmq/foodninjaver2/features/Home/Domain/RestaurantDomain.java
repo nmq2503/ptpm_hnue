@@ -1,15 +1,18 @@
-package com.nmq.foodninjaver2.features.Home.Model;
+package com.nmq.foodninjaver2.features.Home.Domain;
 
-public class MenuDomain {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class RestaurantDomain implements Serializable {
     private String title;
     private String pic;
-    private double fee;
+    private ArrayList<MenuDomain> menuItems; //DS món ăn
 
-    public MenuDomain(String title, String pic, double fee) {
+    public RestaurantDomain(String title, String pic) {
         this.title = title;
         this.pic = pic;
-        this.fee = fee;
     }
+
     public String getTitle() {
         return title;
     }
@@ -24,13 +27,5 @@ public class MenuDomain {
 
     public void setPic(String pic) {
         this.pic = pic;
-    }
-
-    public double getFee() {
-        return fee;
-    }
-
-    public void setFee(double fee) {
-        this.fee = fee;
     }
 }

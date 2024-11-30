@@ -53,6 +53,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
                 <TextView
+                    android:id="@+id/tvViewMoreMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="32dp"
+                    android:text="View More"
+                    android:textColor="#FF3D00"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView13"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textView13" />
+
+                <TextView
                     android:id="@+id/tvViewMore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -153,10 +165,10 @@
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="8dp"
-                            android:background="@drawable/white_button"
+                            android:background="@drawable/green_button"
                             android:text="Order Now"
                             android:textAlignment="center"
-                            android:textColor="#0A7368"
+                            android:textColor="#ffffff"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -240,7 +252,7 @@
             app:itemIconSize="24dp"
             app:itemPadding="8dp"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/menu_bottom" />
+            app:menu="@menu/menu_bottom"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
