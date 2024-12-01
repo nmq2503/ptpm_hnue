@@ -2,6 +2,9 @@ package com.nmq.foodninjaver2.admin.views;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.nmq.foodninjaver2.core.modelBase.UserModel;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
@@ -44,29 +47,120 @@ public class AdminRepository {
     public List<UserModel> getAllUsersWithRoles() {
         List<UserModel> userList = new ArrayList<>();
 
-        // Câu truy vấn để lấy dữ liệu
-        String query = "SELECT u.user_name, u.email, r.role_name " +
+        // Câu truy vấn để lấy tất cả dữ liệu từ bảng USER và ROLE
+        String query = "SELECT u.user_id, u.user_name, u.first_name, u.last_name, u.email, u.password, " +
+                "u.phone_number, u.address, u.date_of_birth, u.url_image_profile, u.create_at, u.update_at, " +
+                "r.role_id, r.role_name " +
                 "FROM USER u " +
                 "JOIN ROLE r ON u.role_id = r.role_id";
 
-        // Gọi executeQuery để thực thi truy vấn
         Cursor cursor = dbHelper.executeQuery(query, null);
 
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                UserModel user = new UserModel();
-                user.setUserName(cursor.getString(0)); // user_name
-                user.setEmail(cursor.getString(1));    // email
-                user.setRole(cursor.getString(2));     // role_name
-                userList.add(user);
-            } while (cursor.moveToNext());
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    UserModel user = new UserModel();
 
-            cursor.close(); // Đóng Cursor sau khi sử dụng
+                    // Lấy tất cả các cột từ bảng USER và ROLE
+                    user.setUserId(cursor.getInt(0));
+                    user.setUserName(cursor.getString(1));
+                    user.setFirstName(cursor.getString(2));
+                    user.setLastName(cursor.getString(3));
+                    user.setEmail(cursor.getString(4));
+                    user.setPassword(cursor.getString(5));
+                    user.setPhoneNumber(cursor.getString(6));
+                    user.setAddress(cursor.getString(7));
+                    user.setDateOfBirth(cursor.getString(8));
+                    user.setUrlImageProfile(cursor.getString(9));
+                    user.setCreateAt(cursor.getString(10));
+                    user.setUpdateAt(cursor.getString(11));
+                    user.setRoleId(cursor.getInt(12));
+                    user.setRoleName(cursor.getString(13));
+
+                    // Thêm user vào danh sách
+                    userList.add(user);
+                } while (cursor.moveToNext());
+            } else {
+                Log.d("Database", "No data found in query.");
+            }
+            cursor.close();
+        } else {
+            Log.e("Database", "Cursor is null. Query execution failed.");
         }
 
         return userList;
     }
 
+    public boolean saveUserToDatabase(String userName, String email, String password, String selectedImagePath) {
+        // Chuẩn bị câu lệnh SQL INSERT
+        String sql = "INSERT INTO USER (user_name, email, password, url_image_profile, role_id) VALUES (?, ?, ?, ?, 3)";
+
+        // Lấy giá trị từ tham số phương thức
+        Object[] bindArgs = new Object[] {
+                userName,
+                email,
+                password,
+                selectedImagePath // Lưu đường dẫn ảnh vào cơ sở dữ liệu
+        };
+
+        try {
+            // Sử dụng phương thức executeNonQuery để thực thi câu lệnh SQL
+            boolean isSuccess = dbHelper.executeNonQuery(sql, bindArgs);
+            return isSuccess;
+        } catch (Exception e) {
+            // Ghi log lỗi (nếu có) để dễ dàng debug
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateUserInDatabase(int userId, String userName, String email, String password, String selectedImagePath) {
+        // Chuẩn bị câu lệnh SQL UPDATE
+        String sql = "UPDATE USER SET user_name = ?, email = ?, password = ?, url_image_profile = ? WHERE user_id = ?";
+
+        // Lấy giá trị từ tham số phương thức
+        Object[] bindArgs = new Object[] {
+                userName,            // Tên người dùng
+                email,               // Email người dùng
+                password,            // Mật khẩu người dùng
+                selectedImagePath,   // Đường dẫn ảnh hồ sơ
+                userId               // ID người dùng cần cập nhật
+        };
+
+        try {
+            // Sử dụng phương thức executeNonQuery để thực thi câu lệnh SQL
+            boolean isSuccess = dbHelper.executeNonQuery(sql, bindArgs);
+            return isSuccess;  // Trả về true nếu cập nhật thành công
+        } catch (Exception e) {
+            // Ghi log lỗi (nếu có) để dễ dàng debug
+            e.printStackTrace();
+            return false;  // Trả về false nếu có lỗi xảy ra
+        }
+    }
+
+
+    public boolean deleteUserById(int userId) {
+        // Câu lệnh SQL xóa dữ liệu theo user_id
+        String sql = "DELETE FROM " + DataBaseHelper.TABLE_USER + " WHERE user_id = ?";
+        Object[] bindArgs = new Object[]{userId};
+
+        // Gọi phương thức executeNonQuery để thực thi câu lệnh SQL
+        // boolean isSuccess = dbHelper.executeNonQuery(sql, bindArgs);
+
+        // Gọi phương thức executeNonQuery để thực thi câu lệnh SQL
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int affectedRows = db.delete(DataBaseHelper.TABLE_USER, "user_id = ?", new String[]{String.valueOf(userId)});
+
+
+        // Kiểm tra nếu câu lệnh không gặp lỗi, trả về true
+        if (affectedRows > 0) {
+            // Nếu không có lỗi trong quá trình xóa, bạn có thể kiểm tra thêm nếu cần (như số lượng dòng bị xóa)
+            return true;
+        } else {
+            // Nếu có lỗi trong quá trình xóa
+            return false;
+        }
+    }
 
     // Truy vấn số lượng món ăn
     public int getMenuItemCount() {
