@@ -27,6 +27,7 @@ public class SecondSplashActivity extends AppCompatActivity {
 
         button.setOnClickListener(view -> {
             startActivity(new Intent(SecondSplashActivity.this, ThirdSplashActivity.class));
+            finish();
         });
     }
 }
