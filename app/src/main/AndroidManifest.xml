@@ -41,6 +41,15 @@
             android:name=".features.Home.HomeActivity"
             android:exported="false" />
         <activity
+            android:name=".features.ViewAllActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.PopularMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.RestaurantDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".features.auth.RegisterActivity"
             android:exported="false" />
         <activity
