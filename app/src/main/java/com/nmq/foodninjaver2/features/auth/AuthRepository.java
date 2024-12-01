@@ -24,7 +24,7 @@ public class AuthRepository {
         }
 
         // Câu lệnh SQL với các tham số dạng placeholder (?)
-        String sql = "INSERT INTO USER (user_name, email, password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO USER (user_name, email, password, role_id) VALUES (?, ?, ?, 3)";
 
         // Danh sách các giá trị bind
         Object[] bindArgs = new Object[] { userName, email, password };
