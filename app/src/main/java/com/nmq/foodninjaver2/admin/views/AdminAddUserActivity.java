@@ -119,6 +119,12 @@ public class AdminAddUserActivity extends AppCompatActivity {
         String email = edtEmailUser.getText().toString();
         String password = edtPasswordUser.getText().toString();
 
+        // Kiểm tra email có tồn tại không
+        if (adminRepository.isEmailExist(email)) {
+            Toast.makeText(this, "Email đã tồn tại! Vui lòng sử dụng email khác.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String internalImagePath = null;
         // Lưu ảnh vào bộ nhớ trong
         if (selectedImagePath != null) {

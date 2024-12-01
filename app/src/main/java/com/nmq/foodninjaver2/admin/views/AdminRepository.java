@@ -91,6 +91,45 @@ public class AdminRepository {
         return userList;
     }
 
+    public boolean isEmailExist(String email) {
+        // Câu lệnh SQL kiểm tra email
+        String query = "SELECT COUNT(*) FROM USER WHERE email = ?";
+        Cursor cursor = null;
+
+        try {
+            // Sử dụng executeQuery để lấy kết quả
+            cursor = dbHelper.executeQuery(query, new String[]{email});
+            if (cursor != null && cursor.moveToFirst()) {
+                int count = cursor.getInt(0);
+                return count > 0; // Trả về true nếu email đã tồn tại
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return false;
+    }
+
+    public boolean isEmailExist(String email, int excludeUserId) {
+        // Kiểm tra email, loại trừ user hiện tại
+        String query = "SELECT COUNT(*) FROM USER WHERE email = ? AND user_id != ?";
+        Cursor cursor = null;
+
+        try {
+            cursor = dbHelper.executeQuery(query, new String[]{email, String.valueOf(excludeUserId)});
+            if (cursor != null && cursor.moveToFirst()) {
+                int count = cursor.getInt(0);
+                return count > 0; // Trả về true nếu email đã tồn tại
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return false;
+    }
+
     public boolean saveUserToDatabase(String userName, String email, String password, String selectedImagePath) {
         // Chuẩn bị câu lệnh SQL INSERT
         String sql = "INSERT INTO USER (user_name, email, password, url_image_profile, role_id) VALUES (?, ?, ?, ?, 3)";
@@ -137,7 +176,6 @@ public class AdminRepository {
             return false;  // Trả về false nếu có lỗi xảy ra
         }
     }
-
 
     public boolean deleteUserById(int userId) {
         // Câu lệnh SQL xóa dữ liệu theo user_id

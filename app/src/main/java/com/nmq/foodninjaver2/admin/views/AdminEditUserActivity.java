@@ -37,6 +37,7 @@ public class AdminEditUserActivity extends AppCompatActivity {
     private MainRepository mainRepository = new MainRepository(this);
     private static final int PICK_IMAGE_REQUEST = 1;
     private int idSelectedUser;
+    private String oldEmail;
 
     Button btnSave;
     Button btnCancel;
@@ -66,7 +67,7 @@ public class AdminEditUserActivity extends AppCompatActivity {
         Intent intent = getIntent();
         idSelectedUser = intent.getIntExtra("user_id", -1);
         String userName = intent.getStringExtra("user_name");
-        String email = intent.getStringExtra("email");
+        oldEmail = intent.getStringExtra("email");
         String password = intent.getStringExtra("password");
         String firstName = intent.getStringExtra("first_name");
         String lastName = intent.getStringExtra("last_name");
@@ -77,7 +78,7 @@ public class AdminEditUserActivity extends AppCompatActivity {
 
         // Thiết lập dữ liệu vào các thành phần giao diện
         edtNameUser.setText(userName);
-        edtEmailUser.setText(email);
+        edtEmailUser.setText(oldEmail);
         edtPasswordUser.setText(password);
 
         // Hiển thị ảnh hồ sơ nếu có
@@ -122,6 +123,12 @@ public class AdminEditUserActivity extends AppCompatActivity {
         String name = edtNameUser.getText().toString();
         String email = edtEmailUser.getText().toString();
         String password = edtPasswordUser.getText().toString();
+
+        // Kiểm tra email có tồn tại không
+        if (!email.equals(oldEmail) && adminRepository.isEmailExist(email, idSelectedUser)) {
+            Toast.makeText(this, "Email đã tồn tại! Vui lòng sử dụng email khác.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String internalImagePath = null;
         // Lưu ảnh vào bộ nhớ trong
