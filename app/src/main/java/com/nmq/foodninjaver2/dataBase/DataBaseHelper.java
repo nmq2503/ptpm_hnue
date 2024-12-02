@@ -88,10 +88,32 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_USERS + " WHERE " + COLUMN_EMAIL + " = ?", new String[]{email});
     }
+    public boolean updateUserInfo(String oldEmail, String newUsername, String newEmail) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USERNAME, newUsername);
+        values.put(COLUMN_EMAIL, newEmail);
+
+        int rowsUpdated = db.update(
+                TABLE_USERS,
+                values,
+                COLUMN_EMAIL + " = ?",
+                new String[]{oldEmail}
+        );
+
+        return rowsUpdated > 0;
+    }
+
+    public boolean deleteUser(String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsDeleted = db.delete(TABLE_USERS, COLUMN_EMAIL + " = ?", new String[]{email});
+        return rowsDeleted > 0;
+    }
 
     // Đóng database khi không còn sử dụng
     @Override
     public synchronized void close() {
         super.close();
     }
+
 }
