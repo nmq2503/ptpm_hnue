@@ -10,7 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.features.Home.Adapter.PopularMenuAdapter;
 import com.nmq.foodninjaver2.features.Home.Adapter.RestaurantAdapter;
-import com.nmq.foodninjaver2.features.Home.DetailRestaurant.RestaurantListActivity;
+import com.nmq.foodninjaver2.features.Home.DetailRestaurant.RestaurantDetailActivity;
 import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
 import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
 
@@ -61,12 +60,30 @@ public class HomeActivity extends AppCompatActivity {
             public void afterTextChanged(Editable CharSequence) {}
         });
 
-        // View more
+//        // View More Menu
+//        tvViewMoreMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ArrayList<MenuDomain> menuList = new ArrayList<>();
+//                menuList.add(new MenuDomain("Pizza", "pizza"));
+//                menuList.add(new MenuDomain("Burger", "burger"));
+//                menuList.add(new MenuDomain("Hotdog", "hot_dog"));
+//                menuList.add(new MenuDomain("Drink", "nuoc_ep_xoai_dao"));
+//                menuList.add(new MenuDomain("Donut", "donut"));
+//                menuList.add(new MenuDomain("BBQ", "bbq"));
+//
+//                // Truyền danh sách món ăn qua Intent
+////                Intent intent = new Intent(MainActivity.this, DetailMenuActivity.class);
+////                intent.putParcelableArrayListExtra("menuList", menuList);
+////                startActivity(intent);
+//            }
+//        });
+        // View more Res
         tvViewMore = findViewById(R.id.tvViewMore);
         tvViewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, RestaurantListActivity.class);
+                Intent intent = new Intent(HomeActivity.this, RestaurantDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,7 +107,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void filterList(String text) {
-        // Lọc danh sách menu
         ArrayList<MenuDomain> filteredList = new ArrayList<>();
         for (MenuDomain item : originalMenuList) {
             if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
@@ -112,17 +128,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void recyclerViewMenu() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManagerMenu = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//        GridLayoutManager griLayoutManagerMenu = new GridLayoutManager(this, 2);
         recyclerViewMenuList = findViewById(R.id.rvMenu);
-        recyclerViewMenuList.setLayoutManager(layoutManager);
+        recyclerViewMenuList.setLayoutManager(layoutManagerMenu);
 
         ArrayList<MenuDomain> menuList = new ArrayList<>();
-        menuList.add(new MenuDomain("Pizza", "pizza"));
-        menuList.add(new MenuDomain("Burger", "burger"));
-        menuList.add(new MenuDomain("Hotdog", "hot_dog"));
-        menuList.add(new MenuDomain("Drink", "nuoc_ep_xoai_dao"));
-        menuList.add(new MenuDomain("Donut", "donut"));
-        menuList.add(new MenuDomain("BBQ", "bbq"));
+        menuList.add(new MenuDomain("Pepperoni pizza", "pop_1", 100.99));
+        menuList.add(new MenuDomain("Cheese Burger", "pop_2", 29.99));
+        menuList.add(new MenuDomain("Hotdog", "hot_dog", 25.00));
+        menuList.add(new MenuDomain("Drink", "nuoc_ep_xoai_dao", 20.00));
+        menuList.add(new MenuDomain("Donut", "donut0", 40.00));
+        menuList.add(new MenuDomain("BBQ", "bbq", 150.00));
 
         originalMenuList = new ArrayList<>(menuList);
 
@@ -132,9 +149,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void recyclerViewRes() {
-        GridLayoutManager griLayoutManager = new GridLayoutManager(this, 2);
+        LinearLayoutManager layoutManagerRes = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewRes = findViewById(R.id.rvRestaurant);
-        recyclerViewRes.setLayoutManager(griLayoutManager);
+        recyclerViewRes.setLayoutManager(layoutManagerRes);
 
         ArrayList<RestaurantDomain> restaurantList = new ArrayList<>();
         restaurantList.add(new RestaurantDomain("Fast Food", "res3"));

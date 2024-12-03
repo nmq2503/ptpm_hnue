@@ -42,6 +42,10 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+
     implementation(libs.picasso)  // Sử dụng Picasso từ libs
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

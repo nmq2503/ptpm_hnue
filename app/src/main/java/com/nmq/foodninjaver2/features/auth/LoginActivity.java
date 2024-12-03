@@ -7,28 +7,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.admin.views.AdminActivity;
 import com.nmq.foodninjaver2.core.SessionManager;
-import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
-import com.nmq.foodninjaver2.features.Home.CartActivity;
 import com.nmq.foodninjaver2.features.Home.HomeActivity;
-import com.nmq.foodninjaver2.features.cart.FoodCartActivity;
-import com.nmq.foodninjaver2.features.splash.FirstSplashActivity;
-import com.nmq.foodninjaver2.features.splash.SecondSplashActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -102,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 // Chuyển đến MainActivity nếu không phải admin
                 if (sessionManager.isLoggedIn()) {
-                    startActivity(new Intent(LoginActivity.this, FoodCartActivity.class));
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }
             }
         } else {

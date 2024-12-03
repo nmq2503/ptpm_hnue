@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".admin.views.AdminDetailManagerUsersActivity">
+    tools:context=".admin.views.manager_users.AdminDetailManagerUsersActivity">
 
     <LinearLayout
         android:background="@drawable/img_background_app"
@@ -48,7 +48,7 @@
             android:layout_marginTop="20dp"
             android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:background="@drawable/img_background_search"
+            android:background="@drawable/custom_bg_manager_search"
             android:iconTint="#DA6317"
             android:textSize="12sp"
             app:iconifiedByDefault="false"
@@ -109,10 +109,12 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
             android:id="@+id/recyclerViewManagerUsers"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="80dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="0dp"/>
 
     </LinearLayout>
 

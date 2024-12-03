@@ -5,5 +5,12 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.FoodNinjaVer2" parent="Base.Theme.FoodNinjaVer2" />
+    <style name="Theme.FoodNinjaVer2" parent="Base.Theme.FoodNinjaVer2">
+        <item name="radioButtonStyle">@style/CustomRadioButton</item>
+    </style>
+
+    <style name="CustomRadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:button">@drawable/custom_rad_btn_manager</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
