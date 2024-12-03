@@ -21,7 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     TextInputEditText edtUsername, edtEmail, edtPassword;
     AppCompatButton btnRegistration;
-    DataBaseHelper dataBaseHelper;
+    AuthRepository authRepository;
     TextView tvLogin;
 
     @Override
@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegistration = findViewById(R.id.btnRegistration);
         tvLogin = findViewById(R.id.tvLogin);
 
-        dataBaseHelper = new DataBaseHelper(this);
+        authRepository = new AuthRepository(this);
 
         btnRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,10 +61,10 @@ public class RegisterActivity extends AppCompatActivity {
         if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
         } else {
-            if (!dataBaseHelper.checkEmail(email)) {
+            if (!authRepository.checkEmail(email)) {
                 if (validPassword(password)) {
                     // Add user to database
-                    if (dataBaseHelper.insertUser(username, email, password)) {
+                    if (authRepository.insertUser(username, email, password)) {
                         Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
                         // Chuyển sang màn hình đăng nhập
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));

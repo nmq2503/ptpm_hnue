@@ -9,6 +9,9 @@
     <color name="hint">#4D3B3B3B</color>
 
     <color name="startColor">#53E88B</color> <!-- Màu bắt đầu của gradient -->
+
+    <color name="colorPrimary">#EA008577</color>
+    <color name="color_selected_bottom_nav">#F64D41</color><!-- Màu kết thúc của gradient -->
     <color name="endColor">#15BE77</color><!-- Màu kết thúc của gradient -->
 
     <!-- Màu cho nút Cancel -->

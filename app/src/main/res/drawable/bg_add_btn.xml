@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Đổ bóng -->
+<!--    <item android:right="2dp" android:left="2dp" android:top="2dp" android:bottom="2dp">-->
+<!--        <shape>-->
+<!--            <solid android:color="#80000000"/> &lt;!&ndash; Màu bóng &ndash;&gt;-->
+<!--            <corners android:radius="16dp"/> &lt;!&ndash; Bo góc cho bóng &ndash;&gt;-->
+<!--        </shape>-->
+<!--    </item>-->
+
+    <!-- Nền gradient -->
+    <item>
+        <shape>
+            <gradient
+                android:startColor="#53E88B"
+                android:endColor="#15BE77"
+                android:angle="315"/>
+            <corners android:radius="8dp"/> <!-- Bo góc cho nền -->
+        </shape>
+    </item>
+</layer-list>

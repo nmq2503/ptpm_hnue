@@ -37,7 +37,7 @@ public class EditProfileActivity extends AppCompatActivity {
             String newEmail = editEmail.getText().toString();
 
             if (!newUsername.isEmpty() && !newEmail.isEmpty()) {
-                updateUserInfo(email, newUsername, newEmail);
+                // updateUserInfo(email, newUsername, newEmail);
             } else {
                 Toast.makeText(this, "Vui lòng không để trống!", Toast.LENGTH_SHORT).show();
             }
@@ -48,29 +48,29 @@ public class EditProfileActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(v -> finish());
     }
 
-     // Hàm cập nhật thông tin
-    private void updateUserInfo(String oldEmail, String newUsername, String newEmail) {
-        DataBaseHelper dbHelper = new DataBaseHelper(this);
-        ContentValues values = new ContentValues();
-        values.put(DataBaseHelper.COLUMN_USERNAME, newUsername);
-        values.put(DataBaseHelper.COLUMN_EMAIL, newEmail);
-
-        int rowsUpdated = dbHelper.getWritableDatabase().update(
-                DataBaseHelper.TABLE_USERS,
-                values,
-                DataBaseHelper.COLUMN_EMAIL + " = ?",
-                new String[]{oldEmail}
-        );
-
-        if (rowsUpdated > 0) {
-            Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
-            finish();
-        } else {
-            Toast.makeText(this, "Cập nhật thất bại!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private
+//     // Hàm cập nhật thông tin
+//    private void updateUserInfo(String oldEmail, String newUsername, String newEmail) {
+//        DataBaseHelper dbHelper = new DataBaseHelper(this);
+//        ContentValues values = new ContentValues();
+//        values.put(DataBaseHelper.COLUMN_USERNAME, newUsername);
+//        values.put(DataBaseHelper.COLUMN_EMAIL, newEmail);
+//
+//        int rowsUpdated = dbHelper.getWritableDatabase().update(
+//                DataBaseHelper.TABLE_USERS,
+//                values,
+//                DataBaseHelper.COLUMN_EMAIL + " = ?",
+//                new String[]{oldEmail}
+//        );
+//
+//        if (rowsUpdated > 0) {
+//            Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+//            finish();
+//        } else {
+//            Toast.makeText(this, "Cập nhật thất bại!", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//
+//    private
 
     boolean isValidEmail(String email) {
         // Kiểm tra định dạng email (có thể sử dụng regex cho email hợp lệ)
