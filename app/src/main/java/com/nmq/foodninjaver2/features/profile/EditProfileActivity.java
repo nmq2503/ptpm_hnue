@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.features.auth;
+package com.nmq.foodninjaver2.features.profile;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -48,7 +48,7 @@ public class EditProfileActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(v -> finish());
     }
 
-    // Hàm cập nhật thông tin
+     // Hàm cập nhật thông tin
     private void updateUserInfo(String oldEmail, String newUsername, String newEmail) {
         DataBaseHelper dbHelper = new DataBaseHelper(this);
         ContentValues values = new ContentValues();

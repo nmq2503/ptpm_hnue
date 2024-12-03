@@ -1,6 +1,5 @@
-package com.nmq.foodninjaver2.features.auth;
+package com.nmq.foodninjaver2.features.profile;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -13,7 +12,6 @@ class ProductDetailActivity extends AppCompatActivity {
     private TextView productNameTextView, productPriceTextView, productDescriptionTextView;
     private ImageView productImageView;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

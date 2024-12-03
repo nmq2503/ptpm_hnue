@@ -1,8 +1,7 @@
-package com.nmq.foodninjaver2.features.auth;
+package com.nmq.foodninjaver2.features.profile;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -24,7 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
 
         // Setup Edge-to-Edge insets for the layout
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -36,25 +34,27 @@ public class ProfileActivity extends AppCompatActivity {
         // Xử lý sự kiện cho biểu tượng Edit
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView editIcon = findViewById(R.id.edit_icon);
         editIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+            startActivity(intent);
             // Lấy thông tin người dùng từ database
-            String currentEmail = "example@gmail.com"; // Giả sử bạn đang lưu email đăng nhập hiện tại
-            DataBaseHelper dbHelper = new DataBaseHelper(this);
-            Cursor cursor = dbHelper.getUserData(currentEmail);
+//            String currentEmail = "example@gmail.com"; // Giả sử bạn đang lưu email đăng nhập hiện tại
+//            DataBaseHelper dbHelper = new DataBaseHelper(this);
+//            Cursor cursor = dbHelper.getUserData(currentEmail);
 
-            if (cursor != null && cursor.moveToFirst()) {
-                @SuppressLint("Range") String username = cursor.getString(cursor.getColumnIndex(DataBaseHelper.COLUMN_USERNAME));
-                @SuppressLint("Range") String email = cursor.getString(cursor.getColumnIndex(DataBaseHelper.COLUMN_EMAIL));
-
-                // Chuyển sang EditProfileActivity và truyền dữ liệu
-                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                intent.putExtra("username", username);
-                intent.putExtra("email", email);
-                startActivity(intent);
-
-                cursor.close(); // Đóng cursor sau khi sử dụng
-            } else {
-                Toast.makeText(ProfileActivity.this, "Không tìm thấy thông tin người dùng!", Toast.LENGTH_SHORT).show();
-            }
+//            if (cursor != null && cursor.moveToFirst()) {
+////                @SuppressLint("Range") String username = cursor.getString(cursor.getColumnIndex(DataBaseHelper.COLUMN_USERNAME));
+////                @SuppressLint("Range") String email = cursor.getString(cursor.getColumnIndex(DataBaseHelper.COLUMN_EMAIL));
+//
+//                // Chuyển sang EditProfileActivity và truyền dữ liệu
+//                // Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+////                intent.putExtra("username", username);
+////                intent.putExtra("email", email);
+//                // startActivity(intent);
+//
+//                cursor.close(); // Đóng cursor sau khi sử dụng
+//            } else {
+//                Toast.makeText(this, "Không tìm thấy thông tin người dùng!", Toast.LENGTH_SHORT).show();
+//            }
         });
 
         // Lặp qua các nút "Buy Again" để gắn sự kiện
@@ -64,7 +64,7 @@ public class ProfileActivity extends AppCompatActivity {
         Button buyAgainButton4 = findViewById(R.id.buy_again_button4);
 
         View.OnClickListener buyAgainListener = v -> {
-            Toast.makeText(ProfileActivity.this, "Buy Again Clicked!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Buy Again Clicked!", Toast.LENGTH_SHORT).show();
             // Thêm logic đặt hàng lại ở đây
         };
 

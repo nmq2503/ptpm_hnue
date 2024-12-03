@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.features.auth;
+package com.nmq.foodninjaver2.features.profile;
 
 import android.content.Context;
 import android.content.Intent;

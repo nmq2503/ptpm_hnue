@@ -6,14 +6,11 @@ import android.widget.Button;
 import android.app.AlertDialog;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.nmq.foodninjaver2.features.auth.Product;
-import com.nmq.foodninjaver2.features.auth.ProductAdapter;
+import com.nmq.foodninjaver2.features.profile.Product;
+import com.nmq.foodninjaver2.features.profile.ProductAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         // Thiết lập padding cho hệ thống
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
 
         Button buyAgainButton1 = findViewById(R.id.buy_again_button1);
         Button buyAgainButton2 = findViewById(R.id.buy_again_button2);

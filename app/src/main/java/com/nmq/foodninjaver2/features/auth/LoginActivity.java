@@ -7,23 +7,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
-import com.nmq.foodninjaver2.features.splash.FirstSplashActivity;
-import com.nmq.foodninjaver2.features.splash.SecondSplashActivity;
+import com.nmq.foodninjaver2.features.profile.ProfileActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -87,10 +82,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Login successful! Welcome " + email, Toast.LENGTH_SHORT).show();
 
             if (isFirstLaunch) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                preferences.edit().putBoolean(MainActivity.KEY_FIRST_LAUNCH, false).apply();
+                startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+                // preferences.edit().putBoolean(MainActivity.KEY_FIRST_LAUNCH, false).apply();
             } else {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
             }
         } else {
             Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
