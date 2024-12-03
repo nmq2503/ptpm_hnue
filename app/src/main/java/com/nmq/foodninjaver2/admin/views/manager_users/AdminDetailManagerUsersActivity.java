@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.admin.views;
+package com.nmq.foodninjaver2.admin.views.manager_users;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.admin.adapters.ManagerUsersAdapter;
+import com.nmq.foodninjaver2.admin.views.AdminActivity;
+import com.nmq.foodninjaver2.admin.repository.AdminRepository;
 import com.nmq.foodninjaver2.core.modelBase.UserModel;
 
 import java.io.File;
@@ -141,67 +142,12 @@ public class AdminDetailManagerUsersActivity extends AppCompatActivity {
             intent.putExtra("address", selectedUser.getAddress());
             intent.putExtra("date_of_birth", selectedUser.getDateOfBirth());
             intent.putExtra("url_image_profile", selectedUser.getUrlImageProfile());
+            intent.putExtra("role_id", selectedUser.getRoleId());
 
             // Bắt đầu Activity AdminEditUserActivity
             startActivity(intent);
         }
     }
-
-//    private void confirmDeleteUser(UserModel selectedUser) {
-//        new AlertDialog.Builder(AdminDetailManagerUsersActivity.this)
-//                .setTitle("Xác nhận xóa")
-//                .setMessage("Bạn có chắc chắn muốn xóa người dùng này không?")
-//                .setPositiveButton("Xóa", (dialog, which) -> {
-//                    // Xóa dữ liệu khỏi database
-//                    Log.d("DeleteUser", "Id user: " + selectedUser.getUserId());
-//                    boolean isDelete = adminRepository.deleteUserById(selectedUser.getUserId());
-//
-//                    if (isDelete) {
-//                        // Lấy đường dẫn tệp ảnh từ URL
-//                        String imagePath = selectedUser.getUrlImageProfile();
-//
-//                        // Kiểm tra xem đường dẫn ảnh có hợp lệ và không phải null
-//                        if (imagePath != null && !imagePath.isEmpty()) {
-//                            File imageFile = new File(imagePath);
-//
-//                            // Kiểm tra xem tệp ảnh có tồn tại không
-//                            if (imageFile.exists()) {
-//                                boolean isDeleted = imageFile.delete();
-//
-//                                // Xóa ảnh nếu tồn tại
-//                                if (isDeleted) {
-//                                    Log.d("DeleteUser", "Ảnh đã được xóa thành công.");
-//                                } else {
-//                                    Log.d("DeleteUser", "Không thể xóa ảnh.");
-//                                }
-//                            } else {
-//                                // Nếu ảnh không tồn tại, bỏ qua
-//                                Log.d("DeleteUser", "Ảnh không tồn tại: " + imagePath);
-//                            }
-//                        } else {
-//                            // Đường dẫn ảnh không hợp lệ (null hoặc trống)
-//                            Log.d("DeleteUser", "Đường dẫn ảnh không hợp lệ.");
-//                        }
-//
-//                        // Cập nhật danh sách và RecyclerView
-////                        userList.remove(selectedUser);
-////                        adapter.updateData(userList);
-//
-//                        updateUsers();
-//
-//                        Toast.makeText(AdminDetailManagerUsersActivity.this, "Đã xóa người dùng", Toast.LENGTH_SHORT).show();
-//                        adapter.clearSelection();
-//                    } else {
-//                        Toast.makeText(AdminDetailManagerUsersActivity.this, "Xóa người dùng thất bại", Toast.LENGTH_SHORT).show();
-//                        adapter.clearSelection();
-//                    }
-//                })
-//                .setNegativeButton("Hủy", (dialog, which) -> {
-//                    // Đặt lại trạng thái chọn
-//                    adapter.clearSelection();
-//                })
-//                .show();
-//    }
 
     private void confirmDeleteUser(UserModel selectedUser) {
         final Dialog dialog = new Dialog(this);

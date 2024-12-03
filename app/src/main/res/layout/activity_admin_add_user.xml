@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".admin.views.AdminAddUserActivity">
+    tools:context=".admin.views.manager_users.AdminAddUserActivity">
 
     <LinearLayout
         android:background="@drawable/img_background_app"
@@ -165,6 +165,67 @@
                         android:background="@drawable/custom_bg_edt_manager_add_user"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="30dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="* "
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:textColor="#C52023"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:text="Chọn vai trò"
+                            android:textStyle="bold"
+                            android:textSize="14sp"
+                            android:textColor="@color/black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupRole"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:layout_weight="1"
+                            android:id="@+id/radioUser"
+                            android:text="Người dùng"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:button="@drawable/custom_rad_btn_manager"
+                            android:paddingStart="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <RadioButton
+                            android:layout_weight="1"
+                            android:id="@+id/radioManager"
+                            android:text="Chủ cửa hàng"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:button="@drawable/custom_rad_btn_manager"
+                            android:paddingStart="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </RadioGroup>
+
                 </LinearLayout>
 
                 <LinearLayout
