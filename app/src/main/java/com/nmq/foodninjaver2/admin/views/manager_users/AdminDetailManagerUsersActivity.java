@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.admin.views;
+package com.nmq.foodninjaver2.admin.views.manager_users;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.admin.adapters.ManagerUsersAdapter;
+import com.nmq.foodninjaver2.admin.views.AdminActivity;
+import com.nmq.foodninjaver2.admin.repository.AdminRepository;
 import com.nmq.foodninjaver2.core.modelBase.UserModel;
 
 import java.io.File;
@@ -53,24 +54,24 @@ public class AdminDetailManagerUsersActivity extends AppCompatActivity {
         recyclerViewManagerUsers = findViewById(R.id.recyclerViewManagerUsers);
         searchView = findViewById(R.id.searchView);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false; // Không xử lý khi submit
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty()) {
-                    // Hiển thị lại danh sách đầy đủ
-                    updateUsers();
-                } else {
-                    // Lọc danh sách
-                    adapter.filter(newText);
-                }
-                return true;
-            }
-        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false; // Không xử lý khi submit
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                if (newText.isEmpty()) {
+//                    // Hiển thị lại danh sách đầy đủ
+//                    updateUsers();
+//                } else {
+//                    // Lọc danh sách
+//                    adapter.filter(newText);
+//                }
+//                return true;
+//            }
+//        });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +142,7 @@ public class AdminDetailManagerUsersActivity extends AppCompatActivity {
             intent.putExtra("address", selectedUser.getAddress());
             intent.putExtra("date_of_birth", selectedUser.getDateOfBirth());
             intent.putExtra("url_image_profile", selectedUser.getUrlImageProfile());
+            intent.putExtra("role_id", selectedUser.getRoleId());
 
             // Bắt đầu Activity AdminEditUserActivity
             startActivity(intent);

@@ -1,12 +1,10 @@
 package com.nmq.foodninjaver2.admin.views;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -14,21 +12,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
+import com.nmq.foodninjaver2.admin.repository.AdminRepository;
+import com.nmq.foodninjaver2.admin.views.manager_users.AdminDetailManagerUsersActivity;
 import com.nmq.foodninjaver2.features.auth.LoginActivity;
-
-import java.io.File;
 
 public class AdminActivity extends AppCompatActivity {
 

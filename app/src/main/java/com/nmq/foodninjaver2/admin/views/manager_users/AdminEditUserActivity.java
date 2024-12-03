@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.admin.views;
+package com.nmq.foodninjaver2.admin.views.manager_users;
 
 import android.Manifest;
 import android.content.Intent;
@@ -8,10 +8,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,14 +22,13 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.exifinterface.media.ExifInterface;
 
 import com.bumptech.glide.Glide;
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.admin.repository.AdminRepository;
 import com.nmq.foodninjaver2.repositories.MainRepository;
+import com.nmq.foodninjaver2.utils.ValidateFunction;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -46,7 +48,11 @@ public class AdminEditUserActivity extends AppCompatActivity {
     EditText edtNameUser;
     EditText edtEmailUser;
     EditText edtPasswordUser;
+    RadioGroup radioGroupRole;
+    RadioButton radioUser;
+    RadioButton radioManager;
 
+    int selectedRole = 0;
     String urlImageProfile = null;
 
     @Override
@@ -62,6 +68,9 @@ public class AdminEditUserActivity extends AppCompatActivity {
         ivRemovePicture = findViewById(R.id.ivRemovePicture);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
+        radioGroupRole = findViewById(R.id.radioGroupRole);
+        radioUser = findViewById(R.id.radioUser);
+        radioManager = findViewById(R.id.radioManager);
 
         // Nhận dữ liệu từ Intent
         Intent intent = getIntent();
@@ -75,11 +84,21 @@ public class AdminEditUserActivity extends AppCompatActivity {
         String address = intent.getStringExtra("address");
         String dateOfBirth = intent.getStringExtra("date_of_birth");
         urlImageProfile = intent.getStringExtra("url_image_profile");
+        selectedRole = intent.getIntExtra("role_id", 0);
 
         // Thiết lập dữ liệu vào các thành phần giao diện
         edtNameUser.setText(userName);
         edtEmailUser.setText(oldEmail);
         edtPasswordUser.setText(password);
+
+        // Gán giá trị vào RadioButton dựa trên roleId
+        if (selectedRole != 0) {
+            if (selectedRole == 2) {
+                radioManager.setChecked(true);
+            } else {
+                radioUser.setChecked(true);
+            }
+        }
 
         // Hiển thị ảnh hồ sơ nếu có
         if (urlImageProfile != null && !urlImageProfile.isEmpty()) {
@@ -92,6 +111,19 @@ public class AdminEditUserActivity extends AppCompatActivity {
                     .error(R.drawable.icon_undefine_user)
                     .into(ivAddPicture);
         }
+
+        // Đặt lắng nghe sự kiện thay đổi trạng thái của RadioGroup
+        radioGroupRole.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Kiểm tra ID của RadioButton được chọn
+                if (checkedId == R.id.radioManager) {
+                    selectedRole = 2; // Nếu chọn "Chủ cửa hàng", roleId = 2
+                } else {
+                    selectedRole = 3; // Ngược lại, roleId = 1
+                }
+            }
+        });
 
         ivAddPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +155,7 @@ public class AdminEditUserActivity extends AppCompatActivity {
         String name = edtNameUser.getText().toString();
         String email = edtEmailUser.getText().toString();
         String password = edtPasswordUser.getText().toString();
+        int roleId = selectedRole;
 
         // Kiểm tra email có tồn tại không
         if (!email.equals(oldEmail) && adminRepository.isEmailExist(email, idSelectedUser)) {
@@ -136,7 +169,7 @@ public class AdminEditUserActivity extends AppCompatActivity {
             internalImagePath = saveImageToInternalStorage(urlImageProfile);
         }
 
-        boolean isSuccess = adminRepository.updateUserInDatabase(idSelectedUser , name, email, password, internalImagePath);
+        boolean isSuccess = adminRepository.updateUserInDatabase(idSelectedUser , name, email, password, internalImagePath, roleId);
 
         if (isSuccess) {
             Toast.makeText(this, "Thông tin người dùng đã được lưu!", Toast.LENGTH_SHORT).show();
@@ -147,17 +180,67 @@ public class AdminEditUserActivity extends AppCompatActivity {
     }
 
     private boolean validateInput() {
-        if (edtNameUser.getText().toString().isEmpty() ||
-                edtEmailUser.getText().toString().isEmpty() ||
-                edtPasswordUser.getText().toString().isEmpty()) {
-            Toast.makeText(this, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+        String name = edtNameUser.getText().toString().trim();
+        String email = edtEmailUser.getText().toString().trim();
+        String password = edtPasswordUser.getText().toString().trim();
+
+        // Kiểm tra tên người dùng
+        if (name.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập tên người dùng!", Toast.LENGTH_SHORT).show();
             return false;
         }
+
+        // Kiểm tra email
+        if (email.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập email!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!ValidateFunction.validateEmail(email)) {
+            Toast.makeText(this, "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // Kiểm tra mật khẩu
+        if (password.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập mật khẩu!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!ValidateFunction.validatePassword(password)) {
+            Toast.makeText(this, "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm 1 số và 1 ký tự đặc biệt!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (selectedRole == 0) {
+            Toast.makeText(this, "Vui lòng chọn vai trò!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // Nếu tất cả kiểm tra đều hợp lệ
         return true;
     }
 
     public void removePicture(View view) {
         // Xóa ảnh và ẩn dấu "x"
+        String imagePath = urlImageProfile;
+
+        // Kiểm tra xem đường dẫn ảnh có hợp lệ và không phải null
+        if (imagePath != null && !imagePath.isEmpty()) {
+            File imageFile = new File(imagePath);
+
+            // Kiểm tra xem tệp ảnh có tồn tại không
+            if (imageFile.exists()) {
+                boolean isDeleted = imageFile.delete();
+
+                // Xóa ảnh nếu tồn tại
+                if (isDeleted) {
+                    Log.d("DeleteUser", "Ảnh đã được xóa thành công.");
+                } else {
+                    Log.d("DeleteUser", "Không thể xóa ảnh.");
+                }
+            } else {
+                // Nếu ảnh không tồn tại, bỏ qua
+                Log.d("DeleteUser", "Ảnh không tồn tại: " + imagePath);
+            }
+        }
+
         ivAddPicture.setImageResource(R.drawable.img_manager_add_picture); // Đặt lại ảnh mặc định
         ivRemovePicture.setVisibility(View.GONE); // Ẩn dấu "x"
         urlImageProfile = null;

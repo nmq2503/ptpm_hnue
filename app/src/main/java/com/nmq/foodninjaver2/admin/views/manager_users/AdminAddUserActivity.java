@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.admin.views;
+package com.nmq.foodninjaver2.admin.views.manager_users;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -7,11 +7,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +25,7 @@ import androidx.exifinterface.media.ExifInterface;
 
 import android.Manifest;
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.admin.repository.AdminRepository;
 import com.nmq.foodninjaver2.repositories.MainRepository;
 import com.nmq.foodninjaver2.utils.ValidateFunction;
 
@@ -45,6 +47,11 @@ public class AdminAddUserActivity extends AppCompatActivity {
     EditText edtEmailUser;
     EditText edtPasswordUser;
 
+    RadioGroup radioGroupRole;
+    RadioButton radioUser;
+    RadioButton radioManager;
+
+    int selectedRole = 0;
     String selectedImagePath = null;
 
     // Định nghĩa ActivityResultCallback cho việc chọn ảnh
@@ -87,6 +94,22 @@ public class AdminAddUserActivity extends AppCompatActivity {
         edtNameUser = findViewById(R.id.edtNameUser);
         edtEmailUser = findViewById(R.id.edtEmailUser);
         edtPasswordUser = findViewById(R.id.edtPasswordUser);
+        radioGroupRole = findViewById(R.id.radioGroupRole);
+        radioUser = findViewById(R.id.radioUser);
+        radioManager = findViewById(R.id.radioManager);
+
+        // Đặt lắng nghe sự kiện thay đổi trạng thái của RadioGroup
+        radioGroupRole.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Kiểm tra ID của RadioButton được chọn
+                if (checkedId == R.id.radioManager) {
+                    selectedRole = 2; // Nếu chọn "Chủ cửa hàng", roleId = 2
+                } else {
+                    selectedRole = 3; // Ngược lại, roleId = 1
+                }
+            }
+        });
 
         ivAddPicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +141,7 @@ public class AdminAddUserActivity extends AppCompatActivity {
         String name = edtNameUser.getText().toString();
         String email = edtEmailUser.getText().toString();
         String password = edtPasswordUser.getText().toString();
+        int roleId = selectedRole;
 
         // Kiểm tra email có tồn tại không
         if (adminRepository.isEmailExist(email)) {
@@ -131,7 +155,7 @@ public class AdminAddUserActivity extends AppCompatActivity {
            internalImagePath = saveImageToInternalStorage(selectedImagePath);
         }
 
-        boolean isSuccess = adminRepository.saveUserToDatabase(name, email, password, internalImagePath);
+        boolean isSuccess = adminRepository.saveUserToDatabase(name, email, password, internalImagePath, roleId);
 
         if (isSuccess) {
             Toast.makeText(this, "Người dùng đã được lưu!", Toast.LENGTH_SHORT).show();
@@ -201,6 +225,11 @@ public class AdminAddUserActivity extends AppCompatActivity {
             return false;
         } else if (!ValidateFunction.validatePassword(password)) {
             Toast.makeText(this, "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm 1 số và 1 ký tự đặc biệt!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (selectedRole == 0) {
+            Toast.makeText(this, "Vui lòng chọn vai trò!", Toast.LENGTH_SHORT).show();
             return false;
         }
 
