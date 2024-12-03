@@ -1,15 +1,20 @@
-package com.nmq.foodninjaver2.admin.views;
+package com.nmq.foodninjaver2.admin.views.manager_users;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.admin.adapters.ManagerUsersAdapter;
+import com.nmq.foodninjaver2.admin.views.AdminActivity;
+import com.nmq.foodninjaver2.admin.repository.AdminRepository;
 import com.nmq.foodninjaver2.core.modelBase.UserModel;
 
 import java.io.File;
@@ -47,24 +54,24 @@ public class AdminDetailManagerUsersActivity extends AppCompatActivity {
         recyclerViewManagerUsers = findViewById(R.id.recyclerViewManagerUsers);
         searchView = findViewById(R.id.searchView);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false; // Không xử lý khi submit
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (newText.isEmpty()) {
-                    // Hiển thị lại danh sách đầy đủ
-                    updateUsers();
-                } else {
-                    // Lọc danh sách
-                    adapter.filter(newText);
-                }
-                return true;
-            }
-        });
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false; // Không xử lý khi submit
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                if (newText.isEmpty()) {
+//                    // Hiển thị lại danh sách đầy đủ
+//                    updateUsers();
+//                } else {
+//                    // Lọc danh sách
+//                    adapter.filter(newText);
+//                }
+//                return true;
+//            }
+//        });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +142,7 @@ public class AdminDetailManagerUsersActivity extends AppCompatActivity {
             intent.putExtra("address", selectedUser.getAddress());
             intent.putExtra("date_of_birth", selectedUser.getDateOfBirth());
             intent.putExtra("url_image_profile", selectedUser.getUrlImageProfile());
+            intent.putExtra("role_id", selectedUser.getRoleId());
 
             // Bắt đầu Activity AdminEditUserActivity
             startActivity(intent);
@@ -142,59 +150,83 @@ public class AdminDetailManagerUsersActivity extends AppCompatActivity {
     }
 
     private void confirmDeleteUser(UserModel selectedUser) {
-        new AlertDialog.Builder(AdminDetailManagerUsersActivity.this)
-                .setTitle("Xác nhận xóa")
-                .setMessage("Bạn có chắc chắn muốn xóa người dùng này không?")
-                .setPositiveButton("Xóa", (dialog, which) -> {
-                    // Xóa dữ liệu khỏi database
-                    Log.d("DeleteUser", "Id user: " + selectedUser.getUserId());
-                    boolean isDelete = adminRepository.deleteUserById(selectedUser.getUserId());
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_alert_dialog);
 
-                    if (isDelete) {
-                        // Lấy đường dẫn tệp ảnh từ URL
-                        String imagePath = selectedUser.getUrlImageProfile();
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
 
-                        // Kiểm tra xem đường dẫn ảnh có hợp lệ và không phải null
-                        if (imagePath != null && !imagePath.isEmpty()) {
-                            File imageFile = new File(imagePath);
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                            // Kiểm tra xem tệp ảnh có tồn tại không
-                            if (imageFile.exists()) {
-                                boolean isDeleted = imageFile.delete();
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
 
-                                // Xóa ảnh nếu tồn tại
-                                if (isDeleted) {
-                                    Log.d("DeleteUser", "Ảnh đã được xóa thành công.");
-                                } else {
-                                    Log.d("DeleteUser", "Không thể xóa ảnh.");
-                                }
+        dialog.setCancelable(false);
+
+        Button btnDelete = dialog.findViewById(R.id.btnDelete);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                adapter.clearSelection();
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isDelete = adminRepository.deleteUserById(selectedUser.getUserId());
+                if (isDelete) {
+                    // Lấy đường dẫn tệp ảnh từ URL
+                    String imagePath = selectedUser.getUrlImageProfile();
+
+                    // Kiểm tra xem đường dẫn ảnh có hợp lệ và không phải null
+                    if (imagePath != null && !imagePath.isEmpty()) {
+                        File imageFile = new File(imagePath);
+
+                        // Kiểm tra xem tệp ảnh có tồn tại không
+                        if (imageFile.exists()) {
+                            boolean isDeleted = imageFile.delete();
+
+                            // Xóa ảnh nếu tồn tại
+                            if (isDeleted) {
+                                Log.d("DeleteUser", "Ảnh đã được xóa thành công.");
                             } else {
-                                // Nếu ảnh không tồn tại, bỏ qua
-                                Log.d("DeleteUser", "Ảnh không tồn tại: " + imagePath);
+                                Log.d("DeleteUser", "Không thể xóa ảnh.");
                             }
                         } else {
-                            // Đường dẫn ảnh không hợp lệ (null hoặc trống)
-                            Log.d("DeleteUser", "Đường dẫn ảnh không hợp lệ.");
+                            // Nếu ảnh không tồn tại, bỏ qua
+                            Log.d("DeleteUser", "Ảnh không tồn tại: " + imagePath);
                         }
+                    } else {
+                        // Đường dẫn ảnh không hợp lệ (null hoặc trống)
+                        Log.d("DeleteUser", "Đường dẫn ảnh không hợp lệ.");
+                    }
 
-                        // Cập nhật danh sách và RecyclerView
+                    // Cập nhật danh sách và RecyclerView
 //                        userList.remove(selectedUser);
 //                        adapter.updateData(userList);
 
-                        updateUsers();
+                    updateUsers();
 
-                        Toast.makeText(AdminDetailManagerUsersActivity.this, "Đã xóa người dùng", Toast.LENGTH_SHORT).show();
-                        adapter.clearSelection();
-                    } else {
-                        Toast.makeText(AdminDetailManagerUsersActivity.this, "Xóa người dùng thất bại", Toast.LENGTH_SHORT).show();
-                        adapter.clearSelection();
-                    }
-                })
-                .setNegativeButton("Hủy", (dialog, which) -> {
-                    // Đặt lại trạng thái chọn
+                    Toast.makeText(AdminDetailManagerUsersActivity.this, "Đã xóa người dùng", Toast.LENGTH_SHORT).show();
                     adapter.clearSelection();
-                })
-                .show();
+                    dialog.dismiss();
+                } else {
+                    Toast.makeText(AdminDetailManagerUsersActivity.this, "Xóa người dùng thất bại", Toast.LENGTH_SHORT).show();
+                    adapter.clearSelection();
+                }
+            }
+        });
+
+        dialog.show();
     }
 
     public void updateUsers() {

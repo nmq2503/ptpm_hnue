@@ -1,8 +1,7 @@
-package com.nmq.foodninjaver2.admin.views;
+package com.nmq.foodninjaver2.admin.repository;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -130,16 +129,17 @@ public class AdminRepository {
         return false;
     }
 
-    public boolean saveUserToDatabase(String userName, String email, String password, String selectedImagePath) {
+    public boolean saveUserToDatabase(String userName, String email, String password, String selectedImagePath, int roleId) {
         // Chuẩn bị câu lệnh SQL INSERT
-        String sql = "INSERT INTO USER (user_name, email, password, url_image_profile, role_id) VALUES (?, ?, ?, ?, 3)";
+        String sql = "INSERT INTO USER (user_name, email, password, url_image_profile, role_id) VALUES (?, ?, ?, ?, ?)";
 
         // Lấy giá trị từ tham số phương thức
         Object[] bindArgs = new Object[] {
                 userName,
                 email,
                 password,
-                selectedImagePath // Lưu đường dẫn ảnh vào cơ sở dữ liệu
+                selectedImagePath, // Lưu đường dẫn ảnh vào cơ sở dữ liệu
+                roleId,
         };
 
         try {
@@ -153,9 +153,9 @@ public class AdminRepository {
         }
     }
 
-    public boolean updateUserInDatabase(int userId, String userName, String email, String password, String selectedImagePath) {
+    public boolean updateUserInDatabase(int userId, String userName, String email, String password, String selectedImagePath, int roleId) {
         // Chuẩn bị câu lệnh SQL UPDATE
-        String sql = "UPDATE USER SET user_name = ?, email = ?, password = ?, url_image_profile = ? WHERE user_id = ?";
+        String sql = "UPDATE USER SET user_name = ?, email = ?, password = ?, url_image_profile = ?, role_id = ? WHERE user_id = ?";
 
         // Lấy giá trị từ tham số phương thức
         Object[] bindArgs = new Object[] {
@@ -163,7 +163,8 @@ public class AdminRepository {
                 email,               // Email người dùng
                 password,            // Mật khẩu người dùng
                 selectedImagePath,   // Đường dẫn ảnh hồ sơ
-                userId               // ID người dùng cần cập nhật
+                roleId,
+                userId,              // ID người dùng cần cập nhật
         };
 
         try {
