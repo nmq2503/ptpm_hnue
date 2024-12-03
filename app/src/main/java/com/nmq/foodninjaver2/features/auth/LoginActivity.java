@@ -24,7 +24,9 @@ import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.admin.views.AdminActivity;
 import com.nmq.foodninjaver2.core.SessionManager;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
+import com.nmq.foodninjaver2.features.Home.CartActivity;
 import com.nmq.foodninjaver2.features.Home.HomeActivity;
+import com.nmq.foodninjaver2.features.cart.FoodCartActivity;
 import com.nmq.foodninjaver2.features.splash.FirstSplashActivity;
 import com.nmq.foodninjaver2.features.splash.SecondSplashActivity;
 
@@ -100,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 // Chuyển đến MainActivity nếu không phải admin
                 if (sessionManager.isLoggedIn()) {
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    startActivity(new Intent(LoginActivity.this, FoodCartActivity.class));
                 }
             }
         } else {

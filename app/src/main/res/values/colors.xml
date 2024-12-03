@@ -10,7 +10,11 @@
 
     <color name="startColor">#53E88B</color> <!-- Màu bắt đầu của gradient -->
     <color name="endColor">#15BE77</color>
+    <color name="colorPrimary">#004d40</color>
+    <color name="colorPrimaryDark">#00251a</color>
+    <color name="colorAccent">#39796b</color>
+    <color name="placeholder_color">#CCCCCC</color>  <!-- Màu xám nhạt -->
 
-    <color name="colorPrimary">#EA008577</color>
+
     <color name="color_selected_bottom_nav">#F64D41</color><!-- Màu kết thúc của gradient -->
 </resources>

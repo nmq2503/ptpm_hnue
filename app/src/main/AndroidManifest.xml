@@ -30,6 +30,9 @@
             android:name=".features.Home.ProfileActivity"
             android:exported="false" />
         <activity
+            android:name=".features.cart.FoodCartActivity"
+            android:exported="false" />
+        <activity
             android:name=".features.Home.CartActivity"
             android:exported="false" />
         <activity
