@@ -1,6 +1,13 @@
 package com.nmq.foodninjaver2.dataBase;
 
 public class DataBaseSchema {
+    public static class RoleTable {
+        public static final String TABLE_NAME = "ROLE";
+        public static final String COLUMN_FAVORITE_ID = "role_id";
+        public static final String COLUMN_USER_ID = "role_name";
+        public static final String COLUMN_MENU_ITEM_ID = "description";
+    }
+
     // Lớp chứa tên bảng
     public static class UserTable {
         public static final String TABLE_NAME = "USER";

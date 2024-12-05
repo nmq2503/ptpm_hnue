@@ -1,22 +1,25 @@
 package com.nmq.foodninjaver2.admin.views;
 
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
+import com.nmq.foodninjaver2.admin.repository.AdminRepository;
+import com.nmq.foodninjaver2.admin.views.manager_users.AdminDetailManagerUsersActivity;
 import com.nmq.foodninjaver2.features.auth.LoginActivity;
 
 public class AdminActivity extends AppCompatActivity {
@@ -68,28 +71,48 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void showLogoutConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Xác nhận đăng xuất");
-        builder.setMessage("Bạn có chắc chắn muốn đăng xuất không?");
-        builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Điều hướng về màn hình LoginActivity
-                Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish(); // Kết thúc Activity hiện tại
-            }
-        });
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_alert_dialog);
 
-        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(false);
+
+        TextView tvTitle = dialog.findViewById(R.id.tvTitle);
+        Button btnDelete = dialog.findViewById(R.id.btnDelete);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+        tvTitle.setText("Bạn có chắc chắn muốn đăng xuất không?");
+        btnDelete.setText("Đồng ý");
+        btnCancel.setText("Hủy");
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Đóng dialog
+            public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
-        AlertDialog dialog = builder.create();
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         dialog.show();
     }
 }

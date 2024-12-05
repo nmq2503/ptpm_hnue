@@ -57,7 +57,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "closing_hours TEXT," +
             "url_image_restaurant TEXT," +
             "owner_id INTEGER NOT NULL," +
-            "FOREIGN KEY (owner_id) REFERENCES USER(user_id)" +
+            "FOREIGN KEY (owner_id) REFERENCES USER(user_id) ON DELETE CASCADE" +
             ");";
 
     // Câu lệnh tạo bảng MENU_ITEM
@@ -70,7 +70,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "category TEXT," +
             "available BOOLEAN DEFAULT 1," +
             "url_image_item TEXT," +
-            "FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT(restaurant_id)" +
+            "FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT(restaurant_id) ON DELETE CASCADE" +
             ");";
 
     // Câu lệnh tạo bảng ORDERS
@@ -83,8 +83,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "total_amount REAL," +
             "delivery_address TEXT," +
             "payment_method TEXT," +
-            "FOREIGN KEY (user_id) REFERENCES USER(user_id)," +
-            "FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT(restaurant_id)" +
+            "FOREIGN KEY (user_id) REFERENCES USER(user_id) ON DELETE CASCADE," +
+            "FOREIGN KEY (restaurant_id) REFERENCES RESTAURANT(restaurant_id) ON DELETE CASCADE" +
             ");";
 
     // Câu lệnh tạo bảng ORDER_ITEM
@@ -94,8 +94,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "menu_item_id INTEGER NOT NULL," +
             "quantity INTEGER NOT NULL," +
             "item_price REAL NOT NULL," +
-            "FOREIGN KEY (order_id) REFERENCES ORDERS(order_id)," +
-            "FOREIGN KEY (menu_item_id) REFERENCES MENU_ITEM(item_id)" +
+            "FOREIGN KEY (order_id) REFERENCES ORDERS(order_id) ON DELETE CASCADE," +
+            "FOREIGN KEY (menu_item_id) REFERENCES MENU_ITEM(item_id) ON DELETE CASCADE" +
             ");";
 
     // Câu lệnh tạo bảng FAVORITE
@@ -104,8 +104,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "user_id INTEGER NOT NULL," +
             "menu_item_id INTEGER NOT NULL," +
             "added_at DATETIME DEFAULT CURRENT_TIMESTAMP," +
-            "FOREIGN KEY (user_id) REFERENCES USER(user_id)," +
-            "FOREIGN KEY (menu_item_id) REFERENCES MENU_ITEM(item_id)" +
+            "FOREIGN KEY (user_id) REFERENCES USER(user_id) ON DELETE CASCADE," +
+            "FOREIGN KEY (menu_item_id) REFERENCES MENU_ITEM(item_id) ON DELETE CASCADE" +
             ");";
 
     // Constructor
@@ -123,6 +123,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_ORDERS_TABLE);
         db.execSQL(CREATE_ORDER_ITEM_TABLE);
         db.execSQL(CREATE_FAVORITE_TABLE);
+
+        db.execSQL("PRAGMA foreign_keys = ON;");
 
         // Thêm dữ liệu giả vào các bảng
         insertFakeData(db);
@@ -204,12 +206,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // Truy vấn trả về dữ liệu (SELECT)
     public Cursor executeQuery(String sql, String[] selectionArgs) {
         SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
         try {
-            return db.rawQuery(sql, selectionArgs);
+            cursor = db.rawQuery(sql, selectionArgs);
         } catch (SQLException e) {
             e.printStackTrace();
-            return null; // Lỗi
+            // Nếu có lỗi, trả về null
+            return null;
         }
+        return cursor;
     }
 
     // Lay duong dan anh
