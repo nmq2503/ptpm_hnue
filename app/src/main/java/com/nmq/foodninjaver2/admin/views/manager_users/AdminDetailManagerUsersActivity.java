@@ -54,24 +54,24 @@ public class AdminDetailManagerUsersActivity extends AppCompatActivity {
         recyclerViewManagerUsers = findViewById(R.id.recyclerViewManagerUsers);
         searchView = findViewById(R.id.searchView);
 
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false; // Không xử lý khi submit
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                if (newText.isEmpty()) {
-//                    // Hiển thị lại danh sách đầy đủ
-//                    updateUsers();
-//                } else {
-//                    // Lọc danh sách
-//                    adapter.filter(newText);
-//                }
-//                return true;
-//            }
-//        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false; // Không xử lý khi submit
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()) {
+                    // Hiển thị lại danh sách đầy đủ
+                    updateUsers();
+                } else {
+                    // Lọc danh sách
+                    adapter.filter(newText);
+                }
+                return true;
+            }
+        });
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
