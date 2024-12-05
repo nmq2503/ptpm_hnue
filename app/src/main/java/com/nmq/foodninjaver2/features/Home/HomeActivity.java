@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,11 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.core.SessionManager;
+import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 import com.nmq.foodninjaver2.features.Home.Adapter.PopularMenuAdapter;
 import com.nmq.foodninjaver2.features.Home.Adapter.RestaurantAdapter;
-import com.nmq.foodninjaver2.features.Home.DetailRestaurant.RestaurantDetailActivity;
+import com.nmq.foodninjaver2.features.Home.RestaurantDetail.RestaurantDetailActivity;
+import com.nmq.foodninjaver2.features.Home.MenuDetail.MenuDetailActivity;
 import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
 import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
+import com.nmq.foodninjaver2.features.auth.LoginActivity;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -30,13 +37,36 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<MenuDomain> menuList, originalMenuList;
     private ArrayList<RestaurantDomain> restaurantList, originalRestaurantList;
     private EditText edtTimKiem;
-    private TextView tvViewMore;
+    private TextView tvViewMore, tvViewMoreMenu;
+    private ImageView imgAvt;
 
-    //    ArrayList<MenuDomain> listSanPhamGoc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // ImgProfile
+        SessionManager sessionManager = new SessionManager(this);
+        int userId = sessionManager.getUserId();
+        if (userId == -1) {
+            // Nếu userId không tồn tại, chuyển về trang đăng nhập
+            Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            DataBaseHelper dbHelper = new DataBaseHelper(this);
+            String imgUrl = dbHelper.getUserProfile(userId);
+            imgAvt = findViewById(R.id.imgAvt);
+            if (imgUrl != null) {
+                imgAvt.setImageResource(R.drawable.icon_undefine_user);
+            } else {
+                Glide.with(this)
+                        .load(imgUrl)
+                        .placeholder(R.drawable.icon_undefine_user) // Hiển thị khi ảnh đang tải
+                        .error(R.drawable.icon_undefine_user)       // Hiển thị nếu tải ảnh thất bại
+                        .into(imgAvt);
+            }
+        }
 
         edtTimKiem = findViewById(R.id.edtTimKiem);
 
@@ -61,23 +91,15 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 //        // View More Menu
-//        tvViewMoreMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ArrayList<MenuDomain> menuList = new ArrayList<>();
-//                menuList.add(new MenuDomain("Pizza", "pizza"));
-//                menuList.add(new MenuDomain("Burger", "burger"));
-//                menuList.add(new MenuDomain("Hotdog", "hot_dog"));
-//                menuList.add(new MenuDomain("Drink", "nuoc_ep_xoai_dao"));
-//                menuList.add(new MenuDomain("Donut", "donut"));
-//                menuList.add(new MenuDomain("BBQ", "bbq"));
-//
-//                // Truyền danh sách món ăn qua Intent
-////                Intent intent = new Intent(MainActivity.this, DetailMenuActivity.class);
-////                intent.putParcelableArrayListExtra("menuList", menuList);
-////                startActivity(intent);
-//            }
-//        });
+        tvViewMoreMenu = findViewById(R.id.tvViewMoreMenu);
+        tvViewMoreMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, MenuDetailActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // View more Res
         tvViewMore = findViewById(R.id.tvViewMore);
         tvViewMore.setOnClickListener(new View.OnClickListener() {

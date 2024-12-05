@@ -34,6 +34,11 @@ public class SessionManager {
         return sharedPreferences.getString(KEY_EMAIL, null);
     }
 
+    // Lấy thông tin userId
+    public int getUserId() {
+        return 0;
+    }
+
     // Xóa trạng thái đăng nhập (đăng xuất)
     public void logout() {
         editor.clear();

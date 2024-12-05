@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.features.Home.DetailRestaurant;
+package com.nmq.foodninjaver2.features.Home.RestaurantDetail;
 
 import android.content.Intent;
 import android.os.Bundle;

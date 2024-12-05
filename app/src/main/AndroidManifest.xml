@@ -21,10 +21,12 @@
 
         </activity>
         <activity
-            android:name=".features.Home.DetailRestaurant.RestaurantListActivity"
+            android:name=".features.Home.RestaurantDetail.ItemRestaurantActivity"
             android:exported="false" />
         <activity
-            android:name=".features.Home.DetailRestaurant.ThucDonActivity"
+            android:name=".features.Home.RestaurantDetail.RestaurantDetailActivity"
+            android:exported="false" />
+        <activity android:name=".features.Home.MenuDetail.MenuDetailActivity"
             android:exported="false" />
         <activity
             android:name=".features.Home.ProfileActivity"
