@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.features.Home.DetailRestaurant.ItemRestaurantActivity;
+import com.nmq.foodninjaver2.features.Home.RestaurantDetail.ItemRestaurantActivity;
 import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
 
 import java.util.ArrayList;

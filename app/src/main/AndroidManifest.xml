@@ -38,6 +38,14 @@
             android:name=".admin.views.manager_users.AdminDetailManagerUsersActivity"
             android:exported="false" />
         <activity
+            android:name=".features.Home.RestaurantDetail.ItemRestaurantActivity"
+            android:exported="false" />
+        <activity android:name=".features.Home.MenuDetail.MenuDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".features.Home.RestaurantDetail.RestaurantDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".admin.views.AdminActivity"
             android:exported="false" />
         <activity

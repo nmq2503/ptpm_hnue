@@ -216,4 +216,26 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+
+    // Lay duong dan anh
+    public  String getUserProfile(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String imgUrl = null;
+        Cursor cursor = null;
+        try {
+            String query = "SELECT url_image_profile FROM USER WHERE user_id = ?";
+            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+            if (cursor.moveToFirst()) {
+                imgUrl = cursor.getString(cursor.getColumnIndexOrThrow("url_image_profile"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+        return imgUrl;
+    }
 }
