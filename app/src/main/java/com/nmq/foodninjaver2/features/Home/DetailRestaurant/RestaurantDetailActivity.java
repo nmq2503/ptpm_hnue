@@ -26,6 +26,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private ImageButton btnBack;
     private EditText edtTimKiem;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         originalRestaurantList = new ArrayList<>(restaurantList);
         adapterRes = new RestaurantAdapter(restaurantList);
         rvRestaurantList.setAdapter(adapterRes);
+
 
         // Back
         btnBack = findViewById(R.id.btnBack);

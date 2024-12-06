@@ -44,9 +44,11 @@ dependencies {
     implementation(libs.navigation.ui)
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    implementation("com.squareup.picasso:picasso:2.8")
 
-    implementation(libs.picasso)  // Sử dụng Picasso từ libs
+  // Sử dụng Picasso từ libs
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

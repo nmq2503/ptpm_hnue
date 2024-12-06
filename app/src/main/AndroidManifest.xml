@@ -53,13 +53,13 @@
             android:name=".features.Home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".features.ViewAllActivity"
+            android:name=".features.Restaurant.ViewAllActivity"
             android:exported="false" />
         <activity
-            android:name=".features.PopularMenuActivity"
+            android:name=".features.Restaurant.PopularMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".features.RestaurantDetailActivity"
+            android:name=".features.Restaurant.RestaurantDetailActivity"
             android:exported="false" />
         <activity
             android:name=".features.auth.RegisterActivity"
