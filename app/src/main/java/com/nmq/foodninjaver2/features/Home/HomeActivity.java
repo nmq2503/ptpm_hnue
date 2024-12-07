@@ -39,14 +39,40 @@ public class HomeActivity extends AppCompatActivity {
     private EditText edtTimKiem;
     private TextView tvViewMore, tvViewMoreMenu;
     private ImageView imgAvt;
+    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // Anh xa view
+        edtTimKiem = findViewById(R.id.edtTimKiem);
+        tvViewMoreMenu = findViewById(R.id.tvViewMoreMenu);
+        tvViewMore = findViewById(R.id.tvViewMore);
+        imgAvt = findViewById(R.id.imgAvt);
+        recyclerViewMenuList = findViewById(R.id.rvMenu);
+        recyclerViewRes = findViewById(R.id.rvRestaurant);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
 
-        // ImgProfile
+        // Khoi tao database
+        dataBaseHelper = new DataBaseHelper(this);
+
+        // Khởi tạo SessionManager để lấy thông tin phiên đăng nhập
         SessionManager sessionManager = new SessionManager(this);
+
+        // Lấy danh sách món ăn từ DatabaseHelper
+        menuList = dataBaseHelper.getAllMenuItems();
+        originalMenuList = new ArrayList<>(menuList); // Luu DS goc
+
+        // Lấy danh sách nhà hàng từ DatabaseHelper
+        restaurantList = dataBaseHelper.getAllRestaurants();
+        originalRestaurantList = new ArrayList<>(restaurantList);
+
+        // Thiet lap RecyclerView
+        recyclerViewMenu();
+        recyclerViewRes();
+
+        // Profile
         int userId = sessionManager.getUserId();
         if (userId == -1) {
             // Nếu userId không tồn tại, chuyển về trang đăng nhập
@@ -68,15 +94,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-        edtTimKiem = findViewById(R.id.edtTimKiem);
-
-        recyclerViewMenu();
-        recyclerViewRes();
-
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
-        bottomNavigationView.setSelectedItemId(R.id.action_home);
-
-        // Thêm TextWatch cho EditText
+        // Xu ly tim kiem
         edtTimKiem.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
@@ -111,10 +129,10 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         // Thanh bar
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.action_home) {
                 Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_SHORT).show();
-//                return true;
             } else if (item.getItemId() == R.id.action_profile){
                 Intent intentProfile = new Intent(HomeActivity.this, ProfileActivity.class);
                 startActivity(intentProfile);
@@ -127,15 +145,44 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
+    // Hàm thiết lập RecyclerView cho menu
+    private void recyclerViewMenu() {
+        LinearLayoutManager layoutManagerMenu = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerViewMenuList.setLayoutManager(layoutManagerMenu);
 
+        ArrayList<MenuDomain> limitedMenuList = new ArrayList<>();
+        if (menuList.size() > 4) {
+            limitedMenuList.addAll(menuList.subList(0, 4)); // Lấy 4 món đầu tiên
+        } else {
+            limitedMenuList.addAll(menuList); // Nếu ít hơn 4 món, lấy toàn bộ
+        }
+        adapter = new PopularMenuAdapter(limitedMenuList);
+        recyclerViewMenuList.setAdapter(adapter);
+    }
+    // Hàm thiết lập RecyclerView cho nhà hàng
+    private void recyclerViewRes() {
+        LinearLayoutManager layoutManagerRes = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewRes.setLayoutManager(layoutManagerRes);
+
+        ArrayList<RestaurantDomain> limitedResList = new ArrayList<>();
+        if (restaurantList.size() > 4) {
+            limitedResList.addAll(restaurantList.subList(0, 4)); // Lý 4 nhà hàng đầu tiên
+        } else {
+            limitedResList.addAll(restaurantList); // Nếu ít hơn 4 nhà hàng, lý toàn bộ
+        }
+        adapterRes = new RestaurantAdapter(limitedResList);
+        recyclerViewRes.setAdapter(adapterRes);
+    }
+
+    // Lọc danh sách dựa trên chuỗi tìm kiếm
     private void filterList(String text) {
+        // Lọc danh sách menu
         ArrayList<MenuDomain> filteredList = new ArrayList<>();
         for (MenuDomain item : originalMenuList) {
             if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
-
         adapter.updateList(filteredList);
 
         // Lọc danh sách nhà hàng
@@ -146,44 +193,5 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
         adapterRes.updateList(filteredRestaurantList);
-
-    }
-
-    private void recyclerViewMenu() {
-        LinearLayoutManager layoutManagerMenu = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-//        GridLayoutManager griLayoutManagerMenu = new GridLayoutManager(this, 2);
-        recyclerViewMenuList = findViewById(R.id.rvMenu);
-        recyclerViewMenuList.setLayoutManager(layoutManagerMenu);
-
-        ArrayList<MenuDomain> menuList = new ArrayList<>();
-        menuList.add(new MenuDomain("Pepperoni pizza", "pop_1", 100.99));
-        menuList.add(new MenuDomain("Cheese Burger", "pop_2", 29.99));
-        menuList.add(new MenuDomain("Hotdog", "hot_dog", 25.00));
-        menuList.add(new MenuDomain("Drink", "nuoc_ep_xoai_dao", 20.00));
-        menuList.add(new MenuDomain("Donut", "donut0", 40.00));
-        menuList.add(new MenuDomain("BBQ", "bbq", 150.00));
-
-        originalMenuList = new ArrayList<>(menuList);
-
-        adapter = new PopularMenuAdapter(menuList);
-        recyclerViewMenuList.setAdapter(adapter);
-    }
-
-
-    private void recyclerViewRes() {
-        LinearLayoutManager layoutManagerRes = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerViewRes = findViewById(R.id.rvRestaurant);
-        recyclerViewRes.setLayoutManager(layoutManagerRes);
-
-        ArrayList<RestaurantDomain> restaurantList = new ArrayList<>();
-        restaurantList.add(new RestaurantDomain("Fast Food", "res3"));
-        restaurantList.add(new RestaurantDomain("Ninja Bakery", "cake2"));
-        restaurantList.add(new RestaurantDomain("Superstar Cafe", "res4"));
-        restaurantList.add(new RestaurantDomain("Healthy Food", "res1"));
-
-        originalRestaurantList = new ArrayList<>(restaurantList);
-
-        adapterRes = new RestaurantAdapter(restaurantList);
-        recyclerViewRes.setAdapter(adapterRes);
     }
 }
