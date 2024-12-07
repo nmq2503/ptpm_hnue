@@ -1,40 +1,23 @@
 package com.nmq.foodninjaver2.Model;
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.nmq.foodninjaver2.dataBase.RestaurantDatabaseHelper;
-
 import java.io.Serializable;
-import java.util.List;
 
-public class Comment implements Serializable {
-    private int userId;
+public class Comment {
     private String userName;
     private String comment;
-    private float rating;
-    // Loại bỏ List<Comment> nếu không cần bình luận con
-    // private List<Comment> comments;
+    private int rating; // Số sao đánh giá
+    private String date;
+    private int avatarUrl; // URL hoặc resource ID cho avatar
 
-    // Constructor không tham số
-    public Comment() {}
-
-    // Constructor đầy đủ tham số
-    public Comment(int userId, String userName, String comment, float rating) {
-        this.userId = userId;
+    public Comment(String userName, String comment, int rating, String date, int avatarUrl) {
         this.userName = userName;
         this.comment = comment;
         this.rating = rating;
+        this.date = date;
+        this.avatarUrl = avatarUrl;
     }
 
-    // Getter và Setter
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+    // Getters and setters
 
     public String getUserName() {
         return userName;
@@ -52,13 +35,27 @@ public class Comment implements Serializable {
         this.comment = comment;
     }
 
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
-}
+    public String getDate() {
+        return date;
+    }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(int avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+}
