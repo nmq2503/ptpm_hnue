@@ -14,11 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.features.Home.RestaurantDetail.ItemRestaurantActivity;
 import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
+import com.nmq.foodninjaver2.features.Restaurant.RestaurantDetailActivity;
 
 import java.util.ArrayList;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
     private ArrayList<RestaurantDomain> restaurantDomains;
+    private ArrayList<RestaurantDomain> restaurantList;
+    private OnRestaurantClickListener listener;
+
+    public interface OnRestaurantClickListener {
+        void onRestaurantClick(RestaurantDomain restaurant);
+    }
+    public RestaurantAdapter(ArrayList<RestaurantDomain> restaurantList, OnRestaurantClickListener listener) {
+        this.restaurantList = restaurantList;
+        this.listener = listener;
+    }
 
     public RestaurantAdapter(ArrayList<RestaurantDomain> restaurantDomains) {
         this.restaurantDomains = restaurantDomains;
@@ -42,7 +53,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         holder.pic.setImageResource(drawableResourceId);
 
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(holder.itemView.getContext(), ItemRestaurantActivity.class);
+            Intent intent = new Intent(holder.itemView.getContext(), RestaurantDetailActivity.class);
             intent.putExtra("object", restaurantDomains.get(position));
             holder.itemView.getContext().startActivity(intent);
         });
