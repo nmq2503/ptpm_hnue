@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 import com.nmq.foodninjaver2.features.Home.HomeActivity;
 import com.nmq.foodninjaver2.features.Home.Adapter.RestaurantAdapter;
 import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
@@ -25,6 +26,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private ArrayList<RestaurantDomain> restaurantList, originalRestaurantList;
     private ImageButton btnBack;
     private EditText edtTimKiem;
+    DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +36,12 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         rvRestaurantList = findViewById(R.id.rvRestaurantList);
         rvRestaurantList.setLayoutManager(new GridLayoutManager(this,2));
 
-        restaurantList = new ArrayList<>();
-        restaurantList.add(new RestaurantDomain("Fast Food", "res3"));
-        restaurantList.add(new RestaurantDomain("Ninja Bakery", "cake2"));
-        restaurantList.add(new RestaurantDomain("Superstar Cafe", "res4"));
-        restaurantList.add(new RestaurantDomain("Healthy Food", "res1"));
-        restaurantList.add(new RestaurantDomain("Nhà hàng 5", "res5"));
+        dataBaseHelper = new DataBaseHelper(this);
 
+        restaurantList = dataBaseHelper.getAllRestaurants();
         originalRestaurantList = new ArrayList<>(restaurantList);
-        adapterRes = new RestaurantAdapter(restaurantList);
-        rvRestaurantList.setAdapter(adapterRes);
+
+        setUpRecyclerView();
 
         // Back
         btnBack = findViewById(R.id.btnBack);
@@ -72,6 +70,11 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void setUpRecyclerView() {
+        adapterRes = new RestaurantAdapter(restaurantList);
+        rvRestaurantList.setAdapter(adapterRes);
     }
 
     private void filterList(String string) {
