@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.Model.MonAn;
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.features.PopularMenuActivity;
+import com.nmq.foodninjaver2.features.Restaurant.PopularMenuActivity;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.features;
+package com.nmq.foodninjaver2.features.Restaurant;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,10 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +21,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.nmq.foodninjaver2.Adapter.CommentAdapter;
 import com.nmq.foodninjaver2.Adapter.MonAnAdapter;
+import com.nmq.foodninjaver2.Adapter.RestaurantAdapter;
 import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.Model.Comment;
 import com.nmq.foodninjaver2.Model.MonAn;
@@ -32,6 +31,7 @@ import com.nmq.foodninjaver2.Model.Product;
 import com.nmq.foodninjaver2.Model.Restaurant;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.dataBase.RestaurantDatabaseHelper;
+import com.nmq.foodninjaver2.features.Home.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,18 +43,32 @@ public class RestaurantDetailActivity extends AppCompatActivity {
      TextView textRating;
      TextView textDescription;
      Button viewAllText;
-     ImageView  crab1, crab2, crab3, crab4;
      ImageButton backButton;
      LinearLayout popularMenuContainer, commentsContainer;
      RecyclerView lvMonAn;
      ArrayList<MonAn> listMonAn;
      MonAnAdapter adapterMonAn;
+    RecyclerView recyclerViewComments;
+    CommentAdapter commentAdapter;
+    List<Comment> commentList;
+    List<RestaurantAdapter> restaurantList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_restaurant_detail);
+
+        recyclerViewComments = findViewById(R.id.recyclerViewComments);
+
+
+
+        // Dữ liệu giả lập
+        // Thiết lập adapter
+        commentAdapter = new CommentAdapter(this, commentList);
+        recyclerViewComments.setAdapter(commentAdapter);
+        recyclerViewComments.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
 
         imageRestaurant = findViewById(R.id.imageRestaurant);
         textRestaurantName = findViewById(R.id.textRestaurantName);
@@ -67,10 +81,11 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         lvMonAn = findViewById(R.id.lvMonAn);
         listMonAn = new ArrayList<>();
-        listMonAn.add(new MonAn(R.drawable.pizza));
+        listMonAn.add(new MonAn(R.drawable.pizza1));
         listMonAn.add(new MonAn(R.drawable.img));
-        listMonAn.add(new MonAn(R.drawable.pizza));
+        listMonAn.add(new MonAn(R.drawable.pizza1));
         listMonAn.add(new MonAn(R.drawable.img));
+
 
         // Thiết lập adapter và layout
         adapterMonAn = new MonAnAdapter(this, listMonAn);
@@ -80,6 +95,16 @@ public class RestaurantDetailActivity extends AppCompatActivity {
 
 
         RestaurantDatabaseHelper dbHelper = new RestaurantDatabaseHelper(this);
+
+        dbHelper.addComment(new Comment("John Doe", "Great food! ", 1, "19 November 2024", R.drawable.avatar));
+        dbHelper.addComment(new Comment("Jane Smith", "Loved it!", 1, "20 November 2024", R.drawable.girl));
+        List<Comment> commentList = dbHelper.getAllComments();
+        CommentAdapter commentAdapter = new CommentAdapter(this, commentList);
+        recyclerViewComments.setAdapter(commentAdapter);
+
+
+
+
         int restaurantId = getIntent().getIntExtra("restaurant_id", -1);
         if (restaurantId != -1) {
             // Lấy thông tin chi tiết của nhà hàng từ cơ sở dữ liệu
@@ -115,11 +140,16 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             return insets;
         });
     }
+
+    private List<Comment> getCommentsFromDatabase() {
+        return commentList;
+    }
+
     public void addEvents() {
         // Gắn sự kiện cho nút Back
         backButton.setOnClickListener(v -> {
             Log.d("RestaurantDetailActivity", "Back button clicked");
-            Intent intent = new Intent(RestaurantDetailActivity.this, MainActivity.class);
+            Intent intent = new Intent(RestaurantDetailActivity.this, HomeActivity.class);
             startActivity(intent);
         });
 

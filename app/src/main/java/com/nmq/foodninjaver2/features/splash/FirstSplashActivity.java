@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -19,6 +20,7 @@ import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.admin.views.AdminActivity;
 import com.nmq.foodninjaver2.core.SessionManager;
+import com.nmq.foodninjaver2.features.Home.HomeActivity;
 
 public class FirstSplashActivity extends AppCompatActivity {
 
@@ -32,10 +34,15 @@ public class FirstSplashActivity extends AppCompatActivity {
 
         // Kiểm tra trạng thái đăng nhập
         if (sessionManager.isLoggedIn()) {
-            // Nếu đã đăng nhập, chuyển đến MainActivity và kết thúc SplashActivity
-            startActivity(new Intent(this, AdminActivity.class));
-            finish(); // Kết thúc FirstSplashActivity
-            return; // Ngăn chặn xử lý tiếp nội dung splash
+            if (sessionManager.getKeyEmail().equals("quanggg2503@gmail.com")) {
+                startActivity(new Intent(this, AdminActivity.class));
+                finish();
+                return;
+            } else {
+                startActivity(new Intent(this, HomeActivity.class));
+                finish();
+                return;
+            }
         }
 
         EdgeToEdge.enable(this);
