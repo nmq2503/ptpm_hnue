@@ -37,7 +37,6 @@ public class AdminAddUserActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private AdminRepository adminRepository = new AdminRepository(this);
     private MainRepository mainRepository = new MainRepository(this);
-    private ValidateFunction validateFunction = new ValidateFunction();
 
     Button btnSave;
     Button btnCancel;
@@ -79,7 +78,6 @@ public class AdminAddUserActivity extends AppCompatActivity {
     // Đăng ký activityResultLauncher
     private final androidx.activity.result.ActivityResultLauncher<Intent> pickImageLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), resultCallback);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,40 +163,6 @@ public class AdminAddUserActivity extends AppCompatActivity {
         }
     }
 
-    private String saveImageToInternalStorage(String originalImagePath) {
-        try {
-            // Xử lý hướng ảnh
-            Bitmap bitmap = handleImageOrientation(originalImagePath);
-            if (bitmap == null) {
-                // Toast.makeText(this, "Không thể xử lý ảnh!", Toast.LENGTH_SHORT).show();
-                return null;
-            }
-
-            // Tạo thư mục lưu ảnh
-            File directory = new File(getFilesDir(), "user_images"); // Thư mục "user_images"
-            if (!directory.exists()) {
-                directory.mkdirs(); // Tạo thư mục nếu chưa tồn tại
-            }
-
-            // Tạo tên file duy nhất
-            String fileName = "user_" + System.currentTimeMillis() + ".jpg";
-
-            // Lưu ảnh vào thư mục
-            File file = new File(directory, fileName);
-            FileOutputStream fos = new FileOutputStream(file);
-
-            // Nén ảnh và lưu
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.close();
-
-            // Trả về đường dẫn đầy đủ của file ảnh
-            return file.getAbsolutePath();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null; // Trả về null nếu có lỗi
-        }
-    }
-
     private boolean validateInput() {
         String name = edtNameUser.getText().toString().trim();
         String email = edtEmailUser.getText().toString().trim();
@@ -235,6 +199,40 @@ public class AdminAddUserActivity extends AppCompatActivity {
 
         // Nếu tất cả kiểm tra đều hợp lệ
         return true;
+    }
+
+    private String saveImageToInternalStorage(String originalImagePath) {
+        try {
+            // Xử lý hướng ảnh
+            Bitmap bitmap = handleImageOrientation(originalImagePath);
+            if (bitmap == null) {
+                // Toast.makeText(this, "Không thể xử lý ảnh!", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+
+            // Tạo thư mục lưu ảnh
+            File directory = new File(getFilesDir(), "user_images"); // Thư mục "user_images"
+            if (!directory.exists()) {
+                directory.mkdirs(); // Tạo thư mục nếu chưa tồn tại
+            }
+
+            // Tạo tên file duy nhất
+            String fileName = "user_" + System.currentTimeMillis() + ".jpg";
+
+            // Lưu ảnh vào thư mục
+            File file = new File(directory, fileName);
+            FileOutputStream fos = new FileOutputStream(file);
+
+            // Nén ảnh và lưu
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.close();
+
+            // Trả về đường dẫn đầy đủ của file ảnh
+            return file.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // Trả về null nếu có lỗi
+        }
     }
 
     public void removePicture(View view) {
