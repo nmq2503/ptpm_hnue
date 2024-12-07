@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".features.Home.CartActivity">
+<<<<<<< HEAD
 
     <!-- TextView để hiển thị giỏ hàng -->
     <TextView
@@ -24,6 +25,8 @@
         tools:text="Giỏ hàng của bạn sẽ hiển thị tại đây." />
 
     <!-- Thanh điều hướng -->
+=======
+>>>>>>> c9b9677f806da0d97276aa06acaedcb253efd308
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
@@ -37,6 +40,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+<<<<<<< HEAD
+=======
+            android:layout_alignParentBottom="true"
+>>>>>>> c9b9677f806da0d97276aa06acaedcb253efd308
             app:itemBackground="@color/colorPrimary"
             app:itemIconTint="@color/custom_color_bottom_nav"
             app:itemTextColor="@color/custom_color_bottom_nav"
@@ -45,4 +52,8 @@
             app:labelVisibilityMode="labeled"
             app:menu="@menu/menu_bottom" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<<<<<<< HEAD
 </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+</androidx.constraintlayout.widget.ConstraintLayout>
+>>>>>>> c9b9677f806da0d97276aa06acaedcb253efd308

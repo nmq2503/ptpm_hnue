@@ -216,6 +216,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return cursor;
     }
+<<<<<<< HEAD
 
     public Cursor getCartItems(int orderId) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -236,4 +237,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+=======
+>>>>>>> c9b9677f806da0d97276aa06acaedcb253efd308
 }

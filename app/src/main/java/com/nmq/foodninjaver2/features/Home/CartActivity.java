@@ -1,10 +1,15 @@
 package com.nmq.foodninjaver2.features.Home;
 
+<<<<<<< HEAD
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.TextView;
+=======
+import android.content.Intent;
+import android.os.Bundle;
+>>>>>>> c9b9677f806da0d97276aa06acaedcb253efd308
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -12,21 +17,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nmq.foodninjaver2.R;
+<<<<<<< HEAD
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 
 public class CartActivity extends AppCompatActivity {
 
     private DataBaseHelper dbHelper; // Đối tượng database helper
     private TextView cartSummary;    // TextView để hiển thị giỏ hàng
+=======
+
+public class CartActivity extends AppCompatActivity {
+
+>>>>>>> c9b9677f806da0d97276aa06acaedcb253efd308
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cart);
 
+<<<<<<< HEAD
         dbHelper = new DataBaseHelper(this); // Khởi tạo database helper
         cartSummary = findViewById(R.id.cart_summary); // Liên kết TextView với layout
 
+=======
+>>>>>>> c9b9677f806da0d97276aa06acaedcb253efd308
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.action_cart);
 
@@ -44,6 +58,7 @@ public class CartActivity extends AppCompatActivity {
             } return true;
 
         });
+<<<<<<< HEAD
         int orderId = 1; // ID đơn hàng
         loadCartItems(orderId);
     }
@@ -79,5 +94,7 @@ public class CartActivity extends AppCompatActivity {
         if (cartItems != null) {
             cartItems.close();
         }
+=======
+>>>>>>> c9b9677f806da0d97276aa06acaedcb253efd308
     }
 }
