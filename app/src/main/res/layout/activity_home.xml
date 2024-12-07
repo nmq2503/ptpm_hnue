@@ -121,16 +121,18 @@
                         android:id="@+id/imageView2"
                         android:layout_width="207dp"
                         android:layout_height="129dp"
+                        android:layout_marginStart="1dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="1.0"
-                        app:srcCompat="@drawable/image_banner" />
+                        app:srcCompat="@drawable/banner" />
 
                     <TextView
                         android:id="@+id/textView8"
                         android:layout_width="132dp"
                         android:layout_height="26dp"
+                        android:layout_marginStart="8dp"
                         android:text="Free Delivery"
                         android:textColor="#ffffff"
                         android:textSize="20sp"
@@ -142,6 +144,7 @@
                         android:id="@+id/textView"
                         android:layout_width="108dp"
                         android:layout_height="23dp"
+                        android:layout_marginTop="4dp"
                         android:text="May 2 - June 10"
                         android:textColor="#ffffff"
                         android:textSize="14sp"
@@ -159,16 +162,16 @@
 
                         <TextView
                             android:id="@+id/textView2"
-                            android:layout_width="86dp"
+                            android:layout_width="96dp"
                             android:layout_height="21dp"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_marginBottom="8dp"
-                            android:background="@drawable/green_button"
+                            android:background="@drawable/white_button"
                             android:text="Order Now"
                             android:textAlignment="center"
-                            android:textColor="#ffffff"
+                            android:textColor="#0A7368"
                             android:textSize="14sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
