@@ -17,14 +17,27 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.admin.views.AdminActivity;
+import com.nmq.foodninjaver2.core.SessionManager;
 
 public class FirstSplashActivity extends AppCompatActivity {
 
+    SessionManager sessionManager;
     ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sessionManager = new SessionManager(this);
+
+        // Kiểm tra trạng thái đăng nhập
+        if (sessionManager.isLoggedIn()) {
+            // Nếu đã đăng nhập, chuyển đến MainActivity và kết thúc SplashActivity
+            startActivity(new Intent(this, AdminActivity.class));
+            finish(); // Kết thúc FirstSplashActivity
+            return; // Ngăn chặn xử lý tiếp nội dung splash
+        }
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_first_splash);
 
@@ -40,10 +53,6 @@ public class FirstSplashActivity extends AppCompatActivity {
         int countInterval = 1000;
         progressBar.setProgress(0);
 
-        // Lấy `SharedPreferences` để kiểm tra trạng thái lần đầu mở ứng dụng
-        SharedPreferences preferences = getSharedPreferences(MainActivity.PREFS_NAME, Context.MODE_PRIVATE);
-        boolean isFirstLaunch = preferences.getBoolean(MainActivity.KEY_FIRST_LAUNCH, true);
-
         CountDownTimer countdownTimer = new CountDownTimer(miles, countInterval) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -57,19 +66,7 @@ public class FirstSplashActivity extends AppCompatActivity {
                 progressBar.setProgress(100);
 
                 // Điều hướng dựa vào trạng thái lần đầu mở ứng dụng
-                if (isFirstLaunch) {
-                    // Nếu là lần đầu, chuyển sang `SecondSplashActivity`
-                    startActivity(new Intent(FirstSplashActivity.this, SecondSplashActivity.class));
-
-                    // Cập nhật trạng thái không còn là lần đầu mở ứng dụng
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean(MainActivity.KEY_FIRST_LAUNCH, false);
-                    editor.apply();
-                } else {
-                    // Nếu không phải lần đầu, chuyển đến `LoginActivity`
-                    startActivity(new Intent(FirstSplashActivity.this, SecondSplashActivity.class));
-                }
-
+                startActivity(new Intent(FirstSplashActivity.this, SecondSplashActivity.class));
                 finish(); // Kết thúc `FirstSplashActivity` để người dùng không quay lại
             }
         };
