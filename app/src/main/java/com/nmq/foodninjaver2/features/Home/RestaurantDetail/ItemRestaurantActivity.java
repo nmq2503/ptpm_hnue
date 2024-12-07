@@ -1,4 +1,4 @@
-package com.nmq.foodninjaver2.features.Home.DetailRestaurant;
+package com.nmq.foodninjaver2.features.Home.RestaurantDetail;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.features.Home.Domain.RestaurantDomain;
+import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
 
 import java.util.ArrayList;
 
