@@ -160,6 +160,61 @@
             </FrameLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="25dp"
+            android:id="@+id/cvManagerMenuItem"
+            android:background="@drawable/img_manager_users"
+            android:layout_width="match_parent"
+            app:cardCornerRadius="22dp"
+            app:cardElevation="2dp"
+            android:layout_height="120dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/ivBackgroundMenuItem"
+                    android:src="@drawable/img_manager_menu_item"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <View
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:background="@drawable/gradient_black_overlay" /> <!-- Màu đen trong suốt -->
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvTitleMenuItem"
+                        android:text="QUẢN LÝ MÓN ĂN"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/tvSubtitleMenuItem"
+                        android:text="Số lượng: 10"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+            </FrameLayout>
+
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

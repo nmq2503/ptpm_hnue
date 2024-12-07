@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.nmq.foodninjaver2.core.modelBase.RestaurantModel;
 import com.nmq.foodninjaver2.core.modelBase.UserModel;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 
@@ -190,6 +191,67 @@ public class AdminRepository {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         int affectedRows = db.delete(DataBaseHelper.TABLE_USER, "user_id = ?", new String[]{String.valueOf(userId)});
 
+
+        // Kiểm tra nếu câu lệnh không gặp lỗi, trả về true
+        if (affectedRows > 0) {
+            // Nếu không có lỗi trong quá trình xóa, bạn có thể kiểm tra thêm nếu cần (như số lượng dòng bị xóa)
+            return true;
+        } else {
+            // Nếu có lỗi trong quá trình xóa
+            return false;
+        }
+    }
+
+    public List<RestaurantModel> getAllRestaurantsWithOwners() {
+        List<RestaurantModel> restaurantList = new ArrayList<>();
+
+        // Câu truy vấn để lấy tất cả dữ liệu từ bảng RESTAURANT và USER
+        String query = "SELECT r.restaurant_id, r.restaurant_name, r.address, r.email, r.phone_number, " +
+                "r.rating, r.opening_hours, r.closing_hours, r.url_image_restaurant, r.owner_id, " +
+                "u.user_name, u.first_name, u.last_name, u.email AS owner_email " +
+                "FROM RESTAURANT r " +
+                "JOIN USER u ON r.owner_id = u.user_id";
+
+        Cursor cursor = dbHelper.executeQuery(query, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    RestaurantModel restaurant = new RestaurantModel();
+
+                    // Lấy tất cả các cột từ bảng RESTAURANT
+                    restaurant.setRestaurantId(cursor.getInt(0));
+                    restaurant.setRestaurantName(cursor.getString(1));
+                    restaurant.setAddress(cursor.getString(2));
+                    restaurant.setEmail(cursor.getString(3));
+                    restaurant.setPhoneNumber(cursor.getString(4));
+                    restaurant.setRating(cursor.getFloat(5));
+                    restaurant.setOpeningHours(cursor.getString(6));
+                    restaurant.setClosingHours(cursor.getString(7));
+                    restaurant.setUrlImageRestaurant(cursor.getString(8));
+                    restaurant.setOwnerId(cursor.getInt(9));
+                    restaurant.setOwnerName(cursor.getString(10));
+
+                    // Thêm restaurant vào danh sách
+                    restaurantList.add(restaurant);
+                } while (cursor.moveToNext());
+            } else {
+                Log.d("Database", "No data found in query.");
+            }
+            cursor.close();
+        } else {
+            Log.e("Database", "Cursor is null. Query execution failed.");
+        }
+
+        return restaurantList;
+    }
+
+
+
+    public boolean deleteRestaurantById(int restaurantId) {
+        // Câu lệnh SQL xóa dữ liệu theo restaurant_id
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int affectedRows = db.delete(DataBaseHelper.TABLE_RESTAURANT, "restaurant_id = ?", new String[]{String.valueOf(restaurantId)});
 
         // Kiểm tra nếu câu lệnh không gặp lỗi, trả về true
         if (affectedRows > 0) {

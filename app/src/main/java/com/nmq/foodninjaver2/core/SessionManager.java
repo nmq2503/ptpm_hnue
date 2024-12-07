@@ -30,8 +30,8 @@ public class SessionManager {
     }
 
     // Lấy thông tin người dùng
-    public String getUsername() {
-        return sharedPreferences.getString(KEY_EMAIL, null);
+    public String getKeyEmail() {
+        return sharedPreferences.getString(KEY_EMAIL, "");
     }
 
     // Lấy thông tin userId
