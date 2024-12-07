@@ -39,7 +39,7 @@ public class FirstSplashActivity extends AppCompatActivity {
                 finish();
                 return;
             } else {
-                startActivity(new Intent(this, HomeActivity.class));
+                startActivity(new Intent(this, AdminActivity.class));
                 finish();
                 return;
             }
