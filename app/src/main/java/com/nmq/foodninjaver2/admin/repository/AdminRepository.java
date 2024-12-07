@@ -246,6 +246,23 @@ public class AdminRepository {
         return restaurantList;
     }
 
+
+
+    public boolean deleteRestaurantById(int restaurantId) {
+        // Câu lệnh SQL xóa dữ liệu theo restaurant_id
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int affectedRows = db.delete(DataBaseHelper.TABLE_RESTAURANT, "restaurant_id = ?", new String[]{String.valueOf(restaurantId)});
+
+        // Kiểm tra nếu câu lệnh không gặp lỗi, trả về true
+        if (affectedRows > 0) {
+            // Nếu không có lỗi trong quá trình xóa, bạn có thể kiểm tra thêm nếu cần (như số lượng dòng bị xóa)
+            return true;
+        } else {
+            // Nếu có lỗi trong quá trình xóa
+            return false;
+        }
+    }
+
     // Truy vấn số lượng món ăn
     public int getMenuItemCount() {
         String query = "SELECT COUNT(*) FROM " + DataBaseHelper.TABLE_MENU_ITEM;
