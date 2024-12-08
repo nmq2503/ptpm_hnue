@@ -1,10 +1,6 @@
 package com.nmq.foodninjaver2.features.auth;
 
-import static android.app.PendingIntent.getActivity;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.TextView;
@@ -45,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
         authRepository = new AuthRepository(this);
 
         btnLogin.setOnClickListener(v -> {
-            // Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_homeFragment);
             handleLogin();
         });
 
@@ -81,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         if (isValid) {
             sessionManager.createLoginSession(email);
 
-            Toast.makeText(this, "Login successful! Welcome " + email, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Đăng nhập thành công! Chào mừng " + email, Toast.LENGTH_SHORT).show();
 
             // Kiểm tra nếu là tài khoản admin
             if (email.equals("quanggg2503@gmail.com") && password.equals("12345678")) {
@@ -96,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         } else {
-            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Email hoặc mật khẩu không hợp lệ! Vui lòng nhập lại!", Toast.LENGTH_SHORT).show();
         }
     }
 }
