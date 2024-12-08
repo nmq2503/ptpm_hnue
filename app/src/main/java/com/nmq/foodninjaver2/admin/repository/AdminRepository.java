@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.nmq.foodninjaver2.core.modelBase.RestaurantModel;
 import com.nmq.foodninjaver2.core.modelBase.UserModel;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 
@@ -200,6 +201,178 @@ public class AdminRepository {
             return false;
         }
     }
+
+    public List<RestaurantModel> getAllRestaurantsWithOwners() {
+        List<RestaurantModel> restaurantList = new ArrayList<>();
+
+        // Câu truy vấn để lấy tất cả dữ liệu từ bảng RESTAURANT và USER
+        String query = "SELECT r.restaurant_id, r.restaurant_name, r.address, r.email, r.phone_number, " +
+                "r.rating, r.opening_hours, r.closing_hours, r.url_image_restaurant, r.owner_id, " +
+                "u.user_name, u.first_name, u.last_name, u.email AS owner_email " +
+                "FROM RESTAURANT r " +
+                "JOIN USER u ON r.owner_id = u.user_id";
+
+        Cursor cursor = dbHelper.executeQuery(query, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    RestaurantModel restaurant = new RestaurantModel();
+
+                    // Lấy tất cả các cột từ bảng RESTAURANT
+                    restaurant.setRestaurantId(cursor.getInt(0));
+                    restaurant.setRestaurantName(cursor.getString(1));
+                    restaurant.setAddress(cursor.getString(2));
+                    restaurant.setEmail(cursor.getString(3));
+                    restaurant.setPhoneNumber(cursor.getString(4));
+                    restaurant.setRating(cursor.getFloat(5));
+                    restaurant.setOpeningHours(cursor.getString(6));
+                    restaurant.setClosingHours(cursor.getString(7));
+                    restaurant.setUrlImageRestaurant(cursor.getString(8));
+                    restaurant.setOwnerId(cursor.getInt(9));
+                    restaurant.setOwnerName(cursor.getString(10));
+
+                    // Thêm restaurant vào danh sách
+                    restaurantList.add(restaurant);
+                } while (cursor.moveToNext());
+            } else {
+                Log.d("Database", "No data found in query.");
+            }
+            cursor.close();
+        } else {
+            Log.e("Database", "Cursor is null. Query execution failed.");
+        }
+
+        return restaurantList;
+    }
+
+    public boolean saveRestaurantToDatabase(String name, String address, String email, String phoneNumber,
+                                            String openingHour, String closingHour, String imageUrl, int ownerId) {
+        // Chuẩn bị câu lệnh SQL INSERT
+        String sql = "INSERT INTO RESTAURANT (restaurant_name, address, email, phone_number, " +
+                "opening_hours, closing_hours, url_image_restaurant, owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        // Lấy giá trị từ tham số phương thức
+        Object[] bindArgs = new Object[] {
+                name,
+                address,
+                email,
+                phoneNumber,
+                openingHour,
+                closingHour,
+                imageUrl, // Lưu đường dẫn ảnh vào cơ sở dữ liệu
+                ownerId
+        };
+
+        try {
+            // Sử dụng phương thức executeNonQuery để thực thi câu lệnh SQL
+            boolean isSuccess = dbHelper.executeNonQuery(sql, bindArgs);
+            return isSuccess;
+        } catch (Exception e) {
+            // Ghi log lỗi (nếu có) để dễ dàng debug
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<UserModel> getAllRestaurantOwners() {
+        List<UserModel> userList = new ArrayList<>();
+
+        // Câu truy vấn để lấy user có vai trò là "Chủ nhà hàng"
+        String query = "SELECT u.user_id, u.user_name, u.first_name, u.last_name, u.email, u.password, " +
+                "u.phone_number, u.address, u.date_of_birth, u.url_image_profile, u.create_at, u.update_at, " +
+                "r.role_id, r.role_name " +
+                "FROM USER u " +
+                "JOIN ROLE r ON u.role_id = r.role_id " +
+                "WHERE r.role_name = ?"; // Lọc vai trò "Chủ nhà hàng"
+
+        // Tham số truyền vào truy vấn
+        String[] selectionArgs = new String[]{"Chủ nhà hàng"};
+
+        Cursor cursor = dbHelper.executeQuery(query, selectionArgs);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    UserModel user = new UserModel();
+
+                    // Lấy tất cả các cột từ bảng USER và ROLE
+                    user.setUserId(cursor.getInt(0));
+                    user.setUserName(cursor.getString(1));
+                    user.setFirstName(cursor.getString(2));
+                    user.setLastName(cursor.getString(3));
+                    user.setEmail(cursor.getString(4));
+                    user.setPassword(cursor.getString(5));
+                    user.setPhoneNumber(cursor.getString(6));
+                    user.setAddress(cursor.getString(7));
+                    user.setDateOfBirth(cursor.getString(8));
+                    user.setUrlImageProfile(cursor.getString(9));
+                    user.setCreateAt(cursor.getString(10));
+                    user.setUpdateAt(cursor.getString(11));
+                    user.setRoleId(cursor.getInt(12));
+                    user.setRoleName(cursor.getString(13));
+
+                    // Thêm user vào danh sách
+                    userList.add(user);
+                } while (cursor.moveToNext());
+            } else {
+                Log.d("Database", "No data found for restaurant owners.");
+            }
+            cursor.close();
+        } else {
+            Log.e("Database", "Cursor is null. Query execution failed.");
+        }
+
+        return userList;
+    }
+
+    public boolean deleteRestaurantById(int restaurantId) {
+        // Câu lệnh SQL xóa dữ liệu theo restaurant_id
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int affectedRows = db.delete(DataBaseHelper.TABLE_RESTAURANT, "restaurant_id = ?", new String[]{String.valueOf(restaurantId)});
+
+        // Kiểm tra nếu câu lệnh không gặp lỗi, trả về true
+        if (affectedRows > 0) {
+            // Nếu không có lỗi trong quá trình xóa, bạn có thể kiểm tra thêm nếu cần (như số lượng dòng bị xóa)
+            return true;
+        } else {
+            // Nếu có lỗi trong quá trình xóa
+            return false;
+        }
+    }
+
+    public boolean updateRestaurantInDatabase(int restaurantId, String restaurantName, String address, String email,
+                                              String phoneNumber, String openingHours, String closingHours,
+                                              String selectedImagePath, int ownerId) {
+        // Chuẩn bị câu lệnh SQL UPDATE
+        String sql = "UPDATE RESTAURANT SET restaurant_name = ?, address = ?, email = ?, phone_number = ?, " +
+                "opening_hours = ?, closing_hours = ?, url_image_restaurant = ?, owner_id = ? " +
+                "WHERE restaurant_id = ?";
+
+        // Lấy giá trị từ tham số phương thức
+        Object[] bindArgs = new Object[] {
+                restaurantName,        // Tên nhà hàng
+                address,               // Địa chỉ nhà hàng
+                email,                 // Email nhà hàng
+                phoneNumber,           // Số điện thoại nhà hàng
+                openingHours,          // Giờ mở cửa
+                closingHours,          // Giờ đóng cửa
+                selectedImagePath,     // Đường dẫn ảnh nhà hàng
+                ownerId,               // ID của chủ sở hữu
+                restaurantId           // ID nhà hàng cần cập nhật
+        };
+
+        try {
+            // Sử dụng phương thức executeNonQuery để thực thi câu lệnh SQL
+            boolean isSuccess = dbHelper.executeNonQuery(sql, bindArgs);
+            return isSuccess;  // Trả về true nếu cập nhật thành công
+        } catch (Exception e) {
+            // Ghi log lỗi (nếu có) để dễ dàng debug
+            e.printStackTrace();
+            return false;  // Trả về false nếu có lỗi xảy ra
+        }
+    }
+
 
     // Truy vấn số lượng món ăn
     public int getMenuItemCount() {

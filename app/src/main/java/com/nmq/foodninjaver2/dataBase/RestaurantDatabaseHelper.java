@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.nmq.foodninjaver2.Model.Comment;
 import com.nmq.foodninjaver2.Model.Restaurant;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.List;
     public class RestaurantDatabaseHelper extends SQLiteOpenHelper {
 
         public static final String DATABASE_NAME = "restaurant_database.db";
-        private static final int DATABASE_VERSION = 1;
+        private static final int DATABASE_VERSION = 2;
         public static final String TABLE_RESTAURANTS = "Restaurants";
         public static final String COLUMN_ID = "id";
         public static final String COLUMN_NAME = "name";
@@ -23,11 +24,13 @@ import java.util.List;
         public static final String COLUMN_RATING = "rating";
         public static final String COLUMN_OPEN_HOUR = "open_hour";
         public static final String COLUMN_CLOSE_HOUR = "close_hour";
-        public static final String TABLE_COMMENTS = "Comments";
-        public static final String COLUMN_COMMENT_ID = "comment_id";
-        public static final String COLUMN_RESTAURANT_ID = "restaurant_id";
-        public static final String COLUMN_USER = "user";
-        public static final String COLUMN_COMMENT = "comment";
+        public static final String TABLE_COMMENTS = "comments";
+        public static final String COMMENT_COLUMN_ID = "id";
+        public static final String COLUMN_USER_NAME = "user_name";
+        public static final String COLUMN_CONTENT = "content";
+        public static final String COMMENT_COLUMN_RATING = "rating";
+        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_AVATAR_RESOURCE = "avatar_resource";
 
         private static final String CREATE_TABLE_RESTAURANTS =
                 "CREATE TABLE " + TABLE_RESTAURANTS + " (" +
@@ -39,11 +42,12 @@ import java.util.List;
                         COLUMN_CLOSE_HOUR + " TEXT)";
         private static final String CREATE_TABLE_COMMENTS =
                 "CREATE TABLE " + TABLE_COMMENTS + " (" +
-                        COLUMN_COMMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        COLUMN_RESTAURANT_ID + " INTEGER, " +
-                        COLUMN_USER + " TEXT, " +
-                        COLUMN_COMMENT + " TEXT, " +
-                        "FOREIGN KEY(" + COLUMN_RESTAURANT_ID + ") REFERENCES " + TABLE_RESTAURANTS + "(" + COLUMN_ID + "))";
+                        COMMENT_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        COLUMN_USER_NAME + " TEXT NOT NULL, " +
+                        COLUMN_CONTENT + " TEXT NOT NULL, " +
+                        COMMENT_COLUMN_RATING + " INTEGER NOT NULL, " +
+                        COLUMN_DATE + " TEXT NOT NULL, " +
+                        COLUMN_AVATAR_RESOURCE + " TEXT NOT NULL);";
 
         public RestaurantDatabaseHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -77,12 +81,15 @@ import java.util.List;
         }
 
         // Thêm bình luận vào cơ sở dữ liệu
-        public void insertComment(int restaurantId, String user, String comment) {
-            SQLiteDatabase db = this.getWritableDatabase(); // Thay dbHelper bằng this
+        public void addComment(Comment comment) {
+            SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(COLUMN_RESTAURANT_ID, restaurantId);
-            values.put(COLUMN_USER, user);
-            values.put(COLUMN_COMMENT, comment);
+
+            values.put(COLUMN_USER_NAME, comment.getUserName());
+            values.put(COLUMN_CONTENT, comment.getComment());
+            values.put(COMMENT_COLUMN_RATING, comment.getRating());
+            values.put(COLUMN_DATE, comment.getDate());
+            values.put(COLUMN_AVATAR_RESOURCE, comment.getAvatarUrl());
 
             db.insert(TABLE_COMMENTS, null, values);
             db.close();
@@ -110,22 +117,28 @@ import java.util.List;
         }
 
         // Lấy bình luận của nhà hàng theo restaurantId
-        public List<String> getCommentsByRestaurantId(int restaurantId) {
-            List<String> comments = new ArrayList<>();
-            SQLiteDatabase db = this.getReadableDatabase(); // Thay dbHelper bằng this
-            String query = "SELECT * FROM " + TABLE_COMMENTS +
-                    " WHERE " + COLUMN_RESTAURANT_ID + " = ?";
+        public List<Comment> getAllComments() {
+            List<Comment> comments = new ArrayList<>();
+            SQLiteDatabase db = this.getReadableDatabase();
 
-            Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(restaurantId)});
-            while (cursor.moveToNext()) {
-                String user = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER));
-                String comment = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_COMMENT));
-                comments.add(user + ": " + comment);
+            Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_COMMENTS, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    Comment comment = new Comment(
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_NAME)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CONTENT)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(COMMENT_COLUMN_RATING)),
+                            cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE)),
+                            cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_AVATAR_RESOURCE))
+                    );
+                    comments.add(comment);
+                } while (cursor.moveToNext());
             }
             cursor.close();
             db.close();
             return comments;
         }
+
         public Restaurant getRestaurantById(int restaurantId) {
             SQLiteDatabase db = this.getReadableDatabase();
             String query = "SELECT * FROM " + TABLE_RESTAURANTS + " WHERE " + COLUMN_ID + " = ?";

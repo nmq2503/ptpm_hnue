@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.PopularMenuActivity">
+    tools:context=".features.Restaurant.PopularMenuActivity">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
@@ -34,7 +34,7 @@
                     android:id="@+id/itemImage"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/pizza"
+                    android:src="@drawable/pizza1"
                     android:scaleType="centerCrop" />
                 <TextView
                     android:text="Originating from Italy, it traditionally consists of a flat, round base made from wheat dough, baked to perfection with a variety of toppings."

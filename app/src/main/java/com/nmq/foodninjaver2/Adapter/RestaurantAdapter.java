@@ -13,43 +13,76 @@ import androidx.annotation.NonNull;
 
 import com.nmq.foodninjaver2.Model.Restaurant;
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.features.RestaurantDetailActivity;
+import com.nmq.foodninjaver2.features.Restaurant.RestaurantDetailActivity;
 
 import java.util.List;
 
-public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.nmq.foodninjaver2.Model.Restaurant;
+import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.features.Restaurant.RestaurantDetailActivity;
+
+import java.util.List;
+
+public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
+
     private Context context;
-    private List<Restaurant> listRestaurant;
-    public RestaurantAdapter(@NonNull Context context, List<Restaurant> restaurantList) {
-        super(context, 0, restaurantList);
+    private List<Restaurant> restaurantList;
+
+    public RestaurantAdapter(Context context, List<Restaurant> restaurantList) {
         this.context = context;
-        this.listRestaurant = restaurantList;
+        this.restaurantList = restaurantList;
     }
-    @NonNull
-    public View getView(int position, @NonNull View convertView, @NonNull ViewGroup parent) {
-        // Tạo hoặc tái sử dụng view cho mỗi item
-        if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_restaurant, parent, false);
+
+    // ViewHolder class
+    public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
+        TextView nameTextView, descriptionTextView;
+        RatingBar ratingBar;
+
+        public RestaurantViewHolder(@NonNull View itemView) {
+            super(itemView);
+            nameTextView = itemView.findViewById(R.id.txtRestaurantName);
+            descriptionTextView = itemView.findViewById(R.id.txtRestaurantDescription);
+            ratingBar = itemView.findViewById(R.id.ratingBarRestaurant);
         }
+    }
 
-        // Lấy đối tượng nhà hàng tại vị trí này
-        Restaurant restaurant = listRestaurant.get(position);
+    @NonNull
+    @Override
+    public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_restaurant, parent, false);
+        return new RestaurantViewHolder(view);
+    }
 
-        // Ánh xạ các view
-        TextView nameTextView = convertView.findViewById(R.id.txtRestaurantName);
-        TextView descriptionTextView = convertView.findViewById(R.id.txtRestaurantDescription);
-        RatingBar ratingBar = convertView.findViewById(R.id.ratingBarRestaurant);
+    @Override
+    public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
+        Restaurant restaurant = restaurantList.get(position);
 
-        // Gán dữ liệu vào các view
-        nameTextView.setText(restaurant.getName());
-        descriptionTextView.setText(restaurant.getDescription());
-        ratingBar.setRating(restaurant.getRating());
-        convertView.setOnClickListener(v -> {
+        // Gán dữ liệu
+        holder.nameTextView.setText(restaurant.getName());
+        holder.descriptionTextView.setText(restaurant.getDescription());
+        holder.ratingBar.setRating(restaurant.getRating());
+
+        // Sự kiện click
+        holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, RestaurantDetailActivity.class);
-            intent.putExtra("restaurant_id", restaurant.getId());  // Truyền restaurant_id
+            intent.putExtra("restaurant_id", restaurant.getId()); // Truyền restaurant_id
             context.startActivity(intent);
         });
+    }
 
-        return convertView;
+    @Override
+    public int getItemCount() {
+        return restaurantList.size();
     }
 }
