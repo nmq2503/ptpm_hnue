@@ -1,5 +1,6 @@
 package com.nmq.foodninjaver2.features.Home.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
 
@@ -53,11 +55,29 @@ public class PopularMenuAdapter extends RecyclerView.Adapter<PopularMenuAdapter.
         holder.menuName.setText(currentItem.getTitle());
         holder.fee.setText(String.valueOf(currentItem.getFee()));
 
-        int drawableResourceId = holder.itemView.getResources().getIdentifier(
-                currentItem.getPic(), "drawable", holder.itemView.getContext().getPackageName()
-        );
-
-        holder.menuPic.setImageResource(drawableResourceId);
+        // Kiểm tra đường dẫn ảnh
+        String imageUrl = currentItem.getPic();
+        Context context = holder.itemView.getContext();
+        if (imageUrl == null || imageUrl.isEmpty()) {
+            // Load ảnh mặc định nếu đường dẫn ảnh rỗng/null
+            holder.menuPic.setImageResource(R.drawable.icon_undefine_user
+            );
+        } else {
+            // Nếu menuPic là tên file trong drawable
+            int drawableResourceId = context.getResources().getIdentifier(
+                    imageUrl, "drawable", context.getPackageName()
+            );
+            if (drawableResourceId != 0) {
+                // Nếu tìm thấy ảnh trong drawable, load ảnh
+                Glide.with(context)
+                        .load(drawableResourceId)
+                        .error(R.drawable.icon_undefine_user) // Ảnh mặc định nếu có lỗi
+                        .into(holder.menuPic);
+            } else {
+                // Nếu không tìm thấy, hiển thị ảnh mặc định
+                holder.menuPic.setImageResource(R.drawable.icon_undefine_user);
+            }
+        }
     }
 
     @Override

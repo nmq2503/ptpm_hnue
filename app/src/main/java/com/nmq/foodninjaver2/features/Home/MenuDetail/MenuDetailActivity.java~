@@ -10,8 +10,6 @@ import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
@@ -37,8 +35,6 @@ public class MenuDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_detail);
 
         rvMenuList = findViewById(R.id.rvMenuList);
-        rvMenuList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
         edtSearch = findViewById(R.id.edtSearch);
         backBtn = findViewById(R.id.backBtn);
 

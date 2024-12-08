@@ -63,8 +63,6 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.FoodCa
             food.setQuantity(0);
             notifyItemChanged(position);
         });
-
-        // TODO: Handle crash when the RecyclerView is empty
     }
 
     @Override
