@@ -1,10 +1,17 @@
 package com.nmq.foodninjaver2.features.Home;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.admin.views.AdminActivity;
 import com.nmq.foodninjaver2.core.SessionManager;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 import com.nmq.foodninjaver2.features.Home.Adapter.PopularMenuAdapter;
@@ -27,6 +35,8 @@ import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
 import com.nmq.foodninjaver2.features.auth.LoginActivity;
 
 import com.bumptech.glide.Glide;
+import com.nmq.foodninjaver2.features.cart.FoodCartActivity;
+import com.nmq.foodninjaver2.features.profile.ProfileActivity;
 
 import java.util.ArrayList;
 
@@ -138,13 +148,63 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intentProfile);
             }
             else if (item.getItemId() == R.id.action_cart) {
-                Intent intentCart= new Intent(HomeActivity.this, CartActivity.class);
+                Intent intentCart= new Intent(HomeActivity.this, FoodCartActivity.class);
                 startActivity(intentCart);
             } return true;
 
         });
 
+        imgAvt.setOnClickListener(v -> {
+            showLogoutConfirmationDialog();
+        });
     }
+
+    private void showLogoutConfirmationDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_alert_dialog);
+
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(false);
+
+        TextView tvTitle = dialog.findViewById(R.id.tvTitle);
+        Button btnDelete = dialog.findViewById(R.id.btnDelete);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+        tvTitle.setText("Bạn có chắc chắn muốn đăng xuất không?");
+        btnDelete.setText("Đồng ý");
+        btnCancel.setText("Hủy");
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        dialog.show();
+    }
+
     // Hàm thiết lập RecyclerView cho menu
     private void recyclerViewMenu() {
         LinearLayoutManager layoutManagerMenu = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -159,6 +219,7 @@ public class HomeActivity extends AppCompatActivity {
         adapter = new PopularMenuAdapter(limitedMenuList);
         recyclerViewMenuList.setAdapter(adapter);
     }
+
     // Hàm thiết lập RecyclerView cho nhà hàng
     private void recyclerViewRes() {
         LinearLayoutManager layoutManagerRes = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
