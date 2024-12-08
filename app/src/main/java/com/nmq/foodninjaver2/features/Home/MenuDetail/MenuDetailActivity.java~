@@ -10,13 +10,10 @@ import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 import com.nmq.foodninjaver2.features.Home.Adapter.PopularMenuAdapter;
 import com.nmq.foodninjaver2.features.Home.HomeActivity;
 import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
@@ -29,6 +26,7 @@ public class MenuDetailActivity extends AppCompatActivity {
     private ArrayList<MenuDomain> menuList, originalMenuList;
     private ImageButton backBtn;
     private EditText edtSearch;
+    DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +35,17 @@ public class MenuDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_detail);
 
         rvMenuList = findViewById(R.id.rvMenuList);
-        rvMenuList.setLayoutManager(new LinearLayoutManager((MenuDetailActivity.this)));
+        edtSearch = findViewById(R.id.edtSearch);
+        backBtn = findViewById(R.id.backBtn);
 
-        menuList = new ArrayList<>();
-        menuList.add(new MenuDomain("Pepperoni pizza", "pop_1", 100.99));
-        menuList.add(new MenuDomain("Cheese Burger", "pop_2", 29.99));
-        menuList.add(new MenuDomain("Hotdog", "pop_3", 25.00));
-        menuList.add(new MenuDomain("Drink", "nuoc_ep_xoai_dao", 20.00));
-        menuList.add(new MenuDomain("Donut", "donut", 40.00));
-        menuList.add(new MenuDomain("BBQ", "bbq", 150.00));
+        dataBaseHelper = new DataBaseHelper(this);
 
+        menuList = dataBaseHelper.getAllMenuItems();
         originalMenuList = new ArrayList<>(menuList);
-        adapter = new PopularMenuAdapter(menuList);
-        rvMenuList.setAdapter(adapter);
+
+        setupRecyclerView();
 
         // Back
-        backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,7 +56,6 @@ public class MenuDetailActivity extends AppCompatActivity {
         });
 
         // Search
-        edtSearch = findViewById(R.id.edtSearch);
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -81,6 +73,12 @@ public class MenuDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setupRecyclerView() {
+        adapter = new PopularMenuAdapter(menuList);
+        rvMenuList.setAdapter(adapter);
+    }
+
     private void fileList(String string) {
         ArrayList<MenuDomain> filteredList = new ArrayList<>();
         for (MenuDomain item : originalMenuList) {
@@ -90,5 +88,5 @@ public class MenuDetailActivity extends AppCompatActivity {
         }
         adapter.updateList(filteredList);
     }
-    }
+
 }

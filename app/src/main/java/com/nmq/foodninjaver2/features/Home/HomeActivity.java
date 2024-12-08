@@ -227,9 +227,9 @@ public class HomeActivity extends AppCompatActivity {
 
         ArrayList<RestaurantDomain> limitedResList = new ArrayList<>();
         if (restaurantList.size() > 4) {
-            limitedResList.addAll(restaurantList.subList(0, 4)); // Lý 4 nhà hàng đầu tiên
+            limitedResList.addAll(restaurantList.subList(0, 4)); // Lấy 4 nhà hàng đầu tiên
         } else {
-            limitedResList.addAll(restaurantList); // Nếu ít hơn 4 nhà hàng, lý toàn bộ
+            limitedResList.addAll(restaurantList); // Nếu ít hơn 4 nhà hàng, lâý toàn bộ
         }
         adapterRes = new RestaurantAdapter(limitedResList);
         recyclerViewRes.setAdapter(adapterRes);
