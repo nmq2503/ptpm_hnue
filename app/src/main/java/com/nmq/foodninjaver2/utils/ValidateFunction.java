@@ -20,7 +20,7 @@ public class ValidateFunction {
 
     public static boolean validatePassword(String password) {
         if (password == null || password.length() < 8) {
-            return false; // Mật khẩu phải có ít nhất 8 ký tự
+            return false;
         }
         String passwordRegex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$";
         return password.matches(passwordRegex);
