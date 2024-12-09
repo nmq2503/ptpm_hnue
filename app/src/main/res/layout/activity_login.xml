@@ -20,212 +20,202 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/ivIconSplash"
-        android:src="@drawable/img_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ScrollView
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/tvTitleSplash"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivIconSplash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:text="@string/app_name"/>
-
-    <TextView
-        android:id="@+id/tvSupTitleSplash"
-        android:text="Deliever Favorite Food"
-        android:textSize="13sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitleSplash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/tvTitleLogin"
-        android:text="Login To Your Account"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSupTitleSplash"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:id="@+id/containerInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitleLogin"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical">
-
-        <com.google.android.material.textfield.TextInputLayout
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitleRegistration"
-            app:startIconDrawable="@drawable/ic_message"
-            app:startIconTint="@color/startColor"
-            app:endIconMode="clear_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/transparent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtEmail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@drawable/custom_bg_text_input"
-                android:hint="Email"
-                android:textColorHint="@color/hint"
-                android:paddingStart="50dp"
-                tools:ignore="RtlSymmetry" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitleRegistration"
-            app:startIconDrawable="@drawable/ic_password"
-            app:startIconTint="@color/startColor"
-            app:endIconMode="password_toggle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/transparent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edtPassword"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@drawable/custom_bg_text_input"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColorHint="@color/hint"
-                android:paddingStart="50dp"
-                tools:ignore="RtlSymmetry" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/text"
-        android:text="Or Continue With"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/containerInput"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textSize="12sp"
-        android:layout_marginVertical="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:id="@+id/containerOptionLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text"
-        android:layout_marginHorizontal="25dp">
-
-        <LinearLayout
-            android:background="@drawable/custom_bg_text_input"
-            android:gravity="center"
-            android:id="@+id/facebook"
-            android:layout_width="150dp"
-            android:layout_height="60dp">
-
-            <ImageView
-                android:src="@drawable/ic_facebook"
-                android:layout_marginRight="10dp"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
-
-            <TextView
-                android:text="Facebook"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-
-        <View
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"/>
-
-        <LinearLayout
-            android:background="@drawable/custom_bg_text_input"
-            android:gravity="center"
-            android:id="@+id/google"
-            android:layout_width="150dp"
-            android:layout_height="60dp">
-
-            <ImageView
-                android:src="@drawable/ic_google"
-                android:layout_marginRight="10dp"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
-
-            <TextView
-                android:text="Facebook"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvRegistration"
-        android:text="Forgot Your Password?"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/containerOptionLogin"
-        app:layout_constraintBottom_toTopOf="@id/btnLogin"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogin"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRegistration"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/custom_bg_button"
-        android:text="Login"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:layout_width="175dp"
-        android:layout_height="60dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivIconSplash"
+                android:src="@drawable/img_logo"
+                android:layout_marginTop="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvTitleSplash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:text="@string/app_name"/>
+
+            <TextView
+                android:id="@+id/tvSupTitleSplash"
+                android:text="Deliever Favorite Food"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tvTitleLogin"
+                android:text="Login To Your Account"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/containerInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitleRegistration"
+                    app:startIconDrawable="@drawable/ic_message"
+                    app:startIconTint="@color/startColor"
+                    app:endIconMode="clear_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@android:color/transparent"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/custom_bg_text_input"
+                        android:hint="Email"
+                        android:textColorHint="@color/hint"
+                        android:paddingStart="50dp"
+                        tools:ignore="RtlSymmetry" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitleRegistration"
+                    app:startIconDrawable="@drawable/ic_password"
+                    app:startIconTint="@color/startColor"
+                    app:endIconMode="password_toggle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@android:color/transparent"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@drawable/custom_bg_text_input"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:textColorHint="@color/hint"
+                        android:paddingStart="50dp"
+                        tools:ignore="RtlSymmetry" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text"
+                android:text="Or Continue With"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginVertical="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/containerOptionLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp">
+
+                <LinearLayout
+                    android:background="@drawable/custom_bg_text_input"
+                    android:gravity="center"
+                    android:id="@+id/facebook"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp">
+
+                    <ImageView
+                        android:src="@drawable/ic_facebook"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"/>
+
+                    <TextView
+                        android:text="Facebook"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"/>
+
+                <LinearLayout
+                    android:background="@drawable/custom_bg_text_input"
+                    android:gravity="center"
+                    android:id="@+id/google"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp">
+
+                    <ImageView
+                        android:src="@drawable/ic_google"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"/>
+
+                    <TextView
+                        android:text="Facebook"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRegistration"
+                android:text="Forgot Your Password?"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/containerOptionLogin"
+                app:layout_constraintBottom_toTopOf="@id/btnLogin"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_bg_button"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_width="175dp"
+                android:layout_height="60dp"/>
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

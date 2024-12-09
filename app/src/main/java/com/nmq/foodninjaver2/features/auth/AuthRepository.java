@@ -14,7 +14,8 @@ public class AuthRepository {
     }
 
     // Thêm tài khoản người dùng mới vào CSDL
-    public boolean insertUser(String userName, String email, String password) {
+    public boolean insertUser(String userName, String firstName, String lastName, String email,
+                              String password, String phoneNumber, String urlImageProfile) {
 
         // Kiểm tra các trường bắt buộc
         if (userName == null || userName.isEmpty() ||
@@ -24,10 +25,19 @@ public class AuthRepository {
         }
 
         // Câu lệnh SQL với các tham số dạng placeholder (?)
-        String sql = "INSERT INTO USER (user_name, email, password, role_id) VALUES (?, ?, ?, 3)";
+        String sql = "INSERT INTO USER (user_name, first_name, last_name, email, " +
+                "password, phone_number, url_image_profile, role_id) VALUES (?, ?, ?, ?, ?, ?, ?, 3)";
 
         // Danh sách các giá trị bind
-        Object[] bindArgs = new Object[] { userName, email, password };
+        Object[] bindArgs = new Object[] {
+                userName,
+                firstName,
+                lastName,
+                email,
+                password,
+                phoneNumber,
+                urlImageProfile
+        };
 
         // Gọi hàm executeNonQuery để thực thi câu lệnh
         return dbHelper.executeNonQuery(sql, bindArgs);

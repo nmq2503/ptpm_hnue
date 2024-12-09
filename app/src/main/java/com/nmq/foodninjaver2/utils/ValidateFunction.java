@@ -13,6 +13,11 @@ public class ValidateFunction {
         return input.trim().replaceAll("\\s+", " ");
     }
 
+    public static boolean validatePhoneNumber(String phoneNumber) {
+        String phoneNumberRegex = "^0\\d{9,10}$";
+        return phoneNumber.matches(phoneNumberRegex);
+    }
+
     public static boolean validateEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return email.matches(emailRegex);
