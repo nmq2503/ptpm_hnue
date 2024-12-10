@@ -1,5 +1,6 @@
 package com.nmq.foodninjaver2.features.Home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -12,13 +13,16 @@ import com.nmq.foodninjaver2.R;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    BottomNavigationView bottomNavigationView;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setSelectedItemId(R.id.action_profile);
 
         bottomNavigationView.setOnItemSelectedListener(item -> {

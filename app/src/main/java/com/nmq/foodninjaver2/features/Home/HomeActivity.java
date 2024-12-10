@@ -20,6 +20,8 @@ import com.nmq.foodninjaver2.features.Home.Adapter.RestaurantAdapter;
 import com.nmq.foodninjaver2.features.Home.DetailRestaurant.RestaurantDetailActivity;
 import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
 import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
+import com.nmq.foodninjaver2.features.cart.FoodCartActivity;
+import com.nmq.foodninjaver2.features.profile.ProfileActivity;
 
 import java.util.ArrayList;
 
@@ -98,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intentProfile);
             }
             else if (item.getItemId() == R.id.action_cart) {
-                Intent intentCart= new Intent(HomeActivity.this, CartActivity.class);
+                Intent intentCart= new Intent(HomeActivity.this, FoodCartActivity.class);
                 startActivity(intentCart);
             } return true;
 

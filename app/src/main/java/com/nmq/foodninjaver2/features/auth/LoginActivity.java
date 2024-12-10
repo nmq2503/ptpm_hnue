@@ -19,6 +19,7 @@ import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.admin.views.AdminActivity;
 import com.nmq.foodninjaver2.core.SessionManager;
 import com.nmq.foodninjaver2.features.Home.HomeActivity;
+import com.nmq.foodninjaver2.features.cart.FoodCartActivity;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -1,11 +1,37 @@
 package com.nmq.foodninjaver2.features.cart;
 
-public class FoodCartModel {
+import java.io.Serializable;
+
+public class FoodCartModel implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private int id;  // Sử dụng int thay vì String cho id
     private String name;
     private String ingredient;
     private int quantity;
     private double price;
-    private int imgId;
+    private String imageUrl;
+
+    // Constructor mặc định
+    public FoodCartModel() {}
+
+    public FoodCartModel(int id, String name, String ingredient, double price, int quantity, String imageUrl) {
+        this.id = id;
+        this.name = name;
+        this.ingredient = ingredient;
+        this.price = Math.max(0, price);
+        this.quantity = Math.max(0, quantity);
+        this.imageUrl = imageUrl;
+    }
+
+    // Getter và Setter
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -31,14 +57,6 @@ public class FoodCartModel {
         this.quantity = Math.max(0, quantity);
     }
 
-    public int getImgId() {
-        return imgId;
-    }
-
-    public void setImgId(int imgId) {
-        this.imgId = imgId;
-    }
-
     public double getPrice() {
         return price;
     }
@@ -47,11 +65,24 @@ public class FoodCartModel {
         this.price = Math.max(0, price);
     }
 
-    public FoodCartModel(String name, String ingredient, double price, int quantity, int imgId) {
-        this.setName(name);
-        this.setIngredient(ingredient);
-        this.setPrice(price);
-        this.setQuantity(quantity);
-        this.setImgId(imgId);
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    // Override toString() để dễ dàng in ra thông tin đối tượng
+    @Override
+    public String toString() {
+        return "FoodCartModel{" +
+                "id=" + id + // sửa id sang int
+                ", name='" + name + '\'' +
+                ", ingredient='" + ingredient + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
 }
