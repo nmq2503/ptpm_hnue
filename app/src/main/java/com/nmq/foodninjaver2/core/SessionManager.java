@@ -24,10 +24,10 @@ public class SessionManager {
     }
 
     // Lưu trạng thái đăng nhập
-    public void createLoginSession(String email, String userId) {
+    public void createLoginSession(String email, int userId) {
         editor.putBoolean(IS_LOGGED_IN, true);
         editor.putString(KEY_EMAIL, email);
-        editor.putString(KEY_USER_ID, userId);
+        editor.putInt(KEY_USER_ID, userId);
         editor.apply();
     }
 
