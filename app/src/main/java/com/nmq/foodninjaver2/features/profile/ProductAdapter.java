@@ -44,7 +44,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         // Xử lý sự kiện click vào ảnh hoặc tên
         View.OnClickListener clickListener = v -> {
-            Intent intent = new Intent(context, ProductDetailActivity.class);
+            Intent intent = new Intent(context, ProductDetail.class);
             intent.putExtra("product_name", product.getName());
             intent.putExtra("product_price", product.getPrice());
             intent.putExtra("product_description", product.getDescription());

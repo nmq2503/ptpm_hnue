@@ -83,6 +83,12 @@
             android:name=".features.Home.CartActivity"
             android:exported="false" />
         <activity
+            android:name=".features.Home.CartAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".features.Home.CartItem"
+            android:exported="false" />
+        <activity
             android:name=".features.Home.HomeActivity"
             android:exported="false" />
         <activity

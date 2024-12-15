@@ -6,11 +6,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
-import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
-
-import java.util.ArrayList;
-
 public class DataBaseHelper extends SQLiteOpenHelper {
     // Tên và phiên bản cơ sở dữ liệu
     private static final String DATABASE_NAME = "FoodNinja.db";
@@ -151,18 +146,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         // Dữ liệu giả cho bảng RESTAURANT
         db.execSQL("INSERT INTO RESTAURANT (restaurant_name, address, email, phone_number, rating, opening_hours, closing_hours, url_image_restaurant, owner_id) VALUES " +
                 "('Pizza Palace', '789 Oak St', 'contact@pizzapalace.com', '111222333', 4.5, '10:00', '22:00', 'url_to_restaurant1', 2)," +
-                "('Burger Barn', '101 Maple St', 'contact@burgerbarn.com', '444555666', 4.2, '11:00', '23:00', 'url_to_restaurant2', 2)," +
-                "('Superstar Cafe', '222 Pine St', 'contact@superstarcafe.com', '777888999', 4.8, '09:00', '21:00', 'res4', 2)," +
-                "('Healthy Food', '333 Birch St', 'contact@healthyfood.com', '222333444', 4.3, '08:00', '22:00', 'res1', 2);");
+                "('Burger Barn', '101 Maple St', 'contact@burgerbarn.com', '444555666', 4.2, '11:00', '23:00', 'url_to_restaurant2', 2);");
 
         // Dữ liệu giả cho bảng MENU_ITEM
         db.execSQL("INSERT INTO MENU_ITEM (restaurant_id, name, description, price, category, available, url_image_item) VALUES " +
-                "(1, 'Pepperoni Pizza', 'Cheese pizza with pepperoni slices', 10.99, 'Pizza', 1, 'pop_1')," +
-                "(2, 'Cheese Burger', 'Beef burger with cheese', 6.99, 'Burger', 1, 'pop_2')," +
-                "(2, 'Hotdog', 'Hotdog with ketchup and mustard', 4.55, 'Hotdog', 1, 'pop_2')," +
-                "(2, 'Fruit Juice', 'Cold drink with ice', 2.10, 'Drink', 1, 'nuoc_ep_xoai_dao')," +
-                "(2, 'Pineapple Bbq', 'Cake with pineapple', 8.99, 'Cake', 1, 'burger'),"+
-                "(2, 'Donut', 'Donut with chocolate', 4.00, 'Cake', 1, 'donut');");
+                "(1, 'Margherita Pizza', 'Classic cheese and tomato pizza', 8.99, 'Pizza', 1, 'url_to_item1')," +
+                "(1, 'Pepperoni Pizza', 'Cheese pizza with pepperoni slices', 10.99, 'Pizza', 1, 'url_to_item2')," +
+                "(2, 'Cheeseburger', 'Beef burger with cheese', 6.99, 'Burger', 1, 'url_to_item3');");
 
         // Dữ liệu giả cho bảng ORDERS
         db.execSQL("INSERT INTO ORDERS (user_id, restaurant_id, status, total_amount, delivery_address, payment_method) VALUES " +
@@ -227,65 +217,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    // Lay duong dan anh
-    public  String getUserProfile(int userId) {
+
+    public Cursor getCartItems(int orderId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String imgUrl = null;
         Cursor cursor = null;
         try {
-            String query = "SELECT url_image_profile FROM USER WHERE user_id = ?";
-            cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
-            if (cursor.moveToFirst()) {
-                imgUrl = cursor.getString(cursor.getColumnIndexOrThrow("url_image_profile"));
-            }
+            String query = "SELECT ORDER_ITEM.order_item_id, MENU_ITEM.name, MENU_ITEM.price, " +
+                    "ORDER_ITEM.quantity, (MENU_ITEM.price * ORDER_ITEM.quantity) AS total_price, " +
+                    "MENU_ITEM.url_image_item " +
+                    "FROM ORDER_ITEM " +
+                    "INNER JOIN MENU_ITEM ON ORDER_ITEM.menu_item_id = MENU_ITEM.item_id " +
+                    "WHERE ORDER_ITEM.order_id = ?;";
+
+            // Truyền `orderId` để lấy các món thuộc đơn hàng này
+            cursor = db.rawQuery(query, new String[]{String.valueOf(orderId)});
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-            db.close();
         }
-        return imgUrl;
-    }
-
-    // Lay du lieu menu
-    public ArrayList<MenuDomain> getAllMenuItems() {
-        ArrayList<MenuDomain> menuList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM MENU_ITEM", null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                String title = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                String pic = cursor.getString(cursor.getColumnIndexOrThrow("url_image_item"));
-                double fee = cursor.getDouble(cursor.getColumnIndexOrThrow("price"));
-
-                menuList.add(new MenuDomain(title, pic, fee));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-
-        return menuList;
-    }
-    // Lay du lieu Restaurant
-    public ArrayList<RestaurantDomain> getAllRestaurants() {
-        ArrayList<RestaurantDomain> restaurantList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM RESTAURANT", null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                String title = cursor.getString(cursor.getColumnIndexOrThrow("restaurant_name"));
-                String pic = cursor.getString(cursor.getColumnIndexOrThrow("url_image_restaurant"));
-
-                restaurantList.add(new RestaurantDomain(title, pic));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-
-        return restaurantList;
+        return cursor;
     }
 }

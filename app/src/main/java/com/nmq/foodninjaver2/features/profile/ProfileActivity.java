@@ -37,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
             startActivity(intent);
             // Lấy thông tin người dùng từ database
-//            String currentEmail = "example@gmail.com"; // Giả sử bạn đang lưu email đăng nhập hiện tại
+//            String currentEmail = "example@gmail.com"; // bạn đang lưu email đăng nhập hiện tại
 //            DataBaseHelper dbHelper = new DataBaseHelper(this);
 //            Cursor cursor = dbHelper.getUserData(currentEmail);
 

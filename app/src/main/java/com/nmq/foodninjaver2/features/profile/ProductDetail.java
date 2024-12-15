@@ -7,7 +7,8 @@ import android.widget.TextView;
 
 import com.nmq.foodninjaver2.R;
 
-class ProductDetailActivity extends AppCompatActivity {
+public class ProductDetail extends AppCompatActivity {
+
 
     private TextView productNameTextView, productPriceTextView, productDescriptionTextView;
     private ImageView productImageView;
