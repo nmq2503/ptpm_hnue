@@ -63,9 +63,9 @@ public class FoodCartActivity extends AppCompatActivity implements FoodCartAdapt
 
     private void addSampleDataToCart() {
         // Thêm dữ liệu mẫu vào giỏ hàng (Thay vì lấy từ cơ sở dữ liệu)
-        foodCartList.add(new FoodCartModel(1, "Pizza", "", 12.99, 2, "url_image_1"));
-        foodCartList.add(new FoodCartModel(2, "Burger", "", 8.49, 1, "url_image_2"));
-        foodCartList.add(new FoodCartModel(3, "Pasta", "", 10.99, 3, "url_image_3"));
+        foodCartList.add(new FoodCartModel(1, "Soup", "", 12.99, 2, R.drawable.img1));
+        foodCartList.add(new FoodCartModel(2, "Noodles", "", 8.49, 1, R.drawable.img2));
+        foodCartList.add(new FoodCartModel(3, "Pasta", "", 10.99, 3, R.drawable.img3));
     }
 
     private void displayCartItems(List<FoodCartModel> foodCartList) {

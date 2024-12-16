@@ -10,19 +10,18 @@ public class FoodCartModel implements Serializable {
     private String ingredient;
     private int quantity;
     private double price;
-    private String imageUrl;
+    private int imageResId; // Thay đổi từ String thành int để lưu ID tài nguyên hình ảnh
 
     // Constructor mặc định
     public FoodCartModel() {}
 
-    // Constructor với tham số
-    public FoodCartModel(int id, String name, String ingredient, double price, int quantity, String imageUrl) {
+    public FoodCartModel(int id, String name, String ingredient, double price, int quantity, int imageResId) {
         this.id = id;
         this.name = name;
         this.ingredient = ingredient;
-        this.price = price > 0 ? price : 0; // Kiểm tra giá trị price không âm
-        this.quantity = quantity > 0 ? quantity : 1; // Đảm bảo quantity >= 1
-        this.imageUrl = imageUrl;
+        this.price = Math.max(0, price);
+        this.quantity = Math.max(0, quantity);
+        this.imageResId = imageResId;  // Sử dụng ID tài nguyên
     }
 
     // Getter và Setter
@@ -55,7 +54,7 @@ public class FoodCartModel implements Serializable {
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = Math.max(1, quantity); // Đảm bảo quantity ít nhất là 1
+        this.quantity = Math.max(0, quantity);
     }
 
     public double getPrice() {
@@ -63,18 +62,17 @@ public class FoodCartModel implements Serializable {
     }
 
     public void setPrice(double price) {
-        this.price = Math.max(0, price); // Đảm bảo price không âm
+        this.price = Math.max(0, price);
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public int getImageResId() {  // Sử dụng int thay vì String
+        return imageResId;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageResId(int imageResId) {  // Thay đổi từ String thành int
+        this.imageResId = imageResId;
     }
 
-    // Override toString() để dễ dàng in ra thông tin đối tượng
     @Override
     public String toString() {
         return "FoodCartModel{" +
@@ -83,7 +81,7 @@ public class FoodCartModel implements Serializable {
                 ", ingredient='" + ingredient + '\'' +
                 ", quantity=" + quantity +
                 ", price=" + price +
-                ", imageUrl='" + imageUrl + '\'' +
+                ", imageResId=" + imageResId +  // Sử dụng imageResId thay vì imageUrl
                 '}';
     }
 }

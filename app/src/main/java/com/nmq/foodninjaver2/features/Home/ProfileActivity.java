@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.features.cart.FoodCartActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -35,7 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
             else if (item.getItemId() == R.id.action_cart) {
-                Intent intentCart= new Intent(ProfileActivity.this, CartActivity.class);
+                Intent intentCart= new Intent(ProfileActivity.this, FoodCartActivity.class);
                 startActivity(intentCart);
                 finish();
             } return true;
