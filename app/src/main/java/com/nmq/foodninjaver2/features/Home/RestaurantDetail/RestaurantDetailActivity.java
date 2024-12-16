@@ -17,6 +17,7 @@ import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 import com.nmq.foodninjaver2.features.Home.HomeActivity;
 import com.nmq.foodninjaver2.features.Home.Adapter.RestaurantAdapter;
 import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
+import com.nmq.foodninjaver2.features.Home.Repository.HomeRepository;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
     private ArrayList<RestaurantDomain> restaurantList, originalRestaurantList;
     private ImageButton btnBack;
     private EditText edtTimKiem;
-    DataBaseHelper dataBaseHelper;
+    private HomeRepository homeRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         rvRestaurantList = findViewById(R.id.rvRestaurantList);
         rvRestaurantList.setLayoutManager(new GridLayoutManager(this,2));
 
-        dataBaseHelper = new DataBaseHelper(this);
+        homeRepository = new HomeRepository(this);
 
-        restaurantList = dataBaseHelper.getAllRestaurants();
+        restaurantList = homeRepository.getAllRestaurants();
         originalRestaurantList = new ArrayList<>(restaurantList);
 
         setUpRecyclerView();

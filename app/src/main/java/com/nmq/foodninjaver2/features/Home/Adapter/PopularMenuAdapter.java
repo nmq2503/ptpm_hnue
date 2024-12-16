@@ -1,6 +1,7 @@
 package com.nmq.foodninjaver2.features.Home.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.features.Home.MenuDetail.ItemMenuActivity;
+import com.nmq.foodninjaver2.features.Home.MenuDetail.MenuDetailActivity;
 import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
 
 import java.util.ArrayList;
@@ -78,6 +81,14 @@ public class PopularMenuAdapter extends RecyclerView.Adapter<PopularMenuAdapter.
                 holder.menuPic.setImageResource(R.drawable.icon_undefine_user);
             }
         }
+
+        holder.mainLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ItemMenuActivity.class);
+            intent.putExtra("menuTitle", currentItem.getTitle());
+            intent.putExtra("menuPic", currentItem.getPic());
+            intent.putExtra("menuFee", currentItem.getFee());
+            context.startActivity(intent);
+        });
     }
 
     @Override
