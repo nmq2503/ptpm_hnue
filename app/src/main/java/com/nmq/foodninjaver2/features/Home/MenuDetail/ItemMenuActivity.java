@@ -1,6 +1,8 @@
 package com.nmq.foodninjaver2.features.Home.MenuDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -13,6 +15,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
+import com.nmq.foodninjaver2.features.Home.HomeActivity;
+import com.nmq.foodninjaver2.features.Home.RestaurantDetail.RestaurantDetailActivity;
 
 public class ItemMenuActivity extends AppCompatActivity {
     ImageView menuItemBackBtn, imgItemMenu;
@@ -38,5 +42,13 @@ public class ItemMenuActivity extends AppCompatActivity {
         descriptionsTv = findViewById(R.id.descriptionsTv);
         addToCartBtn = findViewById(R.id.addToCartBtn);
         rvReview = findViewById(R.id.rvReview);
+
+        menuItemBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ItemMenuActivity.this, MenuDetailActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
