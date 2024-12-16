@@ -28,6 +28,7 @@ import com.nmq.foodninjaver2.core.SessionManager;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 import com.nmq.foodninjaver2.features.Home.Adapter.PopularMenuAdapter;
 import com.nmq.foodninjaver2.features.Home.Adapter.RestaurantAdapter;
+import com.nmq.foodninjaver2.features.Home.Repository.HomeRepository;
 import com.nmq.foodninjaver2.features.Home.RestaurantDetail.RestaurantDetailActivity;
 import com.nmq.foodninjaver2.features.Home.MenuDetail.MenuDetailActivity;
 import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
@@ -50,6 +51,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView tvViewMore, tvViewMoreMenu;
     private ImageView imgAvt;
     private DataBaseHelper dataBaseHelper;
+    private HomeRepository homeRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +68,18 @@ public class HomeActivity extends AppCompatActivity {
 
         // Khoi tao database
         dataBaseHelper = new DataBaseHelper(this);
+        homeRepository = new HomeRepository(this);
+//        myRepository = new MyRepository(dataBaseHelper);
 
         // Khởi tạo SessionManager để lấy thông tin phiên đăng nhập
         SessionManager sessionManager = new SessionManager(this);
 
         // Lấy danh sách món ăn từ DatabaseHelper
-        menuList = dataBaseHelper.getAllMenuItems();
+        menuList = homeRepository.getAllMenuItems();
         originalMenuList = new ArrayList<>(menuList); // Luu DS goc
 
         // Lấy danh sách nhà hàng từ DatabaseHelper
-        restaurantList = dataBaseHelper.getAllRestaurants();
+        restaurantList = homeRepository.getAllRestaurants();
         originalRestaurantList = new ArrayList<>(restaurantList);
 
         // Thiet lap RecyclerView
@@ -90,8 +94,7 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            DataBaseHelper dbHelper = new DataBaseHelper(this);
-            String imgUrl = dbHelper.getUserProfile(userId);
+            String imgUrl = dataBaseHelper.getUserProfile(userId);
             imgAvt = findViewById(R.id.imgAvt);
             if (imgUrl != null) {
                 imgAvt.setImageResource(R.drawable.icon_undefine_user);
@@ -119,7 +122,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 //        // View More Menu
-        tvViewMoreMenu = findViewById(R.id.tvViewMoreMenu);
         tvViewMoreMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,8 +130,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        // View more Res
-        tvViewMore = findViewById(R.id.tvViewMore);
+        // View more Restaurant
         tvViewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
