@@ -1,8 +1,5 @@
 package com.nmq.foodninjaver2.features.cart;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,19 +26,19 @@ public class FoodCartActivity extends AppCompatActivity implements FoodCartAdapt
 
     private List<FoodCartModel> foodCartList;
     private FoodCartAdapter foodCartAdapter;
-    private DataBaseHelper dbHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodcart);
 
-        dbHelper = new DataBaseHelper(this);
         initializeUIComponents();
         setupButtonListeners();
 
         foodCartList = new ArrayList<>();
-        fetchCartItems();
+        // Thêm dữ liệu mẫu vào giỏ hàng
+        addSampleDataToCart();
+        displayCartItems(foodCartList);
     }
 
     private void initializeUIComponents() {
@@ -55,48 +51,22 @@ public class FoodCartActivity extends AppCompatActivity implements FoodCartAdapt
         scrollViewCart = findViewById(R.id.scrollviewcart);
     }
 
-    // Khong hieu cau lenh nay la sao
     private void setupButtonListeners() {
         backBtn.setOnClickListener(v -> finish());
 
         findViewById(R.id.buttonPlaceOrder).setOnClickListener(v -> {
-            saveOrder();
+            // Mô phỏng đặt hàng thành công
             Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
             finish();
         });
     }
 
-    private void fetchCartItems() {
-        foodCartList.clear(); // Xóa danh sách cũ
-        SQLiteDatabase db = dbHelper.getReadableDatabase(); // Mở cơ sở dữ liệu ở chế độ chỉ đọc
-
-        // Truy vấn kết hợp bảng ORDER_ITEM và MENU_ITEM
-        Cursor cursor = db.rawQuery("SELECT * FROM ORDER_ITEM INNER JOIN MENU_ITEM " +
-                "ON ORDER_ITEM.menu_item_id = MENU_ITEM.item_id", null);
-
-        // Kiểm tra cursor
-        if (cursor != null) {
-            // Duyệt qua các dòng dữ liệu trả về
-            while (cursor.moveToNext()) {
-                // Lấy dữ liệu từ cursor theo tên cột
-                int itemId = cursor.getInt(cursor.getColumnIndexOrThrow("menu_item_id")); // ID của item
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("name")); // Tên món
-                double price = cursor.getDouble(cursor.getColumnIndexOrThrow("price")); // Giá
-                int quantity = cursor.getInt(cursor.getColumnIndexOrThrow("quantity")); // Số lượng
-                String image = cursor.getString(cursor.getColumnIndexOrThrow("url_image_item")); // URL hình ảnh
-
-                // Tạo đối tượng FoodCartModel và thêm vào danh sách
-                FoodCartModel model = new FoodCartModel(itemId, name, "", price, quantity, image);
-                foodCartList.add(model);
-            }
-            cursor.close(); // Đóng cursor sau khi sử dụng
-        }
-
-        db.close(); // Đóng cơ sở dữ liệu
-        displayCartItems(foodCartList); // Hiển thị danh sách
+    private void addSampleDataToCart() {
+        // Thêm dữ liệu mẫu vào giỏ hàng (Thay vì lấy từ cơ sở dữ liệu)
+        foodCartList.add(new FoodCartModel(1, "Pizza", "", 12.99, 2, "url_image_1"));
+        foodCartList.add(new FoodCartModel(2, "Burger", "", 8.49, 1, "url_image_2"));
+        foodCartList.add(new FoodCartModel(3, "Pasta", "", 10.99, 3, "url_image_3"));
     }
-
-
 
     private void displayCartItems(List<FoodCartModel> foodCartList) {
         foodCartAdapter = new FoodCartAdapter(this, foodCartList, this);
@@ -132,38 +102,27 @@ public class FoodCartActivity extends AppCompatActivity implements FoodCartAdapt
 
     @Override
     public void onQuantityChanged(FoodCartModel model, int newQuantity) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // Sử dụng phương thức update thay vì execSQL
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("quantity", newQuantity);
-
-        String whereClause = "menu_item_id = ?";
-        String[] whereArgs = new String[] { String.valueOf(model.getId()) }; // Lấy id là kiểu int
-
-        // Cập nhật số lượng món ăn trong bảng ORDER_ITEM
-        db.update("ORDER_ITEM", contentValues, whereClause, whereArgs);
-        db.close();
-
-        fetchCartItems();
+        // Cập nhật lại số lượng món trong giỏ hàng
+        model.setQuantity(newQuantity);
+        foodCartAdapter.notifyDataSetChanged();
+        updatePriceDetails(foodCartList);
     }
 
-
-    private void saveOrder() {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        // Xóa toàn bộ các món trong giỏ hàng
-        db.execSQL("DELETE FROM ORDER_ITEM");
-        db.close();
-        fetchCartItems();
-    }
-
+    /**
+     *
+     */
     @Override
     public void onQuantityChanged() {
-        // Phương thức này không cần thiết, có thể bỏ qua hoặc loại bỏ
+
+    }
+
+    private void saveOrder() {
+        // Thực hiện lưu trữ đơn hàng (Chức năng không cần thiết ở đây)
     }
 
     @Override
     public void onTotalPriceChanged(double totalPrice) {
-        // Nếu cần cập nhật tổng giá trị khi thay đổi số lượng, gọi updatePriceDetails()
+        // Cập nhật lại giá trị tổng khi thay đổi số lượng món
         updatePriceDetails(foodCartList);
     }
 }

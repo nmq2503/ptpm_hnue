@@ -15,12 +15,13 @@ public class FoodCartModel implements Serializable {
     // Constructor mặc định
     public FoodCartModel() {}
 
+    // Constructor với tham số
     public FoodCartModel(int id, String name, String ingredient, double price, int quantity, String imageUrl) {
         this.id = id;
         this.name = name;
         this.ingredient = ingredient;
-        this.price = Math.max(0, price);
-        this.quantity = Math.max(0, quantity);
+        this.price = price > 0 ? price : 0; // Kiểm tra giá trị price không âm
+        this.quantity = quantity > 0 ? quantity : 1; // Đảm bảo quantity >= 1
         this.imageUrl = imageUrl;
     }
 
@@ -54,7 +55,7 @@ public class FoodCartModel implements Serializable {
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = Math.max(0, quantity);
+        this.quantity = Math.max(1, quantity); // Đảm bảo quantity ít nhất là 1
     }
 
     public double getPrice() {
@@ -62,7 +63,7 @@ public class FoodCartModel implements Serializable {
     }
 
     public void setPrice(double price) {
-        this.price = Math.max(0, price);
+        this.price = Math.max(0, price); // Đảm bảo price không âm
     }
 
     public String getImageUrl() {
@@ -77,7 +78,7 @@ public class FoodCartModel implements Serializable {
     @Override
     public String toString() {
         return "FoodCartModel{" +
-                "id=" + id + // sửa id sang int
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", ingredient='" + ingredient + '\'' +
                 ", quantity=" + quantity +

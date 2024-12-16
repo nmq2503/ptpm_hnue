@@ -1,8 +1,6 @@
 package com.nmq.foodninjaver2.features.cart;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +13,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
-import com.nmq.foodninjaver2.features.cart.FoodCartModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -26,12 +21,10 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.FoodCa
     private List<FoodCartModel> foodList;
     private Context context;
     private final QuantityChangeListener quantityChangeListener;
-    private DataBaseHelper dbHelper;
 
     public FoodCartAdapter(Context context, List<FoodCartModel> foodList, QuantityChangeListener listener) {
         this.context = context;
         this.foodList = foodList;
-        this.dbHelper = new DataBaseHelper(context);
         this.quantityChangeListener = listener;
     }
 
@@ -46,9 +39,6 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.FoodCa
     public void onBindViewHolder(@NonNull FoodCartViewHolder holder, int position) {
         FoodCartModel food = foodList.get(position);
 
-        Picasso.get()
-                .load(food.getImageUrl())
-                .into(holder.itemImg);
 
         holder.itemName.setText(food.getName());
         holder.itemIngredient.setText(food.getIngredient());
@@ -67,7 +57,6 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.FoodCa
     private void decreaseQuantity(FoodCartModel food, int position, FoodCartViewHolder holder) {
         if (food.getQuantity() > 1) {
             food.setQuantity(food.getQuantity() - 1);
-            updateFoodQuantityInDb(food);
             holder.itemQuantity.setText(String.valueOf(food.getQuantity()));
             notifyTotalPrice();
         } else {
@@ -77,38 +66,15 @@ public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.FoodCa
 
     private void increaseQuantity(FoodCartModel food, FoodCartViewHolder holder, int position) {
         food.setQuantity(food.getQuantity() + 1);
-        updateFoodQuantityInDb(food);
         holder.itemQuantity.setText(String.valueOf(food.getQuantity()));
         notifyTotalPrice();
     }
 
     private void removeItemFromCart(FoodCartModel food, int position) {
-        removeFoodFromDb(food);
         foodList.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, foodList.size());
         notifyTotalPrice();
-    }
-
-    private void updateFoodQuantityInDb(FoodCartModel food) {
-        SQLiteDatabase db = null;
-        try {
-            db = dbHelper.getWritableDatabase();
-            ContentValues values = new ContentValues();
-            values.put("quantity", food.getQuantity());
-            db.update(DataBaseHelper.TABLE_MENU_ITEM, values, "item_id = ?", new String[]{String.valueOf(food.getId())});
-        } catch (Exception e) {
-            e.printStackTrace(); // Ghi lại log để kiểm tra lỗi
-        } finally {
-            if (db != null) db.close();
-        }
-    }
-
-
-    private void removeFoodFromDb(FoodCartModel food) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String deleteQuery = "DELETE FROM " + DataBaseHelper.TABLE_MENU_ITEM + " WHERE item_id = ?";
-        db.execSQL(deleteQuery, new Object[]{food.getId()});
     }
 
     private void notifyTotalPrice() {
