@@ -74,7 +74,8 @@ public class LoginActivity extends AppCompatActivity {
         boolean isValid = authRepository.checkLogin(email, password);
 
         if (isValid) {
-            sessionManager.createLoginSession(email);
+            int userId = authRepository.getUserIdByEmail(email);
+            sessionManager.createLoginSession(email, userId);
 
             Toast.makeText(this, "Đăng nhập thành công! Chào mừng " + email, Toast.LENGTH_SHORT).show();
 
