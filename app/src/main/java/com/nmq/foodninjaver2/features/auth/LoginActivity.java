@@ -1,40 +1,35 @@
 package com.nmq.foodninjaver2.features.auth;
 
-import static android.app.PendingIntent.getActivity;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.nmq.foodninjaver2.MainActivity;
 import com.nmq.foodninjaver2.R;
-import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
-import com.nmq.foodninjaver2.features.splash.FirstSplashActivity;
-import com.nmq.foodninjaver2.features.splash.SecondSplashActivity;
+import com.nmq.foodninjaver2.admin.views.AdminActivity;
+import com.nmq.foodninjaver2.core.SessionManager;
+import com.nmq.foodninjaver2.features.Home.HomeActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
     TextInputEditText edtEmail, edtPassword;
     AppCompatButton btnLogin;
-    DataBaseHelper dataBaseHelper;
+    AuthRepository authRepository;
     TextView tvRegistration;
+
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sessionManager = new SessionManager(this);
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
@@ -43,10 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         tvRegistration = findViewById(R.id.tvRegistration);
 
-        dataBaseHelper = new DataBaseHelper(this);
+        authRepository = new AuthRepository(this);
 
         btnLogin.setOnClickListener(v -> {
-            // Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_homeFragment);
             handleLogin();
         });
 
@@ -77,23 +71,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void authenticateUser(String email, String password) {
-        boolean isValid = dataBaseHelper.checkLogin(email, password);
-
-        // Kiểm tra điều kiện lần đầu vào app
-        SharedPreferences preferences = getSharedPreferences(MainActivity.PREFS_NAME, Context.MODE_PRIVATE);
-        boolean isFirstLaunch = preferences.getBoolean(MainActivity.KEY_FIRST_LAUNCH, true);
+        boolean isValid = authRepository.checkLogin(email, password);
 
         if (isValid) {
-            Toast.makeText(this, "Login successful! Welcome " + email, Toast.LENGTH_SHORT).show();
+            sessionManager.createLoginSession(email);
 
-            if (isFirstLaunch) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                preferences.edit().putBoolean(MainActivity.KEY_FIRST_LAUNCH, false).apply();
+            Toast.makeText(this, "Đăng nhập thành công! Chào mừng " + email, Toast.LENGTH_SHORT).show();
+
+            // Kiểm tra nếu là tài khoản admin
+            if (email.equals("quanggg2503@gmail.com") && password.equals("12345678")) {
+                // Sử dụng Intent để chuyển đến AdminActivity và xóa hết các Activity trước đó
+                Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Xóa tất cả Activity trước đó
+                startActivity(intent);
             } else {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                // Chuyển đến MainActivity nếu không phải admin
+                if (sessionManager.isLoggedIn()) {
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                }
             }
         } else {
-            Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Email hoặc mật khẩu không hợp lệ! Vui lòng nhập lại!", Toast.LENGTH_SHORT).show();
         }
     }
 }

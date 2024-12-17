@@ -16,12 +16,13 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.textfield.TextInputEditText;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
+import com.nmq.foodninjaver2.utils.ValidateFunction;
 
 public class RegisterActivity extends AppCompatActivity {
 
     TextInputEditText edtUsername, edtEmail, edtPassword;
     AppCompatButton btnRegistration;
-    DataBaseHelper dataBaseHelper;
+    AuthRepository authRepository;
     TextView tvLogin;
 
     @Override
@@ -36,7 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegistration = findViewById(R.id.btnRegistration);
         tvLogin = findViewById(R.id.tvLogin);
 
-        dataBaseHelper = new DataBaseHelper(this);
+        authRepository = new AuthRepository(this);
 
         btnRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,26 +60,22 @@ public class RegisterActivity extends AppCompatActivity {
         String password = edtPassword.getText().toString().trim();
 
         if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Không được để trống!", Toast.LENGTH_SHORT).show();
         } else {
-            if (!dataBaseHelper.checkEmail(email)) {
-                if (validPassword(password)) {
+            if (!authRepository.checkEmail(email)) {
+                if (ValidateFunction.validatePassword(password)) {
                     // Add user to database
-                    if (dataBaseHelper.insertUser(username, email, password)) {
-                        Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                    if (authRepository.insertUser(username, email, password)) {
+                        Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
                         // Chuyển sang màn hình đăng nhập
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     }
                 } else {
-                    Toast.makeText(this, "Password must be at least 8 characters!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm 1 số và 1 ký tự đặc biệt!", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(this, "Email already exists!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Email đã tồn tại! Vui lòng nhập email khác!", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    private boolean validPassword(String password) {
-        return password.length() >= 8;
     }
 }

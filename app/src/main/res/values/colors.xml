@@ -9,5 +9,20 @@
     <color name="hint">#4D3B3B3B</color>
 
     <color name="startColor">#53E88B</color> <!-- Màu bắt đầu của gradient -->
-    <color name="endColor">#15BE77</color>   <!-- Màu kết thúc của gradient -->
+    <color name="endColor">#15BE77</color>
+    <color name="colorPrimary">#004d40</color>
+    <color name="colorPrimaryDark">#00251a</color>
+    <color name="colorAccent">#39796b</color>
+    <color name="placeholder_color">#CCCCCC</color>  <!-- Màu xám nhạt -->
+
+    <color name="color_selected_bottom_nav">#F64D41</color><!-- Màu kết thúc của gradient -->
+
+
+    <!-- Màu cho nút Cancel -->
+    <color name="colorCancelDefault">#F44336</color> <!-- Màu đỏ cho nút Cancel -->
+    <color name="colorCancelPressed">#D32F2F</color> <!-- Màu đỏ đậm khi nhấn -->
+
+    <!-- Màu cho nút Save -->
+    <color name="colorSaveDefault">#4CAF50</color> <!-- Màu xanh cho nút Save -->
+    <color name="colorSavePressed">#388E3C</color> <!-- Màu xanh đậm khi nhấn -->
 </resources>
