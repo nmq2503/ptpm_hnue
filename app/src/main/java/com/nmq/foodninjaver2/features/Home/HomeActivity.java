@@ -1,11 +1,19 @@
 package com.nmq.foodninjaver2.features.Home;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,9 +25,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.features.Home.Adapter.PopularMenuAdapter;
 import com.nmq.foodninjaver2.features.Home.Adapter.RestaurantAdapter;
-import com.nmq.foodninjaver2.features.Home.DetailRestaurant.RestaurantDetailActivity;
 import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
 import com.nmq.foodninjaver2.features.Home.Model.RestaurantDomain;
+import com.nmq.foodninjaver2.features.Home.RestaurantDetail.RestaurantDetailActivity;
+import com.nmq.foodninjaver2.features.auth.LoginActivity;
 import com.nmq.foodninjaver2.features.cart.FoodCartActivity;
 import com.nmq.foodninjaver2.features.profile.ProfileActivity;
 
@@ -33,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     private ArrayList<RestaurantDomain> restaurantList, originalRestaurantList;
     private EditText edtTimKiem;
     private TextView tvViewMore;
+    private ImageView imgAvt;
 
     //    ArrayList<MenuDomain> listSanPhamGoc;
     @Override
@@ -40,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        imgAvt = findViewById(R.id.imgAvt);
         edtTimKiem = findViewById(R.id.edtTimKiem);
 
         recyclerViewMenu();
@@ -106,6 +117,56 @@ public class HomeActivity extends AppCompatActivity {
 
         });
 
+        imgAvt.setOnClickListener(v -> {
+            showLogoutConfirmationDialog();
+        });
+
+    }
+
+    private void showLogoutConfirmationDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_alert_dialog);
+
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(false);
+
+        TextView tvTitle = dialog.findViewById(R.id.tvTitle);
+        Button btnDelete = dialog.findViewById(R.id.btnDelete);
+        Button btnCancel = dialog.findViewById(R.id.btnCancel);
+
+        tvTitle.setText("Bạn có chắc chắn muốn đăng xuất không?");
+        btnDelete.setText("Đồng ý");
+        btnCancel.setText("Hủy");
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        dialog.show();
     }
 
     private void filterList(String text) {

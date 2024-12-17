@@ -20,6 +20,8 @@ import java.util.List;
 
 public class FoodCartAdapter extends RecyclerView.Adapter<FoodCartAdapter.FoodCartViewHolder> {
     private List<FoodCartModel> foodList;
+    private Context context;
+    private QuantityChangeListener quantityChangeListener;
 
     public FoodCartAdapter(Context context, List<FoodCartModel> foodList, QuantityChangeListener listener) {
         this.context = context;
