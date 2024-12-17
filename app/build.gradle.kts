@@ -48,7 +48,7 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.squareup.picasso:picasso:2.8")
 
-  // Sử dụng Picasso từ libs
+    // Sử dụng Picasso từ libs
     testImplementation(libs.junit)
 
     implementation("com.github.bumptech.glide:glide:4.12.0")

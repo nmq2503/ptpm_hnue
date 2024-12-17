@@ -258,7 +258,7 @@ public class AdminEditUserActivity extends AppCompatActivity {
             // Tạo thư mục lưu ảnh
             File directory = new File(getFilesDir(), "user_images"); // Thư mục "user_images"
             if (!directory.exists()) {
-                directory.mkdirs(); // Tạo thư mục nếu chưa tồn tại
+                directory.mkdirs();
             }
 
             // Tạo tên file duy nhất

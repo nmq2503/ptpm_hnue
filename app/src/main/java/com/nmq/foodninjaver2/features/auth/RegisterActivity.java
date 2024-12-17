@@ -64,13 +64,6 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
             if (!authRepository.checkEmail(email)) {
                 if (ValidateFunction.validatePassword(password)) {
-                    // Add user to database
-//                    if (authRepository.insertUser(username, email, password)) {
-//                        Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-//                        // Chuyển sang màn hình đăng nhập
-//                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-//                    }
-
                     Intent intent = new Intent(RegisterActivity.this, RegisterProcessActivity.class);
                     intent.putExtra("user_name", username);
                     intent.putExtra("email", email);
