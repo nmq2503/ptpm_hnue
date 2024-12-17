@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="120dp"
     >
-
     <androidx.cardview.widget.CardView
         android:id="@+id/foodCom"
-        android:layout_width="390dp"
-        android:layout_height="120dp"
+        android:layout_width="395dp"
+        android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         app:cardElevation="4dp"
@@ -18,87 +17,67 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="12dp"
         tools:ignore="MissingConstraints">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:padding="5dp">
-
+            android:layout_height="100dp"
+            android:padding="8dp">
 
             <ImageView
                 android:id="@+id/dish_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/dish_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:text="TextView"
-                android:textColor="#000000"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="82dp" />
-
-            <!-- Subtitle for the restaurant name -->
-            <TextView
-                android:id="@+id/restaurant_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Text View"
-                android:textColor="#888888"
-                android:textSize="17sp"
-                app:layout_constraintTop_toBottomOf="@id/dish_title"
-                tools:layout_editor_absoluteX="82dp" />
-
-            <!-- Price TextView -->
-            <TextView
-                android:id="@+id/dish_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Text view"
-                android:textColor="#00CC00"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/restaurant_name"
-                app:layout_constraintTop_toBottomOf="@id/restaurant_name" />
-
-            <!-- Add/Remove Quantity Layout -->
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/removeItemBtn"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_alignParentEnd="true"
-                android:background="#FFF"
-                android:drawableStart="@drawable/delete_button"
-                android:gravity="center"
-                android:padding="3dp"
-                tools:layout_editor_absoluteX="346dp"
-                tools:layout_editor_absoluteY="-4dp"
-                android:text="."/>
+                android:layout_marginTop="15dp"
+                tools:srcCompat="@tools:sample/avatars"/>
 
             <LinearLayout
-                android:id="@+id/quantity_layout"
+                android:id="@+id/foodcartInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/dish_image"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/dish_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên món ăn"
+                    android:textSize="18sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="82dp"/>
+
+                <TextView
+                    android:id="@+id/restaurant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Nha hang"
+                    android:textColor="#888888"
+                    android:textSize="13sp"
+                    tools:layout_editor_absoluteX="82dp"/>
+
+                <TextView
+                    android:id="@+id/dish_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#00CC00"
+                    android:text="$Giá sản phẩm"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:layout_alignParentRight="true">
 
-
-                <!-- Minus button -->
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_minus"
                     android:layout_width="48dp"
@@ -107,9 +86,9 @@
                     android:text="-"
                     android:textAlignment="center"
                     android:textColor="#143E16"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"/>
 
-                <!-- Quantity TextView -->
+
                 <TextView
                     android:id="@+id/quantity_text"
                     android:layout_width="wrap_content"
@@ -118,24 +97,20 @@
                     android:paddingHorizontal="8dp"
                     android:text="0"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"/>
 
-                <!-- Plus button -->
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_plus"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@drawable/ic_plus"
+                    android:drawableStart="@drawable/subtract_button"
                     android:text="+"
                     android:textAlignment="center"
                     android:textColor="#CEEFCF"
                     android:textSize="25sp" />
 
-
             </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
