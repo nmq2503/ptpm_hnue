@@ -10,6 +10,7 @@ public class MenuDomain {
         this.pic = pic;
         this.fee = fee;
     }
+
     public String getTitle() {
         return title;
     }
@@ -33,4 +34,5 @@ public class MenuDomain {
     public void setFee(double fee) {
         this.fee = fee;
     }
+
 }

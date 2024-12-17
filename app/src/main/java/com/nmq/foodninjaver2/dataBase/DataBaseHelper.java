@@ -150,10 +150,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         // Dữ liệu giả cho bảng RESTAURANT
         db.execSQL("INSERT INTO RESTAURANT (restaurant_name, address, email, phone_number, rating, opening_hours, closing_hours, url_image_restaurant, owner_id) VALUES " +
-                "('Pizza Palace', '789 Oak St', 'contact@pizzapalace.com', '111222333', 4.5, '10:00', '22:00', 'url_to_restaurant1', 2)," +
-                "('Burger Barn', '101 Maple St', 'contact@burgerbarn.com', '444555666', 4.2, '11:00', '23:00', 'url_to_restaurant2', 2)," +
+                "('Pizza Palace', '789 Oak St', 'contact@pizzapalace.com', '111222333', 4.5, '10:00', '22:00', 'res5', 2)," +
+                "('Burger Barn', '101 Maple St', 'contact@burgerbarn.com', '444555666', 4.2, '11:00', '23:00', 'res2', 2)," +
                 "('Superstar Cafe', '222 Pine St', 'contact@superstarcafe.com', '777888999', 4.8, '09:00', '21:00', 'res4', 2)," +
-                "('Healthy Food', '333 Birch St', 'contact@healthyfood.com', '222333444', 4.3, '08:00', '22:00', 'res1', 2);");
+                "('Healthy Food', '333 Birch St', 'contact@healthyfood.com', '222333444', 4.3, '08:00', '22:00', 'res1', 2)," +
+                "('Tasty Treats', '444 Cedar St', 'contact@tastytreats.com', '555666777', 4.7, '10:00', '23:00', 'res3', 2)," +
+                "('Delicious Desserts', '555 Spruce St', 'contact@deliciousdesserts.com', '888999000', 4.9, '09:00', '21:00', 'url_to_image5', 2);");
 
         // Dữ liệu giả cho bảng MENU_ITEM
         db.execSQL("INSERT INTO MENU_ITEM (restaurant_id, name, description, price, category, available, url_image_item) VALUES " +
@@ -248,44 +250,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return imgUrl;
     }
-
-    // Lay du lieu menu
-    public ArrayList<MenuDomain> getAllMenuItems() {
-        ArrayList<MenuDomain> menuList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM MENU_ITEM", null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                String title = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                String pic = cursor.getString(cursor.getColumnIndexOrThrow("url_image_item"));
-                double fee = cursor.getDouble(cursor.getColumnIndexOrThrow("price"));
-
-                menuList.add(new MenuDomain(title, pic, fee));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-
-        return menuList;
-    }
-    // Lay du lieu Restaurant
-    public ArrayList<RestaurantDomain> getAllRestaurants() {
-        ArrayList<RestaurantDomain> restaurantList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM RESTAURANT", null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                String title = cursor.getString(cursor.getColumnIndexOrThrow("restaurant_name"));
-                String pic = cursor.getString(cursor.getColumnIndexOrThrow("url_image_restaurant"));
-
-                restaurantList.add(new RestaurantDomain(title, pic));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-
-        return restaurantList;
-    }
+//    // Lay du lieu Restaurant
+//    public ArrayList<RestaurantDomain> getAllRestaurants() {
+//        ArrayList<RestaurantDomain> restaurantList = new ArrayList<>();
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT * FROM RESTAURANT", null);
+//
+//        if (cursor.moveToFirst()) {
+//            do {
+//                String title = cursor.getString(cursor.getColumnIndexOrThrow("restaurant_name"));
+//                String pic = cursor.getString(cursor.getColumnIndexOrThrow("url_image_restaurant"));
+//
+//                restaurantList.add(new RestaurantDomain(title, pic));
+//            } while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        db.close();
+//
+//        return restaurantList;
+//    }
 }

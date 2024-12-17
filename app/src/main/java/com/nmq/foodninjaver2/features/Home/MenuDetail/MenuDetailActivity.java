@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +18,7 @@ import com.nmq.foodninjaver2.dataBase.DataBaseHelper;
 import com.nmq.foodninjaver2.features.Home.Adapter.PopularMenuAdapter;
 import com.nmq.foodninjaver2.features.Home.HomeActivity;
 import com.nmq.foodninjaver2.features.Home.Model.MenuDomain;
+import com.nmq.foodninjaver2.features.Home.Repository.HomeRepository;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class MenuDetailActivity extends AppCompatActivity {
     private ArrayList<MenuDomain> menuList, originalMenuList;
     private ImageButton backBtn;
     private EditText edtSearch;
-    DataBaseHelper dataBaseHelper;
+    private HomeRepository homeRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,9 @@ public class MenuDetailActivity extends AppCompatActivity {
         edtSearch = findViewById(R.id.edtSearch);
         backBtn = findViewById(R.id.backBtn);
 
-        dataBaseHelper = new DataBaseHelper(this);
+        homeRepository = new HomeRepository(this);
 
-        menuList = dataBaseHelper.getAllMenuItems();
+        menuList = homeRepository.getAllMenuItems();
         originalMenuList = new ArrayList<>(menuList);
 
         setupRecyclerView();

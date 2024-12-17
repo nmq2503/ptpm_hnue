@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".features.auth.RegisterProcessActivity">
+
+    <LinearLayout
+        android:background="@drawable/img_background_app"
+        android:paddingHorizontal="25dp"
+        android:paddingTop="40dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivBackBtn"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/img_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Điền thông tin của bạn\nđể bắt đầu"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:textColor="#09051C"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="Dữ liệu này sẽ được hiển thị trong hồ sơ\ntài khoản của bạn để bảo mật"
+            android:textSize="14sp"
+            android:textColor="#09051C"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/edtFirstNameUser"
+            android:hint="Họ"
+            android:padding="20dp"
+            android:textColorHint="#4DDA6317"
+            android:textSize="14sp"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/custom_bg_edt_manager_add_user"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/edtLastNameUser"
+            android:hint="Tên"
+            android:padding="20dp"
+            android:textColorHint="#4DDA6317"
+            android:textSize="14sp"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/custom_bg_edt_manager_add_user"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/edtPhoneNumberUser"
+            android:hint="Số điện thoại"
+            android:padding="20dp"
+            android:textColorHint="#4DDA6317"
+            android:textSize="14sp"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:background="@drawable/custom_bg_edt_manager_add_user"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
+
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/btnContinue"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/custom_bg_button"
+            android:text="Tiếp tục"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_width="175dp"
+            android:layout_height="60dp"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

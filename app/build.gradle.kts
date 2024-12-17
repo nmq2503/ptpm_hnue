@@ -48,7 +48,7 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.squareup.picasso:picasso:2.8")
 
-  // Sử dụng Picasso từ libs
+    // Sử dụng Picasso từ libs
     testImplementation(libs.junit)
 
     implementation("com.github.bumptech.glide:glide:4.12.0")
@@ -56,4 +56,11 @@ dependencies {
 
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Camera
+    implementation(libs.camera.core)
+    implementation("androidx.camera:camera-lifecycle:1.4.0")
+    implementation("androidx.camera:camera-view:1.4.0")
+    implementation("androidx.camera:camera-extensions:1.4.0")
+    implementation("androidx.camera:camera-video:1.4.0")
 }

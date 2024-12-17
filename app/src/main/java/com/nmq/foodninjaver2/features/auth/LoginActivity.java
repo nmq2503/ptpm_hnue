@@ -15,6 +15,7 @@ import com.nmq.foodninjaver2.R;
 import com.nmq.foodninjaver2.admin.views.AdminActivity;
 import com.nmq.foodninjaver2.core.SessionManager;
 import com.nmq.foodninjaver2.features.Home.HomeActivity;
+import com.nmq.foodninjaver2.features.cart.FoodCartActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -74,18 +75,16 @@ public class LoginActivity extends AppCompatActivity {
         boolean isValid = authRepository.checkLogin(email, password);
 
         if (isValid) {
-            sessionManager.createLoginSession(email);
+            int userId = authRepository.getUserIdByEmail(email);
+            sessionManager.createLoginSession(email, userId);
 
             Toast.makeText(this, "Đăng nhập thành công! Chào mừng " + email, Toast.LENGTH_SHORT).show();
 
-            // Kiểm tra nếu là tài khoản admin
             if (email.equals("quanggg2503@gmail.com") && password.equals("12345678")) {
-                // Sử dụng Intent để chuyển đến AdminActivity và xóa hết các Activity trước đó
                 Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);  // Xóa tất cả Activity trước đó
                 startActivity(intent);
             } else {
-                // Chuyển đến MainActivity nếu không phải admin
                 if (sessionManager.isLoggedIn()) {
                     startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 }
